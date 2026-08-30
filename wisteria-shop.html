@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aayush Shop — Elevate Your Everyday</title>
+  <meta name="description" content="Aayush Shop — Your premium destination for curated electronics, fashion, home decor, books & more. Shop in style with our sleek slate-themed store." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="wisteria-shop.css" />
+</head>
+<body>
+
+  <!-- ===== TOP UTILITY BAR ===== -->
+  <div class="top-bar" id="top-bar">
+    <div class="container top-bar__inner">
+      <span>🏪 Free shipping on orders over ₹999 &nbsp;|&nbsp; Use code <strong>AAYUSH20</strong> for 20% off!</span>
+      <div class="top-bar__links">
+        <a href="#" id="top-bar-track">Track Order</a>
+        <a href="#" id="top-bar-sell">Sell on Aayush Shop</a>
+        <a href="#" id="top-bar-help">Help</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER / NAVBAR ===== -->
+  <header class="header" id="main-header">
+    <div class="container header__inner">
+
+      <!-- Logo -->
+      <a href="#" class="logo" id="logo-link">
+        <span class="logo__icon">🏪</span>
+        <span class="logo__text">Aayush<span class="logo__accent">Shop</span></span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-bar" id="search-bar">
+        <select class="search-bar__category" id="search-category">
+          <option>All</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Home & Decor</option>
+          <option>Books</option>
+          <option>Beauty</option>
+          <option>Sports</option>
+        </select>
+        <input type="text" class="search-bar__input" id="search-input" placeholder="Search Aayush Shop..." />
+        <button class="search-bar__btn" id="search-btn" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header__actions">
+        <div class="header-action" id="header-account">
+          <span class="header-action__label">Hello, Sign in</span>
+          <span class="header-action__main">Account & Lists ▾</span>
+        </div>
+        <div class="header-action" id="header-returns">
+          <span class="header-action__label">Returns</span>
+          <span class="header-action__main">& Orders</span>
+        </div>
+        <button class="cart-btn" id="cart-btn" aria-label="Open cart">
+          <div class="cart-btn__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+          <span class="cart-btn__count" id="cart-count">0</span>
+          <span class="cart-btn__text">Cart</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Nav Categories -->
+    <nav class="nav-categories" id="nav-categories">
+      <div class="container nav-categories__inner">
+        <a href="#" class="nav-cat active" id="nav-all">☰ All</a>
+        <a href="#" class="nav-cat" id="nav-today">Today's Deals</a>
+        <a href="#" class="nav-cat" id="nav-customer">Customer Service</a>
+        <a href="#" class="nav-cat" id="nav-registry">Registry</a>
+        <a href="#" class="nav-cat" id="nav-gift">Gift Cards</a>
+        <a href="#" class="nav-cat" id="nav-sell">Sell</a>
+        <a href="#" class="nav-cat" id="nav-electronics">Electronics</a>
+        <a href="#" class="nav-cat" id="nav-fashion">Fashion</a>
+        <a href="#" class="nav-cat" id="nav-home">Home & Garden</a>
+        <a href="#" class="nav-cat" id="nav-beauty">Beauty</a>
+        <a href="#" class="nav-cat" id="nav-sports">Sports</a>
+        <a href="#" class="nav-cat nav-cat--prime" id="nav-prime">🌟 Prime</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+
+    <!-- ===== HERO BANNER ===== -->
+    <section class="hero" id="hero-section">
+      <div class="hero__banner">
+        <img src="public/hero_banner.png" alt="Elevate Your Everyday — Aayush Shop Hero Banner" class="hero__img" id="hero-img" />
+        <div class="hero__overlay">
+          <div class="hero__content">
+            <p class="hero__eyebrow">✨ New Season Arrivals</p>
+            <h1 class="hero__title">Elevate Your Everyday</h1>
+            <p class="hero__subtitle">Discover premium curated collections — from cutting-edge tech to timeless elegance.</p>
+            <div class="hero__actions">
+              <a href="#featured" class="btn btn--primary" id="hero-shop-now">Shop Now</a>
+              <a href="#categories" class="btn btn--ghost" id="hero-explore">Explore Categories</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flash Stats -->
+      <div class="hero__stats container">
+        <div class="stat-card" id="stat-1">
+          <span class="stat-card__number">2M+</span>
+          <span class="stat-card__label">Products</span>
+        </div>
+        <div class="stat-card" id="stat-2">
+          <span class="stat-card__number">500K+</span>
+          <span class="stat-card__label">Happy Customers</span>
+        </div>
+        <div class="stat-card" id="stat-3">
+          <span class="stat-card__number">24/7</span>
+          <span class="stat-card__label">Customer Support</span>
+        </div>
+        <div class="stat-card" id="stat-4">
+          <span class="stat-card__number">Free</span>
+          <span class="stat-card__label">Easy Returns</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEALS TICKER ===== -->
+    <div class="deals-ticker" id="deals-ticker">
+      <div class="deals-ticker__label">⚡ DEALS</div>
+      <div class="deals-ticker__track">
+        <span>🔥 Wireless Headphones — 40% OFF</span>
+        <span>🎀 Aayush Silk Scarf — Limited Edition</span>
+        <span>⌚ SmartWatch Bundle — Save ₹2000</span>
+        <span>📚 Book Sets — Buy 2 Get 1 Free</span>
+        <span>🏡 Home Decor — Up to 50% OFF</span>
+        <span>✨ Aura Signature Perfume — New Arrival</span>
+        <span>🔥 Wireless Headphones — 40% OFF</span>
+        <span>🎀 Aayush Silk Scarf — Limited Edition</span>
+        <span>⌚ SmartWatch Bundle — Save ₹2000</span>
+        <span>📚 Book Sets — Buy 2 Get 1 Free</span>
+        <span>🏡 Home Decor — Up to 50% OFF</span>
+        <span>✨ Aura Signature Perfume — New Arrival</span>
+      </div>
+    </div>
+
+    <!-- ===== SHOP BY CATEGORY ===== -->
+    <section class="section" id="categories">
+      <div class="container">
+        <h2 class="section__title">Shop by Category</h2>
+        <p class="section__subtitle">Find what you love, curated with care</p>
+        <div class="categories-grid" id="categories-grid">
+          <a href="#" class="cat-card" id="cat-electronics">
+            <div class="cat-card__icon">🎧</div>
+            <h3 class="cat-card__name">Electronics</h3>
+            <p class="cat-card__desc">Gadgets & Tech</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-fashion">
+            <div class="cat-card__icon">👗</div>
+            <h3 class="cat-card__name">Fashion</h3>
+            <p class="cat-card__desc">Styles & Trends</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-home-decor">
+            <div class="cat-card__icon">🏡</div>
+            <h3 class="cat-card__name">Home & Decor</h3>
+            <p class="cat-card__desc">Interior Bliss</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-books">
+            <div class="cat-card__icon">📚</div>
+            <h3 class="cat-card__name">Books</h3>
+            <p class="cat-card__desc">Stories & Knowledge</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-beauty">
+            <div class="cat-card__icon">💄</div>
+            <h3 class="cat-card__name">Beauty</h3>
+            <p class="cat-card__desc">Glow & Radiance</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-sports">
+            <div class="cat-card__icon">⚽</div>
+            <h3 class="cat-card__name">Sports</h3>
+            <p class="cat-card__desc">Fitness & Play</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-toys">
+            <div class="cat-card__icon">🧸</div>
+            <h3 class="cat-card__name">Toys & Kids</h3>
+            <p class="cat-card__desc">Fun & Learning</p>
+          </a>
+          <a href="#" class="cat-card" id="cat-grocery">
+            <div class="cat-card__icon">🛒</div>
+            <h3 class="cat-card__name">Grocery</h3>
+            <p class="cat-card__desc">Fresh Picks</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED PRODUCTS ===== -->
+    <section class="section section--ice" id="featured">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <h2 class="section__title">Today's Featured Picks</h2>
+            <p class="section__subtitle">Hand-picked, just for you</p>
+          </div>
+          <a href="#" class="see-all-link" id="see-all-featured">See all deals →</a>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+
+          <!-- Product 1 -->
+          <div class="product-card" id="product-1" data-product="1">
+            <div class="product-card__badge">Best Seller</div>
+            <div class="product-card__wishlist" id="wish-1" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_electronics.png" alt="AetherFlow Pro Wireless Headphones" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Electronics</p>
+              <h3 class="product-card__title">AetherFlow Pro Wireless Headphones</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(4,821)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹4,999</span>
+                <span class="price-original">₹8,499</span>
+                <span class="discount">41% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery by Tomorrow</p>
+              <button class="btn btn--add-cart" id="add-cart-1" data-id="1" data-name="AetherFlow Pro Headphones" data-price="4999">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Product 2 -->
+          <div class="product-card" id="product-2" data-product="2">
+            <div class="product-card__badge product-card__badge--new">New Arrival</div>
+            <div class="product-card__wishlist" id="wish-2" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_fashion.png" alt="Aayush Bloom Silk Scarf" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Fashion</p>
+              <h3 class="product-card__title">Aayush Bloom Silk Scarf — Limited Edition</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-count">(1,203)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹2,299</span>
+                <span class="price-original">₹3,999</span>
+                <span class="discount">42% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery by Tomorrow</p>
+              <button class="btn btn--add-cart" id="add-cart-2" data-id="2" data-name="Aayush Silk Scarf" data-price="2299">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Product 3 -->
+          <div class="product-card" id="product-3" data-product="3">
+            <div class="product-card__badge product-card__badge--deal">Deal of Day</div>
+            <div class="product-card__wishlist" id="wish-3" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_home.png" alt="Lavender Dreams Ceramic Vase" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Home & Decor</p>
+              <h3 class="product-card__title">Lavender Dreams Ceramic Vase</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(892)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹1,499</span>
+                <span class="price-original">₹2,999</span>
+                <span class="discount">50% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery in 2 days</p>
+              <button class="btn btn--add-cart" id="add-cart-3" data-id="3" data-name="Lavender Ceramic Vase" data-price="1499">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Product 4 -->
+          <div class="product-card" id="product-4" data-product="4">
+            <div class="product-card__wishlist" id="wish-4" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_book.png" alt="Aayush Reads — Premium Book Collection" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Books</p>
+              <h3 class="product-card__title">Aayush Reads — Premium Book Collection (6 Books)</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(3,441)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹1,199</span>
+                <span class="price-original">₹1,999</span>
+                <span class="discount">40% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery by Tomorrow</p>
+              <button class="btn btn--add-cart" id="add-cart-4" data-id="4" data-name="Premium Book Collection" data-price="1199">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Product 5 -->
+          <div class="product-card" id="product-5" data-product="5">
+            <div class="product-card__badge">Top Rated</div>
+            <div class="product-card__wishlist" id="wish-5" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_watch.png" alt="VioletPulse SmartWatch Pro" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Electronics</p>
+              <h3 class="product-card__title">VioletPulse SmartWatch Pro — Silver Edition</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(6,102)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹12,999</span>
+                <span class="price-original">₹21,999</span>
+                <span class="discount">41% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery Tomorrow</p>
+              <button class="btn btn--add-cart" id="add-cart-5" data-id="5" data-name="VioletPulse SmartWatch Pro" data-price="12999">Add to Cart</button>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="product-card" id="product-6" data-product="6">
+            <div class="product-card__badge product-card__badge--new">Exclusive</div>
+            <div class="product-card__wishlist" id="wish-6" aria-label="Wishlist">♡</div>
+            <div class="product-card__img-wrap">
+              <img src="public/product_perfume.png" alt="Aura de Wistéria Eau de Parfum" class="product-card__img" loading="lazy" />
+            </div>
+            <div class="product-card__body">
+              <p class="product-card__category">Beauty & Fragrance</p>
+              <h3 class="product-card__title">Aura de Wistéria Eau de Parfum 50ml</h3>
+              <div class="product-card__rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-count">(2,789)</span>
+              </div>
+              <div class="product-card__pricing">
+                <span class="price">₹3,499</span>
+                <span class="price-original">₹5,999</span>
+                <span class="discount">41% off</span>
+              </div>
+              <p class="product-card__delivery">🚚 FREE delivery by Tomorrow</p>
+              <button class="btn btn--add-cart" id="add-cart-6" data-id="6" data-name="Aura de Wistéria Perfume" data-price="3499">Add to Cart</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRIME BANNER ===== -->
+    <section class="prime-banner" id="prime-section">
+      <div class="container prime-banner__inner">
+        <div class="prime-banner__content">
+          <p class="prime-banner__eyebrow">✨ Exclusive Membership</p>
+          <h2 class="prime-banner__title">Try Aayush Prime</h2>
+          <ul class="prime-banner__perks">
+            <li>⚡ Same-day & next-day delivery</li>
+            <li>🎬 Access to Aayush Originals streaming</li>
+            <li>💜 Members-only deals & early access</li>
+            <li>🎵 Ad-free music streaming included</li>
+            <li>📦 Unlimited free returns</li>
+          </ul>
+          <div class="prime-banner__cta">
+            <button class="btn btn--prime" id="prime-join-btn">Start Free 30-Day Trial</button>
+            <p class="prime-banner__note">₹999/month after trial · Cancel anytime</p>
+          </div>
+        </div>
+        <div class="prime-banner__visual">
+          <div class="prime-badge" id="prime-badge">
+            <span class="prime-badge__icon">⭐</span>
+            <span class="prime-badge__text">PRIME</span>
+          </div>
+          <div class="prime-float-cards">
+            <div class="prime-float" id="pf-1">🚀 Free Fast Delivery</div>
+            <div class="prime-float" id="pf-2">🎁 Exclusive Offers</div>
+            <div class="prime-float" id="pf-3">📱 Stream Anywhere</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MORE PRODUCTS — RECENTLY VIEWED ===== -->
+    <section class="section" id="recently-viewed">
+      <div class="container">
+        <div class="section__header">
+          <div>
+            <h2 class="section__title">You Might Also Like</h2>
+            <p class="section__subtitle">Curated recommendations for you</p>
+          </div>
+        </div>
+        <div class="products-mini-grid" id="mini-products-grid">
+
+          <div class="mini-product" id="mini-1">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_electronics.png" alt="Wireless Earbuds" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">AetherFlow Earbuds</p>
+            <p class="mini-product__price">₹1,999</p>
+            <button class="btn btn--mini-cart" id="mini-cart-1" data-id="7" data-name="AetherFlow Earbuds" data-price="1999">+ Cart</button>
+          </div>
+
+          <div class="mini-product" id="mini-2">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_fashion.png" alt="Aayush Shawl" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">Aayush Shawl</p>
+            <p class="mini-product__price">₹999</p>
+            <button class="btn btn--mini-cart" id="mini-cart-2" data-id="8" data-name="Aayush Shawl" data-price="999">+ Cart</button>
+          </div>
+
+          <div class="mini-product" id="mini-3">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_home.png" alt="Lavender Candle Set" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">Lavender Candle Set</p>
+            <p class="mini-product__price">₹799</p>
+            <button class="btn btn--mini-cart" id="mini-cart-3" data-id="9" data-name="Lavender Candle Set" data-price="799">+ Cart</button>
+          </div>
+
+          <div class="mini-product" id="mini-4">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_book.png" alt="Midnight Chronicles" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">Midnight Chronicles</p>
+            <p class="mini-product__price">₹349</p>
+            <button class="btn btn--mini-cart" id="mini-cart-4" data-id="10" data-name="Midnight Chronicles" data-price="349">+ Cart</button>
+          </div>
+
+          <div class="mini-product" id="mini-5">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_watch.png" alt="VioletPulse Watch Band" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">VioletPulse Watch Band</p>
+            <p class="mini-product__price">₹499</p>
+            <button class="btn btn--mini-cart" id="mini-cart-5" data-id="11" data-name="VioletPulse Watch Band" data-price="499">+ Cart</button>
+          </div>
+
+          <div class="mini-product" id="mini-6">
+            <div class="mini-product__img-wrap">
+              <img src="public/product_perfume.png" alt="Aayush Body Mist" class="mini-product__img" loading="lazy" />
+            </div>
+            <p class="mini-product__name">Aayush Body Mist</p>
+            <p class="mini-product__price">₹699</p>
+            <button class="btn btn--mini-cart" id="mini-cart-6" data-id="12" data-name="Aayush Body Mist" data-price="699">+ Cart</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRUST BADGES ===== -->
+    <section class="trust-section" id="trust-section">
+      <div class="container trust-grid">
+        <div class="trust-item" id="trust-1">
+          <div class="trust-item__icon">🔒</div>
+          <h4 class="trust-item__title">Secure Payments</h4>
+          <p class="trust-item__desc">SSL encrypted & PCI-DSS compliant checkout</p>
+        </div>
+        <div class="trust-item" id="trust-2">
+          <div class="trust-item__icon">🚚</div>
+          <h4 class="trust-item__title">Fast Delivery</h4>
+          <p class="trust-item__desc">Same-day & next-day delivery in 100+ cities</p>
+        </div>
+        <div class="trust-item" id="trust-3">
+          <div class="trust-item__icon">🔄</div>
+          <h4 class="trust-item__title">Easy Returns</h4>
+          <p class="trust-item__desc">Hassle-free 30-day returns on all orders</p>
+        </div>
+        <div class="trust-item" id="trust-4">
+          <div class="trust-item__icon">🎧</div>
+          <h4 class="trust-item__title">24/7 Support</h4>
+          <p class="trust-item__desc">Expert help via chat, call, or email anytime</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter" id="newsletter-section">
+      <div class="container newsletter__inner">
+        <div class="newsletter__content">
+          <h2 class="newsletter__title">Stay in the Loop 🏪</h2>
+          <p class="newsletter__desc">Get the latest deals, new arrivals & exclusive Prime offers delivered to your inbox.</p>
+          <form class="newsletter__form" id="newsletter-form">
+            <input type="email" class="newsletter__input" id="newsletter-email" placeholder="Enter your email address..." required />
+            <button type="submit" class="btn btn--subscribe" id="newsletter-submit">Subscribe</button>
+          </form>
+          <p class="newsletter__disclaimer">No spam, ever. Unsubscribe in one click.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="main-footer">
+    <div class="footer__top">
+      <div class="container footer__top-inner">
+        <div class="footer-col" id="footer-col-1">
+          <h4 class="footer-col__title">Get to Know Us</h4>
+          <ul class="footer-col__list">
+            <li><a href="#" id="footer-about">About Aayush Shop</a></li>
+            <li><a href="#" id="footer-careers">Careers</a></li>
+            <li><a href="#" id="footer-press">Press Releases</a></li>
+            <li><a href="#" id="footer-csr">Aayush Shop Cares</a></li>
+            <li><a href="#" id="footer-gift-wrap">Gift Wrapping</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-2">
+          <h4 class="footer-col__title">Make Money With Us</h4>
+          <ul class="footer-col__list">
+            <li><a href="#" id="footer-sell">Sell on Aayush Shop</a></li>
+            <li><a href="#" id="footer-affiliate">Affiliate Programme</a></li>
+            <li><a href="#" id="footer-advertise">Advertise Your Products</a></li>
+            <li><a href="#" id="footer-self-publish">Self-Publish with Us</a></li>
+            <li><a href="#" id="footer-vendor">Become a Vendor</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-3">
+          <h4 class="footer-col__title">Let Us Help You</h4>
+          <ul class="footer-col__list">
+            <li><a href="#" id="footer-account">Your Account</a></li>
+            <li><a href="#" id="footer-orders">Your Orders</a></li>
+            <li><a href="#" id="footer-shipping">Shipping Rates & Policies</a></li>
+            <li><a href="#" id="footer-returns">Returns & Replacements</a></li>
+            <li><a href="#" id="footer-help">Help & FAQs</a></li>
+          </ul>
+        </div>
+        <div class="footer-col" id="footer-col-4">
+          <h4 class="footer-col__title">Aayush Shop Payment</h4>
+          <ul class="footer-col__list">
+            <li><a href="#" id="footer-cards">Shop with Credit/Debit Cards</a></li>
+            <li><a href="#" id="footer-emi">EMI Offers</a></li>
+            <li><a href="#" id="footer-upi">Pay via UPI</a></li>
+            <li><a href="#" id="footer-cod">Cash on Delivery</a></li>
+            <li><a href="#" id="footer-giftcards">Gift Cards</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__mid">
+      <div class="container footer__mid-inner">
+        <a href="#" class="logo footer__logo" id="footer-logo">
+          <span class="logo__icon">🏪</span>
+          <span class="logo__text">Aayush<span class="logo__accent">Shop</span></span>
+        </a>
+        <div class="footer__socials">
+          <a href="#" class="social-btn" id="social-fb" aria-label="Facebook">f</a>
+          <a href="#" class="social-btn" id="social-ig" aria-label="Instagram">📸</a>
+          <a href="#" class="social-btn" id="social-tw" aria-label="Twitter">𝕏</a>
+          <a href="#" class="social-btn" id="social-yt" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>© 2026 Aayush Shop. All rights reserved.</p>
+        <div class="footer__legal">
+          <a href="#" id="footer-privacy">Privacy Policy</a>
+          <a href="#" id="footer-terms">Terms of Service</a>
+          <a href="#" id="footer-cookies">Cookie Settings</a>
+        </div>
+        <div class="footer__payment-icons">
+          <span class="pay-icon" id="pay-visa">VISA</span>
+          <span class="pay-icon" id="pay-mc">MC</span>
+          <span class="pay-icon" id="pay-upi">UPI</span>
+          <span class="pay-icon" id="pay-cod">COD</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CART SIDEBAR ===== -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-sidebar__header">
+      <h2 class="cart-sidebar__title">🛒 Your Cart</h2>
+      <button class="cart-sidebar__close" id="cart-close" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-sidebar__body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <div class="cart-empty__icon">🛒</div>
+        <p class="cart-empty__text">Your cart is empty</p>
+        <p class="cart-empty__sub">Start shopping to add items here</p>
+      </div>
+      <ul class="cart-items" id="cart-items-list"></ul>
+    </div>
+    <div class="cart-sidebar__footer" id="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <span class="cart-subtotal__amount" id="cart-subtotal">₹0</span>
+      </div>
+      <button class="btn btn--checkout" id="checkout-btn">Proceed to Checkout →</button>
+      <p class="cart-footer__note">🔒 Secure checkout · Free returns</p>
+    </div>
+  </aside>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast" id="toast-notification" role="alert" aria-live="polite">
+    <span class="toast__icon">✅</span>
+    <span class="toast__msg" id="toast-msg">Item added to cart!</span>
+  </div>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <script src="wisteria-shop.js"></script>
+</body>
+</html>

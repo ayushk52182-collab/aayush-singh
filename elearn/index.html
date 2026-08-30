@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduSphere — College E-Learning Platform</title>
+  <meta name="description" content="EduSphere is a premium college e-learning platform offering expert-led courses in engineering, science, arts, and more. Learn at your own pace with world-class faculty." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        EduSphere
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#instructors">Faculty</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn-ghost" id="loginBtn">Sign In</button>
+        <button class="btn-primary" id="enrollBtn">Enroll Free</button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#courses" class="mobile-link">Courses</a></li>
+      <li><a href="#categories" class="mobile-link">Categories</a></li>
+      <li><a href="#instructors" class="mobile-link">Faculty</a></li>
+      <li><a href="#testimonials" class="mobile-link">Reviews</a></li>
+      <li><button class="btn-primary full-width" id="mobileEnroll">Enroll Free</button></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Now offering 500+ courses across 20 departments
+      </div>
+      <h1 class="hero-title">
+        Learn Smarter,<br/>
+        <span class="gradient-text">Achieve More.</span>
+      </h1>
+      <p class="hero-subtitle">
+        The premier e-learning platform built exclusively for college students.
+        Access expert-led lectures, labs, and projects — anytime, anywhere.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-hero-primary" id="heroCta">
+          Start Learning Free
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-hero-ghost" id="heroDemo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch Demo
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-num" data-target="48200">0</span>
+          <span class="stat-label">Students Enrolled</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="stat-num" data-target="520">0</span>
+          <span class="stat-label">Active Courses</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="stat-num" data-target="98">0</span>
+          <span class="stat-label">% Satisfaction</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="dashboard-card">
+        <div class="dash-header">
+          <div class="dash-avatar"></div>
+          <div>
+            <div class="dash-name">Aanya Sharma</div>
+            <div class="dash-role">Computer Science, Yr 3</div>
+          </div>
+          <div class="dash-streak">🔥 14 day streak</div>
+        </div>
+        <div class="dash-progress-section">
+          <div class="dash-course-item">
+            <div class="course-icon cs">{ }</div>
+            <div class="course-info">
+              <div class="course-name">Data Structures & Algorithms</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+              <div class="progress-pct">72% complete</div>
+            </div>
+          </div>
+          <div class="dash-course-item">
+            <div class="course-icon ml">∑</div>
+            <div class="course-info">
+              <div class="course-name">Machine Learning Fundamentals</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+              <div class="progress-pct">45% complete</div>
+            </div>
+          </div>
+          <div class="dash-course-item">
+            <div class="course-icon db">⚡</div>
+            <div class="course-info">
+              <div class="course-name">Database Systems</div>
+              <div class="progress-bar"><div class="progress-fill" style="width:89%"></div></div>
+              <div class="progress-pct">89% complete</div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-next">
+          <span>Next: Linear Regression — Module 4</span>
+          <button class="dash-play">▶ Resume</button>
+        </div>
+      </div>
+      <div class="floating-badge badge-top">
+        <div class="badge-icon">🏆</div>
+        <div><div class="badge-title">Certificate Earned!</div><div class="badge-sub">Web Development</div></div>
+      </div>
+      <div class="floating-badge badge-bottom">
+        <div class="badge-icon">👥</div>
+        <div><div class="badge-title">+2,400 joined today</div><div class="badge-sub">Live sessions active</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUSTED BY -->
+  <section class="trusted">
+    <div class="container">
+      <p class="trusted-label">Trusted by students at top institutions</p>
+      <div class="trusted-logos">
+        <span class="uni-logo">IIT Delhi</span>
+        <span class="uni-logo">BITS Pilani</span>
+        <span class="uni-logo">NIT Trichy</span>
+        <span class="uni-logo">VIT Vellore</span>
+        <span class="uni-logo">DTU Delhi</span>
+        <span class="uni-logo">NSUT</span>
+        <span class="uni-logo">IIIT Hyderabad</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Explore</div>
+        <h2 class="section-title">Learn by Department</h2>
+        <p class="section-subtitle">Dive into any of our 20 specialized departments with structured, semester-aligned curricula.</p>
+      </div>
+      <div class="categories-grid">
+        <div class="cat-card active" data-filter="all">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="cat-name">Computer Science</div>
+          <div class="cat-count">148 courses</div>
+        </div>
+        <div class="cat-card" data-filter="math">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="cat-name">Mathematics</div>
+          <div class="cat-count">92 courses</div>
+        </div>
+        <div class="cat-card" data-filter="physics">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>
+          </div>
+          <div class="cat-name">Physics</div>
+          <div class="cat-count">67 courses</div>
+        </div>
+        <div class="cat-card" data-filter="chem">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+          </div>
+          <div class="cat-name">Chemistry</div>
+          <div class="cat-count">54 courses</div>
+        </div>
+        <div class="cat-card" data-filter="eng">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#f97316,#dc2626)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.4 7.5-6 9.3"/><path d="M12 2a10 10 0 0 0-10 10c0 4 2.4 7.5 6 9.3"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="cat-name">Engineering</div>
+          <div class="cat-count">113 courses</div>
+        </div>
+        <div class="cat-card" data-filter="biz">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 3h18v4H3zM3 11h18v4H3zM3 19h18v4H3z"/></svg>
+          </div>
+          <div class="cat-name">Business & MBA</div>
+          <div class="cat-count">86 courses</div>
+        </div>
+        <div class="cat-card" data-filter="arts">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div class="cat-name">Arts & Humanities</div>
+          <div class="cat-count">45 courses</div>
+        </div>
+        <div class="cat-card" data-filter="bio">
+          <div class="cat-icon" style="background:linear-gradient(135deg,#14b8a6,#06b6d4)">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="cat-name">Biology & Medicine</div>
+          <div class="cat-count">79 courses</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COURSES -->
+  <section class="courses" id="courses">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Popular</div>
+        <h2 class="section-title">Featured Courses</h2>
+        <p class="section-subtitle">Hand-picked by our academic committee — semester-ready and industry-aligned.</p>
+      </div>
+      <div class="course-filters">
+        <button class="filter-btn active" data-cat="all">All</button>
+        <button class="filter-btn" data-cat="cs">CS & IT</button>
+        <button class="filter-btn" data-cat="math">Math</button>
+        <button class="filter-btn" data-cat="science">Science</button>
+        <button class="filter-btn" data-cat="biz">Business</button>
+      </div>
+      <div class="courses-grid" id="coursesGrid">
+
+        <div class="course-card" data-category="cs">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">
+            <div class="thumb-icon">{ }</div>
+            <div class="course-badge">Bestseller</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">CS</span><span class="tag">Beginner</span></div>
+            <h3 class="course-title">Data Structures & Algorithms</h3>
+            <p class="course-desc">Master arrays, trees, graphs, and dynamic programming with 200+ practice problems.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#6366f1">P</div>
+              <span>Prof. Priya Menon</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.9</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>42h 30m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>12.4k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-dsa">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" data-category="cs">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#0c1a3e,#1e3a6e)">
+            <div class="thumb-icon">🤖</div>
+            <div class="course-badge trending">Trending</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">AI/ML</span><span class="tag">Intermediate</span></div>
+            <h3 class="course-title">Machine Learning A–Z</h3>
+            <p class="course-desc">Supervised & unsupervised learning, neural networks, and real-world ML projects in Python.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#06b6d4">R</div>
+              <span>Dr. Rohan Kapoor</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.8</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>56h 15m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>9.8k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-ml">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" data-category="math">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#1a0533,#2d1b69)">
+            <div class="thumb-icon">∫</div>
+            <div class="course-badge new">New</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">Math</span><span class="tag">All Levels</span></div>
+            <h3 class="course-title">Advanced Calculus & Linear Algebra</h3>
+            <p class="course-desc">From limits and derivatives to eigenvalues — a rigorous course for STEM majors.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#8b5cf6">S</div>
+              <span>Prof. Sunita Rao</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.7</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>38h 00m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>7.2k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-calc">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" data-category="science">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#052e16,#064e3b)">
+            <div class="thumb-icon">⚗️</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">Chemistry</span><span class="tag">Intermediate</span></div>
+            <h3 class="course-title">Organic Chemistry Mastery</h3>
+            <p class="course-desc">Reaction mechanisms, stereochemistry, and spectroscopy with 3D molecular visualizations.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#10b981">A</div>
+              <span>Dr. Arjun Nair</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.6</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>29h 45m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>5.1k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-chem">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" data-category="biz">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#1e0535,#4a044e)">
+            <div class="thumb-icon">📊</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">Business</span><span class="tag">Advanced</span></div>
+            <h3 class="course-title">Financial Management & Strategy</h3>
+            <p class="course-desc">Corporate finance, valuation models, and strategic decision-making for future business leaders.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#ec4899">N</div>
+              <span>Prof. Neha Gupta</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.8</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>44h 20m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>6.3k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-fin">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="course-card" data-category="cs">
+          <div class="course-thumb" style="background:linear-gradient(135deg,#0a0a2e,#1a1a5e)">
+            <div class="thumb-icon">🌐</div>
+            <div class="thumb-overlay">
+              <button class="preview-btn">▶ Preview</button>
+            </div>
+          </div>
+          <div class="course-body">
+            <div class="course-tags"><span class="tag">Web Dev</span><span class="tag">Beginner</span></div>
+            <h3 class="course-title">Full-Stack Web Development</h3>
+            <p class="course-desc">Build modern web apps with React, Node.js, and PostgreSQL. Deploy to the cloud with CI/CD.</p>
+            <div class="course-instructor">
+              <div class="inst-avatar" style="background:#f97316">K</div>
+              <span>Prof. Karan Mehta</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span>4.9</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>68h 10m</span>
+              </div>
+              <div class="meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>15.7k enrolled</span>
+              </div>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">Free</div>
+              <button class="btn-enroll" id="enroll-web">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="courses-cta">
+        <button class="btn-outline-large" id="viewAllCourses">View All 520 Courses →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Why EduSphere</div>
+        <h2 class="section-title">Built for College Life</h2>
+        <p class="section-subtitle">Every feature crafted to match the rhythm of campus learning.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.362a1 1 0 0 1-1.447.894L15 14M3 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/></svg>
+          </div>
+          <h3>Live Interactive Sessions</h3>
+          <p>Attend live lectures with real-time Q&A, polls, and breakout rooms — just like a real classroom.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>AI-Powered Notes</h3>
+          <p>Auto-generate structured notes from any lecture. Summarize, highlight, and export to PDF in one click.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Progress Tracking</h3>
+          <p>Visual dashboards show your completion rate, quiz scores, and weekly learning hours at a glance.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Study Groups</h3>
+          <p>Form or join study groups with students from your semester. Collaborate in shared workspaces.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <h3>Offline Mode</h3>
+          <p>Download any course for offline access. Keep learning even when Wi-Fi is spotty in the hostel.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:linear-gradient(135deg,#f97316,#dc2626)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <h3>Verified Certificates</h3>
+          <p>Earn blockchain-verified certificates recognized by 200+ companies. Add them to your LinkedIn instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUCTORS -->
+  <section class="instructors" id="instructors">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Faculty</div>
+        <h2 class="section-title">Learn from the Best</h2>
+        <p class="section-subtitle">Our instructors are IIT/IIM alumni and industry veterans with decades of teaching experience.</p>
+      </div>
+      <div class="instructors-grid">
+        <div class="instructor-card">
+          <div class="inst-photo" style="background:linear-gradient(135deg,#4f46e5,#7c3aed)">
+            <span>PM</span>
+            <div class="inst-status online"></div>
+          </div>
+          <h4>Prof. Priya Menon</h4>
+          <p class="inst-dept">Computer Science</p>
+          <p class="inst-bio">Ex-Google SWE, PhD from IIT Bombay. Specializes in algorithms and competitive programming.</p>
+          <div class="inst-stats">
+            <div class="inst-stat"><strong>28</strong><span>Courses</span></div>
+            <div class="inst-stat"><strong>4.9★</strong><span>Rating</span></div>
+            <div class="inst-stat"><strong>45k</strong><span>Students</span></div>
+          </div>
+          <button class="btn-follow" id="follow-pm">Follow</button>
+        </div>
+        <div class="instructor-card">
+          <div class="inst-photo" style="background:linear-gradient(135deg,#0891b2,#0e7490)">
+            <span>RK</span>
+            <div class="inst-status online"></div>
+          </div>
+          <h4>Dr. Rohan Kapoor</h4>
+          <p class="inst-dept">AI & Machine Learning</p>
+          <p class="inst-bio">Research Scientist at DeepMind, PhD MIT. Author of 3 textbooks on Deep Learning.</p>
+          <div class="inst-stats">
+            <div class="inst-stat"><strong>15</strong><span>Courses</span></div>
+            <div class="inst-stat"><strong>4.8★</strong><span>Rating</span></div>
+            <div class="inst-stat"><strong>32k</strong><span>Students</span></div>
+          </div>
+          <button class="btn-follow" id="follow-rk">Follow</button>
+        </div>
+        <div class="instructor-card">
+          <div class="inst-photo" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">
+            <span>SR</span>
+            <div class="inst-status"></div>
+          </div>
+          <h4>Prof. Sunita Rao</h4>
+          <p class="inst-dept">Mathematics</p>
+          <p class="inst-bio">Former HOD at IIT Delhi, 20+ years teaching calculus, linear algebra, and topology.</p>
+          <div class="inst-stats">
+            <div class="inst-stat"><strong>22</strong><span>Courses</span></div>
+            <div class="inst-stat"><strong>4.7★</strong><span>Rating</span></div>
+            <div class="inst-stat"><strong>28k</strong><span>Students</span></div>
+          </div>
+          <button class="btn-follow" id="follow-sr">Follow</button>
+        </div>
+        <div class="instructor-card">
+          <div class="inst-photo" style="background:linear-gradient(135deg,#dc2626,#ea580c)">
+            <span>KM</span>
+            <div class="inst-status online"></div>
+          </div>
+          <h4>Prof. Karan Mehta</h4>
+          <p class="inst-dept">Web Development</p>
+          <p class="inst-bio">Ex-Meta Staff Engineer, full-stack architect. Builds courses that bridge college and industry.</p>
+          <div class="inst-stats">
+            <div class="inst-stat"><strong>19</strong><span>Courses</span></div>
+            <div class="inst-stat"><strong>4.9★</strong><span>Rating</span></div>
+            <div class="inst-stat"><strong>52k</strong><span>Students</span></div>
+          </div>
+          <button class="btn-follow" id="follow-km">Follow</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">Reviews</div>
+        <h2 class="section-title">What Students Say</h2>
+        <p class="section-subtitle">Over 48,000 students trust EduSphere. Here's what they have to say.</p>
+      </div>
+      <div class="testimonials-track-wrapper">
+        <div class="testimonials-track" id="testimonialsTrack">
+
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"EduSphere completely changed how I prepare for exams. The DSA course by Prof. Menon is better than any coaching class I've attended. Got placed at Amazon! 🎉"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:#6366f1">AS</div>
+              <div>
+                <strong>Aryan Singh</strong>
+                <span>B.Tech CSE, Year 4 — IIT Delhi</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"The AI notes feature is a lifesaver during exam season. I can catch up on a whole week of lectures in just a few hours. Absolutely worth it!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:#ec4899">PR</div>
+              <div>
+                <strong>Pooja Reddy</strong>
+                <span>B.Sc Chemistry, Year 2 — NIT Trichy</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"Live sessions with real professors, not just pre-recorded videos — this is the future of college learning. My GPA went from 7.2 to 9.1 in one semester!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:#f97316">VK</div>
+              <div>
+                <strong>Vikram Kumar</strong>
+                <span>MBA Finance, Year 1 — BITS Pilani</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars">★★★★☆</div>
+            <p>"The offline download feature means I can study even in my village during holidays. Never thought e-learning could feel this personal and structured."</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:#10b981">AP</div>
+              <div>
+                <strong>Anita Patel</strong>
+                <span>B.E. Electronics, Year 3 — VIT Vellore</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>"The ML course here is miles ahead of university curriculum. Dr. Kapoor explains complex concepts with such clarity. I built my first model within week 2!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:#8b5cf6">RN</div>
+              <div>
+                <strong>Rahul Nambiar</strong>
+                <span>M.Tech AI, Year 1 — IIIT Hyderabad</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="testi-controls">
+          <button class="testi-btn" id="testiPrev" aria-label="Previous testimonial">‹</button>
+          <div class="testi-dots" id="testiDots"></div>
+          <button class="testi-btn" id="testiNext" aria-label="Next testimonial">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+        <div class="cta-content">
+          <h2>Ready to Transform Your College Experience?</h2>
+          <p>Join 48,000+ students already learning smarter. Start for free today — no credit card required.</p>
+          <div class="cta-actions">
+            <button class="btn-cta-main" id="ctaSignup">Get Started for Free</button>
+            <button class="btn-cta-ghost" id="ctaExplore">Explore Courses</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            <div class="logo-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            EduSphere
+          </a>
+          <p class="footer-tagline">The smartest way to study in college. Learn from India's top educators, on your schedule.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Twitter" class="social-btn" id="social-twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="social-btn" id="social-linkedin">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" class="social-btn" id="social-youtube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="social-btn" id="social-instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="#">Browse Courses</a></li>
+            <li><a href="#">Live Classes</a></li>
+            <li><a href="#">Study Groups</a></li>
+            <li><a href="#">Certificates</a></li>
+            <li><a href="#">Mobile App</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Departments</h5>
+          <ul>
+            <li><a href="#">Computer Science</a></li>
+            <li><a href="#">Engineering</a></li>
+            <li><a href="#">Mathematics</a></li>
+            <li><a href="#">Sciences</a></li>
+            <li><a href="#">Business & MBA</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Faculty Portal</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 EduSphere Technologies Pvt. Ltd. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-icon">🎓</div>
+      <h3>Join EduSphere for Free</h3>
+      <p>Create your account and get instant access to 520+ courses.</p>
+      <form class="modal-form" id="signupForm">
+        <input type="text" placeholder="Full Name" class="form-input" id="signupName" autocomplete="name" required />
+        <input type="email" placeholder="College Email" class="form-input" id="signupEmail" autocomplete="email" required />
+        <input type="text" placeholder="College / University" class="form-input" id="signupCollege" autocomplete="organization" />
+        <select class="form-input" id="signupDept">
+          <option value="">Select Department</option>
+          <option>Computer Science</option>
+          <option>Engineering</option>
+          <option>Mathematics</option>
+          <option>Physics</option>
+          <option>Chemistry</option>
+          <option>Business & MBA</option>
+          <option>Biology & Medicine</option>
+          <option>Arts & Humanities</option>
+          <option>Other</option>
+        </select>
+        <button type="submit" class="btn-modal-submit" id="signupSubmit">Create Free Account</button>
+      </form>
+      <p class="modal-terms">By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

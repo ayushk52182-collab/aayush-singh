@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Backend Panel | Parul University</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0d14; --surface: #111520; --surface-2: #161b2e;
+      --border: rgba(124,58,237,0.18); --border-2: rgba(255,255,255,0.07);
+      --purple: #7c3aed; --purple-light: #a78bfa; --cyan: #06b6d4;
+      --green: #10b981; --yellow: #f59e0b; --red: #ef4444;
+      --orange: #f97316; --pink: #ec4899; --text: #e2e8f0; --muted: #64748b; --radius: 14px;
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    .bg-grid { position:fixed;inset:0;z-index:0;pointer-events:none; background-image:linear-gradient(rgba(124,58,237,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.04) 1px,transparent 1px);background-size:40px 40px; }
+    .bg-glow { position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(124,58,237,.12) 0%,transparent 70%);top:-150px;left:-150px;animation:mg 12s ease-in-out infinite alternate; }
+    .bg-glow2 { position:fixed;width:400px;height:400px;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(6,182,212,.09) 0%,transparent 70%);bottom:-100px;right:-100px;animation:mg2 10s ease-in-out infinite alternate; }
+    @keyframes mg { 0%{transform:translate(0,0)} 100%{transform:translate(80px,80px)} }
+    @keyframes mg2 { 0%{transform:translate(0,0)} 100%{transform:translate(-60px,-60px)} }
+    .layout { display:flex;min-height:100vh;position:relative;z-index:1; }
+    .sidebar { width:250px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 0;position:sticky;top:0;height:100vh;overflow-y:auto; }
+    .sidebar-logo { padding:0 20px 24px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:12px; }
+    .logo-icon { width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:white;flex-shrink:0; }
+    .logo-text { font-size:14px;font-weight:700;line-height:1.3; }
+    .logo-text span { color:var(--purple-light);display:block;font-size:10px;font-weight:400;letter-spacing:1px;text-transform:uppercase; }
+    .sidebar-nav { flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px; }
+    .nav-label { font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:12px 8px 6px; }
+    .nav-item { display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);transition:all .2s;border:1px solid transparent; }
+    .nav-item:hover { background:var(--surface-2);color:var(--text);border-color:var(--border); }
+    .nav-item.active { background:rgba(124,58,237,.15);color:var(--purple-light);border-color:rgba(124,58,237,.3); }
+    .n-icon { font-size:16px;width:20px;text-align:center; }
+    .nav-badge { margin-left:auto;font-size:10px;font-weight:700;background:var(--purple);color:white;padding:2px 7px;border-radius:20px; }
+    .sidebar-footer { padding:16px 12px;border-top:1px solid var(--border-2); }
+    .sidebar-user { display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--surface-2);cursor:pointer;transition:background .2s; }
+    .sidebar-user:hover { background:rgba(124,58,237,.12); }
+    .user-avatar { width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white; }
+    .user-name { font-size:13px;font-weight:600; }
+    .user-role { font-size:11px;color:var(--muted); }
+    .main { flex:1;display:flex;flex-direction:column;overflow:hidden; }
+    .topbar { padding:16px 28px;border-bottom:1px solid var(--border-2);display:flex;align-items:center;gap:16px;background:rgba(17,21,32,.8);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10; }
+    .topbar-title { font-size:18px;font-weight:700;flex:1; }
+    .topbar-title span { color:var(--muted);font-size:14px;font-weight:400;display:block; }
+    .topbar-actions { display:flex;gap:10px;align-items:center; }
+    .tb-btn { padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px; }
+    .tb-btn:hover { background:rgba(124,58,237,.2);border-color:var(--purple); }
+    .tb-btn.primary { background:var(--purple);border-color:var(--purple); }
+    .tb-btn.primary:hover { background:#6d28d9; }
+    .status-dot { width:8px;height:8px;border-radius:50%;background:var(--green); }
+    .status-dot.pulse { animation:sp 2s ease-in-out infinite; }
+    @keyframes sp { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.4)} 50%{box-shadow:0 0 0 6px rgba(16,185,129,0)} }
+    .content { flex:1;padding:28px;overflow-y:auto;display:flex;gap:24px; }
+    .content-left { flex:1;display:flex;flex-direction:column;gap:24px; }
+    .content-right { width:380px;flex-shrink:0;display:flex;flex-direction:column;gap:24px; }
+    .card { background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:20px; }
+    .card-header { display:flex;align-items:center;gap:10px;margin-bottom:16px; }
+    .card-title { font-size:15px;font-weight:600; }
+    .card-sub { font-size:12px;color:var(--muted);margin-left:auto; }
+    .stats-row { display:grid;grid-template-columns:repeat(4,1fr);gap:14px; }
+    .stat-card { background:var(--surface);border:1px solid var(--border-2);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden; }
+    .stat-card::before { content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;background:linear-gradient(135deg,var(--sc,#7c3aed) 0%,transparent 60%); }
+    .stat-card:hover::before { opacity:.08; }
+    .stat-card:hover { border-color:rgba(124,58,237,.3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3); }
+    .stat-card:active { transform:translateY(0); }
+    .si { width:40px;height:40px;border-radius:10px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:20px;background:rgba(255,255,255,.06); }
+    .sn { font-size:26px;font-weight:800;letter-spacing:-1px; }
+    .sl { font-size:12px;color:var(--muted);margin-top:4px; }
+    .sc { font-size:11px;margin-top:8px; }
+    .sc.up { color:var(--green); }
+    .action-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:14px; }
+    .action-btn { background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--radius);padding:20px 16px;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;position:relative;overflow:hidden; }
+    .action-btn:hover { transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3); }
+    .action-btn:hover .bi { transform:scale(1.1) rotate(-3deg); }
+    .action-btn:active { transform:translateY(0) scale(.98); }
+    .action-btn.running { border-color:var(--yellow);background:rgba(245,158,11,.08); }
+    .action-btn.done { border-color:var(--green);background:rgba(16,185,129,.08); }
+    .bi { width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(255,255,255,.06);transition:transform .2s; }
+    .blbl { font-size:13px;font-weight:600; }
+    .bsub { font-size:11px;color:var(--muted); }
+    .bsts { position:absolute;top:10px;right:10px;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;opacity:0;transition:opacity .2s; }
+    .action-btn.running .bsts { opacity:1;background:rgba(245,158,11,.2);color:var(--yellow); }
+    .action-btn.done .bsts { opacity:1;background:rgba(16,185,129,.2);color:var(--green); }
+    .terminal { background:#060910;border:1px solid rgba(124,58,237,.25);border-radius:var(--radius);overflow:hidden;flex:1; }
+    .term-hdr { background:#0d1117;padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-2); }
+    .term-dots { display:flex;gap:6px; }
+    .dot { width:12px;height:12px;border-radius:50%;cursor:pointer;transition:filter .2s; }
+    .dot:hover { filter:brightness(1.3); }
+    .dot.r { background:#ff5f57; }
+    .dot.y { background:#febc2e; }
+    .dot.g { background:#28c840; }
+    .term-ttl { font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);flex:1;text-align:center; }
+    .term-clr { font-size:11px;color:var(--muted);cursor:pointer;padding:3px 8px;border-radius:5px;border:1px solid var(--border-2);transition:all .2s;font-family:inherit;background:transparent; }
+    .term-clr:hover { background:var(--surface-2);color:var(--text); }
+    .term-body { padding:16px;height:420px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7; }
+    .term-body::-webkit-scrollbar { width:4px; }
+    .term-body::-webkit-scrollbar-thumb { background:var(--border);border-radius:4px; }
+    .tl { display:flex;align-items:flex-start;gap:8px;margin-bottom:2px; }
+    .tp { color:var(--purple-light);user-select:none;flex-shrink:0; }
+    .tc { color:var(--cyan); }
+    .to { color:#8b9dc3;padding-left:20px; }
+    .to.s { color:var(--green); }
+    .to.e { color:var(--red); }
+    .to.w { color:var(--yellow); }
+    .to.i { color:var(--cyan); }
+    .to.h { color:#c084fc;font-weight:600; }
+    .to.d { color:#e2e8f0; }
+    .term-in-row { display:flex;align-items:center;gap:8px;border-top:1px solid var(--border-2);padding:10px 16px;background:#060910; }
+    .tip { color:var(--purple-light);font-family:'JetBrains Mono',monospace;font-size:13px; }
+    .tin { flex:1;background:transparent;border:none;outline:none;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:13px;caret-color:var(--purple-light); }
+    .trn { padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s; }
+    .trn:hover { background:var(--purple);border-color:var(--purple); }
+    .alist { display:flex;flex-direction:column;gap:8px; }
+    .aitem { display:flex;align-items:flex-start;gap:12px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid transparent;transition:border-color .2s;cursor:pointer; }
+    .aitem:hover { border-color:var(--border); }
+    .adot { width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0; }
+    .atxt { font-size:13px; }
+    .atm { font-size:11px;color:var(--muted);margin-top:2px; }
+    .abdg { font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;margin-left:auto;align-self:center;flex-shrink:0; }
+    .mrow { display:flex;gap:8px;align-items:flex-end;height:60px;margin-top:8px; }
+    .mbar { flex:1;border-radius:4px;background:rgba(124,58,237,.3);transition:all .3s;cursor:pointer;position:relative; }
+    .mbar:hover { background:rgba(124,58,237,.6); }
+    .mbar::after { content:attr(data-v) '%';position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);white-space:nowrap;opacity:0;transition:opacity .2s; }
+    .mbar:hover::after { opacity:1; }
+    .plist { display:flex;flex-direction:column;gap:14px;margin-top:4px; }
+    .ptop { display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px; }
+    .ppct { color:var(--muted);font-size:12px; }
+    .pbg { height:6px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden; }
+    .pfill { height:100%;border-radius:20px;transition:width 1s cubic-bezier(.4,0,.2,1); }
+    ::-webkit-scrollbar { width:6px;height:6px; }
+    ::-webkit-scrollbar-thumb { background:var(--border);border-radius:6px; }
+    @media(max-width:1100px){ .content-right{width:320px;} .stats-row{grid-template-columns:repeat(2,1fr);} }
+    @media(max-width:850px){ .sidebar{width:60px;} .logo-text,.nspan,.nav-badge,.uinfo{display:none;} .sidebar-logo{justify-content:center;padding:0 0 24px;} .nav-item{justify-content:center;padding:12px;} .sidebar-user{justify-content:center;} .content{flex-direction:column;} .content-right{width:100%;} .action-grid{grid-template-columns:repeat(2,1fr);} }
+  </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">P</div>
+      <div class="logo-text">Parul University<span>Admin Panel</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" id="nav-dashboard" onclick="switchNav('dashboard')"><span class="n-icon">🏠</span><span class="nspan">Dashboard</span></div>
+      <div class="nav-item" id="nav-actions" onclick="switchNav('actions')"><span class="n-icon">⚡</span><span class="nspan">Actions</span><span class="nav-badge">9</span></div>
+      <div class="nav-item" id="nav-terminal" onclick="document.getElementById('tin').focus();switchNav('terminal')"><span class="n-icon">💻</span><span class="nspan">Terminal</span></div>
+      <div class="nav-label">University</div>
+      <div class="nav-item" onclick="runAction('students')"><span class="n-icon">🎓</span><span class="nspan">Students</span></div>
+      <div class="nav-item" onclick="runAction('courses')"><span class="n-icon">📚</span><span class="nspan">Courses</span></div>
+      <div class="nav-item" onclick="runAction('placements')"><span class="n-icon">💼</span><span class="nspan">Placements</span></div>
+      <div class="nav-item" onclick="runAction('faculty')"><span class="n-icon">👩‍🏫</span><span class="nspan">Faculty</span></div>
+      <div class="nav-label">System</div>
+      <div class="nav-item" onclick="runAction('backup')"><span class="n-icon">💾</span><span class="nspan">Backup</span></div>
+      <div class="nav-item" onclick="runAction('security')"><span class="n-icon">🔒</span><span class="nspan">Security</span></div>
+      <div class="nav-item" onclick="window.location.href='./index.html'"><span class="n-icon">🌐</span><span class="nspan">View Website</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">A</div>
+        <div class="uinfo"><div class="user-name">Aayush Singh</div><div class="user-role">Super Admin</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">Backend Dashboard<span>Parul University Admin Control Panel</span></div>
+      <div class="topbar-actions">
+        <div class="status-dot pulse"></div>
+        <span style="font-size:12px;color:var(--green)">Server Online</span>
+        <button class="tb-btn" onclick="refreshAll()">🔄 Refresh</button>
+        <button class="tb-btn primary" onclick="runAction('deploy')">🚀 Deploy</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="content-left">
+        <div class="stats-row">
+          <div class="stat-card" style="--sc:#7c3aed" onclick="runAction('students')"><div class="si">🎓</div><div class="sn">1,04,782</div><div class="sl">Total Students</div><div class="sc up">↑ +2,341 this month</div></div>
+          <div class="stat-card" style="--sc:#06b6d4" onclick="runAction('courses')"><div class="si">📚</div><div class="sn">214</div><div class="sl">Active Courses</div><div class="sc up">↑ +6 new</div></div>
+          <div class="stat-card" style="--sc:#10b981" onclick="runAction('placements')"><div class="si">💼</div><div class="sn">₹60L</div><div class="sl">Highest Package</div><div class="sc up">↑ Best ever</div></div>
+          <div class="stat-card" style="--sc:#f59e0b" onclick="runAction('faculty')"><div class="si">👩‍🏫</div><div class="sn">3,284</div><div class="sl">Faculty Members</div><div class="sc up">↑ +48 new</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span style="font-size:18px">⚡</span><div class="card-title">Quick Actions — Click Icon to Run</div><div class="card-sub">Live backend operations</div></div>
+          <div class="action-grid">
+            <div class="action-btn" id="btn-students" onclick="runAction('students')"><div class="bi">🎓</div><div class="blbl">Student Report</div><div class="bsub">Generate enrollment data</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-courses" onclick="runAction('courses')"><div class="bi">📚</div><div class="blbl">Course Sync</div><div class="bsub">Sync all course data</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-placements" onclick="runAction('placements')"><div class="bi">💼</div><div class="blbl">Placement Stats</div><div class="bsub">Pull placement analytics</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-faculty" onclick="runAction('faculty')"><div class="bi">👩‍🏫</div><div class="blbl">Faculty Roster</div><div class="bsub">Load faculty directory</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-backup" onclick="runAction('backup')"><div class="bi">💾</div><div class="blbl">Database Backup</div><div class="bsub">Full DB snapshot</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-security" onclick="runAction('security')"><div class="bi">🔒</div><div class="blbl">Security Scan</div><div class="bsub">Vulnerability check</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-deploy" onclick="runAction('deploy')"><div class="bi">🚀</div><div class="blbl">Deploy Website</div><div class="bsub">Push build to production</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-email" onclick="runAction('email')"><div class="bi">📧</div><div class="blbl">Email Blast</div><div class="bsub">Send bulk notification</div><div class="bsts">IDLE</div></div>
+            <div class="action-btn" id="btn-analytics" onclick="runAction('analytics')"><div class="bi">📊</div><div class="blbl">Analytics</div><div class="bsub">Live traffic & metrics</div><div class="bsts">IDLE</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span style="font-size:18px">📈</span><div class="card-title">Server Metrics (Last 12 hours)</div><button class="tb-btn" style="padding:4px 12px;font-size:12px" onclick="doMetrics()">🔄</button></div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">CPU Load %</div>
+          <div class="mrow" id="mrow"></div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="terminal">
+          <div class="term-hdr">
+            <div class="term-dots"><div class="dot r" onclick="clearTerm()"></div><div class="dot y"></div><div class="dot g" onclick="toggleBig()"></div></div>
+            <div class="term-ttl">parul-admin — bash — 80×24</div>
+            <button class="term-clr" onclick="clearTerm()">Clear</button>
+          </div>
+          <div class="term-body" id="tbody"></div>
+          <div class="term-in-row">
+            <span class="tip">admin@parul:~$</span>
+            <input type="text" class="tin" id="tin" placeholder="type command and press Enter..." autocomplete="off" />
+            <button class="trn" onclick="runInput()">▶ Run</button>
+          </div>
+        </div>
+
+        <div class="card" style="flex:1">
+          <div class="card-header"><span style="font-size:18px">📋</span><div class="card-title">Activity Log</div><div class="card-sub" id="actcnt">0 events</div></div>
+          <div class="alist" id="alist"><div style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Click an action button to begin.</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span style="font-size:18px">❤️</span><div class="card-title">System Health</div></div>
+          <div class="plist">
+            <div><div class="ptop"><span>CPU Usage</span><span class="ppct" id="pcpu">42%</span></div><div class="pbg"><div class="pfill" id="bcpu" style="width:42%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div></div>
+            <div><div class="ptop"><span>Memory Usage</span><span class="ppct" id="pmem">67%</span></div><div class="pbg"><div class="pfill" id="bmem" style="width:67%;background:linear-gradient(90deg,#06b6d4,#22d3ee)"></div></div></div>
+            <div><div class="ptop"><span>Disk Storage</span><span class="ppct" id="pdisk">54%</span></div><div class="pbg"><div class="pfill" id="bdisk" style="width:54%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div></div>
+            <div><div class="ptop"><span>Network Load</span><span class="ppct" id="pnet">28%</span></div><div class="pbg"><div class="pfill" id="bnet" style="width:28%;background:linear-gradient(90deg,#f59e0b,#fcd34d)"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+const tbody = document.getElementById('tbody');
+const tin = document.getElementById('tin');
+let evtCount = 0;
+let bigMode = false;
+
+function tprint(text, type, delay) {
+  delay = delay || 0;
+  return new Promise(function(res) {
+    setTimeout(function() {
+      var l = document.createElement('div');
+      l.className = 'tl';
+      if (type === 'cmd') {
+        l.innerHTML = '<span class="tp">admin@parul:~$</span> <span class="tc">' + text + '</span>';
+      } else {
+        l.innerHTML = '<div class="to ' + (type||'') + '">' + text + '</div>';
+      }
+      tbody.appendChild(l);
+      tbody.scrollTop = tbody.scrollHeight;
+      res();
+    }, delay);
+  });
+}
+
+function clearTerm() {
+  tbody.innerHTML = '';
+  tprint('Terminal cleared.', 'i');
+  tprint('admin@parul ready.', 's');
+}
+
+function toggleBig() {
+  bigMode = !bigMode;
+  tbody.style.height = bigMode ? '680px' : '420px';
+}
+
+async function boot() {
+  await tprint('Initializing Parul University Admin Panel...', 'h', 0);
+  await tprint('System version: v3.7.2 | Node: 20.11 LTS', 'i', 300);
+  await tprint('Connecting to university database...', '', 600);
+  await tprint('&#10003; PostgreSQL connected (128ms)', 's', 1200);
+  await tprint('&#10003; Redis cache online', 's', 1600);
+  await tprint('&#10003; Auth service ready', 's', 1900);
+  await tprint('&#10003; All 9 microservices healthy', 's', 2200);
+  await tprint('Welcome, Super Admin <strong>Aayush Singh</strong> &#128075;', 'h', 2600);
+  await tprint('Type <strong>help</strong> for available commands, or click any action button.', 'i', 2900);
+}
+boot();
+
+var actions = {
+  students: {
+    cmd: 'parul-admin fetch --module=students --format=json',
+    steps: [
+      {t:'Authenticating request...',c:'',d:300},
+      {t:'&#10003; Token validated',c:'s',d:700},
+      {t:'Querying student database...',c:'',d:1000},
+      {t:'&#8212; STUDENT ENROLLMENT REPORT &#8212;',c:'h',d:1600},
+      {t:'Total Active Students : <strong>1,04,782</strong>',c:'d',d:1900},
+      {t:'New Admissions (2025) : <strong>18,431</strong>',c:'d',d:2100},
+      {t:'Graduation Rate      : <strong>94.7%</strong>',c:'d',d:2300},
+      {t:'International        : <strong>3,421</strong> from 54 countries',c:'d',d:2500},
+      {t:'&#10003; Report generated successfully.',c:'s',d:2800},
+    ],
+    act:'Student enrollment report generated', col:'#7c3aed'
+  },
+  courses: {
+    cmd: 'parul-admin sync --module=courses --verbose',
+    steps: [
+      {t:'Connecting to LMS...',c:'',d:300},
+      {t:'&#10003; LMS handshake OK',c:'s',d:700},
+      {t:'&#8212; COURSE CATALOG &#8212;',c:'h',d:1200},
+      {t:'Total Programs        : <strong>214</strong>',c:'d',d:1500},
+      {t:'Engineering & Tech    : <strong>58 courses</strong>',c:'d',d:1700},
+      {t:'Management & MBA      : <strong>32 courses</strong>',c:'d',d:1900},
+      {t:'Medical & Health Sci  : <strong>44 courses</strong>',c:'d',d:2100},
+      {t:'Newly added           : <strong>6 courses</strong>',c:'d',d:2300},
+      {t:'&#10003; Course sync complete.',c:'s',d:2600},
+    ],
+    act:'Course catalog synced with LMS', col:'#06b6d4'
+  },
+  placements: {
+    cmd: 'parul-admin stats --module=placements --year=2025',
+    steps: [
+      {t:'Pulling placement analytics...',c:'',d:300},
+      {t:'&#8212; PLACEMENT STATISTICS 2025 &#8212;',c:'h',d:900},
+      {t:'Highest Package      : <strong>&#8377;60 LPA</strong> &#127942;',c:'d',d:1200},
+      {t:'Average Package      : <strong>&#8377;8.4 LPA</strong>',c:'d',d:1400},
+      {t:'Total Offers         : <strong>12,847</strong>',c:'d',d:1600},
+      {t:'Placement Rate       : <strong>89.3%</strong>',c:'d',d:1800},
+      {t:'Top Recruiters       : <strong>Google &#8226; Microsoft &#8226; Infosys</strong>',c:'d',d:2000},
+      {t:'Partner Companies    : <strong>500+</strong>',c:'d',d:2200},
+      {t:'&#10003; Stats loaded.',c:'s',d:2500},
+    ],
+    act:'Placement analytics report pulled', col:'#10b981'
+  },
+  faculty: {
+    cmd: 'parul-admin list --module=faculty --sort=department',
+    steps: [
+      {t:'Loading faculty directory...',c:'',d:300},
+      {t:'&#8212; FACULTY ROSTER &#8212;',c:'h',d:800},
+      {t:'Total Faculty        : <strong>3,284</strong>',c:'d',d:1200},
+      {t:'PhDs                 : <strong>1,847</strong>',c:'d',d:1400},
+      {t:'Professors           : <strong>421</strong>',c:'d',d:1600},
+      {t:'Assoc. Professors    : <strong>682</strong>',c:'d',d:1800},
+      {t:'New this month       : <strong>+48</strong>',c:'d',d:2000},
+      {t:'&#10003; Roster loaded.',c:'s',d:2300},
+    ],
+    act:'Faculty roster loaded successfully', col:'#f59e0b'
+  },
+  backup: {
+    cmd: 'parul-admin backup --full --compress=gzip --dest=s3://pu-backups',
+    steps: [
+      {t:'&#9888; Starting full database backup...',c:'w',d:200},
+      {t:'Locking write operations temporarily...',c:'',d:600},
+      {t:'&#10003; Snapshot taken',c:'s',d:1200},
+      {t:'Compressing with gzip...',c:'',d:1500},
+      {t:'&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 100%',c:'',d:2400},
+      {t:'Uploading to S3 bucket pu-backups...',c:'',d:2800},
+      {t:'&#10003; Backup uploaded: pu_backup_2025_08_05.sql.gz (2.3 GB)',c:'s',d:3600},
+      {t:'Write lock released. &#10003;',c:'i',d:3900},
+    ],
+    act:'Full database backup completed (2.3 GB)', col:'#ec4899'
+  },
+  security: {
+    cmd: 'parul-admin scan --security --full --report',
+    steps: [
+      {t:'&#128269; Starting security vulnerability scan...',c:'h',d:200},
+      {t:'Scanning open ports...',c:'',d:600},
+      {t:'&#10003; Only port 443 & 80 exposed',c:'s',d:1200},
+      {t:'Checking for CVEs in dependencies...',c:'',d:1500},
+      {t:'&#10003; 0 critical vulnerabilities found',c:'s',d:2200},
+      {t:'&#9888; 2 low-severity advisories (non-critical)',c:'w',d:2600},
+      {t:'SSL cert expiry: <strong>182 days remaining</strong>',c:'i',d:2900},
+      {t:'&#10003; System secure. Score: <strong>A+</strong>',c:'s',d:3400},
+    ],
+    act:'Security scan complete — Score: A+', col:'#ef4444'
+  },
+  deploy: {
+    cmd: 'parul-admin deploy --env=production --branch=main --no-downtime',
+    steps: [
+      {t:'&#128640; Initiating production deployment...',c:'h',d:200},
+      {t:'Pulling latest from branch: main',c:'',d:500},
+      {t:'&#10003; 14 commits ahead of last deploy',c:'s',d:1000},
+      {t:'Running build pipeline...',c:'',d:1300},
+      {t:'[1/4] Compiling assets...',c:'',d:1700},
+      {t:'[2/4] Running tests... (112 passed)',c:'s',d:2300},
+      {t:'[3/4] Building Docker image...',c:'',d:2900},
+      {t:'[4/4] Pushing to CDN...',c:'',d:3500},
+      {t:'&#10003; Deployment complete! Zero downtime.',c:'s',d:4200},
+      {t:'Live at: <strong>https://paruluniversity.ac.in</strong>',c:'i',d:4400},
+    ],
+    act:'Production deployment completed (14 commits)', col:'#8b5cf6'
+  },
+  email: {
+    cmd: 'parul-admin email --blast --template=welcome --to=all-students',
+    steps: [
+      {t:'&#128231; Preparing email blast...',c:'',d:200},
+      {t:'Loading template: welcome_2025.html',c:'',d:600},
+      {t:'&#10003; Template compiled (3 variants)',c:'s',d:1000},
+      {t:'Recipients: <strong>1,04,782 students</strong>',c:'i',d:1300},
+      {t:'Sending via SendGrid...',c:'',d:1600},
+      {t:'&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; 100% (104,782 sent)',c:'s',d:3000},
+      {t:'&#10003; Email blast complete. Open rate target: 24%',c:'s',d:3400},
+    ],
+    act:'Email blast sent to 1,04,782 students', col:'#06b6d4'
+  },
+  analytics: {
+    cmd: 'parul-admin analytics --live --interval=realtime',
+    steps: [
+      {t:'&#128202; Pulling live analytics...',c:'h',d:200},
+      {t:'&#8212; WEBSITE TRAFFIC (LIVE) &#8212;',c:'h',d:700},
+      {t:'Active Visitors Now  : <strong>3,847</strong>',c:'d',d:1000},
+      {t:"Today's Sessions     : <strong>24,193</strong>",c:'d',d:1200},
+      {t:'Avg Session Duration : <strong>4m 32s</strong>',c:'d',d:1400},
+      {t:'Bounce Rate          : <strong>38.2%</strong>',c:'d',d:1600},
+      {t:'Top Page             : <strong>/admissions</strong> (6,821 hits)',c:'d',d:1800},
+      {t:'Mobile Traffic       : <strong>61%</strong>',c:'d',d:2000},
+      {t:'&#10003; Analytics dashboard refreshed.',c:'s',d:2400},
+    ],
+    act:'Live analytics dashboard updated', col:'#f97316'
+  }
+};
+
+var cmds = {
+  help: async function() {
+    await tprint('&#8212; AVAILABLE COMMANDS &#8212;', 'h');
+    var list = ['students','courses','placements','faculty','backup','security','deploy','email','analytics','status','clear','date','uptime'];
+    for (var c of list) await tprint(c, '');
+  },
+  status: async function() {
+    await tprint('&#8212; SERVER STATUS &#8212;', 'h');
+    await tprint('Web Server : <strong>&#128994; ONLINE</strong>', 'd');
+    await tprint('Database   : <strong>&#128994; ONLINE</strong>', 'd');
+    await tprint('Cache      : <strong>&#128994; ONLINE</strong>', 'd');
+    await tprint('CDN        : <strong>&#128994; ONLINE</strong>', 'd');
+    await tprint('All systems operational. &#10003;', 's');
+  },
+  date: async function() {
+    var n = new Date();
+    await tprint(n.toDateString() + ' ' + n.toTimeString().split(' ')[0], 'i');
+  },
+  uptime: async function() {
+    await tprint('Server uptime: <strong>42 days, 7 hours, 14 minutes</strong>', 'd');
+    await tprint('Last restart: Jun 24, 2025 at 02:11 AM', '');
+  },
+  clear: function() { clearTerm(); }
+};
+
+async function runInput() {
+  var raw = tin.value.trim();
+  if (!raw) return;
+  tin.value = '';
+  await tprint(raw, 'cmd');
+  var key = raw.toLowerCase().split(' ')[0];
+  if (cmds[key]) {
+    await cmds[key]();
+  } else if (actions[key]) {
+    runAction(key);
+  } else {
+    await tprint('bash: ' + key + ': command not found', 'e');
+    await tprint('Type <strong>help</strong> for available commands.', '');
+  }
+}
+tin.addEventListener('keydown', function(e) { if (e.key === 'Enter') runInput(); });
+
+var running = new Set();
+
+function runAction(key) {
+  var a = actions[key];
+  if (!a || running.has(key)) return;
+  running.add(key);
+  var btn = document.getElementById('btn-' + key);
+  if (btn) { btn.classList.add('running'); btn.querySelector('.bsts').textContent = 'RUNNING'; }
+  tprint(a.cmd, 'cmd');
+  a.steps.forEach(function(s) { tprint(s.t, s.c, s.d); });
+  var last = a.steps[a.steps.length - 1];
+  setTimeout(function() {
+    if (btn) {
+      btn.classList.remove('running');
+      btn.classList.add('done');
+      btn.querySelector('.bsts').textContent = 'DONE ✓';
+      setTimeout(function() { btn.classList.remove('done'); btn.querySelector('.bsts').textContent = 'IDLE'; }, 4000);
+    }
+    addActivity(a.act, a.col);
+    updateHealth();
+    running.delete(key);
+  }, last.d + 300);
+}
+
+function addActivity(text, col) {
+  evtCount++;
+  var list = document.getElementById('alist');
+  var cnt = document.getElementById('actcnt');
+  var empty = list.querySelector('div[style]');
+  if (empty) list.removeChild(empty);
+  var t = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var d = document.createElement('div');
+  d.className = 'aitem';
+  d.innerHTML = '<div class="adot" style="background:' + col + '"></div><div style="flex:1"><div class="atxt">' + text + '</div><div class="atm">Just now &bull; ' + t + '</div></div><div class="abdg" style="background:' + col + '22;color:' + col + '">DONE</div>';
+  list.insertBefore(d, list.firstChild);
+  cnt.textContent = evtCount + ' event' + (evtCount !== 1 ? 's' : '');
+  while (list.children.length > 8) list.removeChild(list.lastChild);
+}
+
+function updateHealth() {
+  var cpu = 30 + Math.floor(Math.random()*55);
+  var mem = 50 + Math.floor(Math.random()*40);
+  var dsk = 40 + Math.floor(Math.random()*30);
+  var net = 10 + Math.floor(Math.random()*60);
+  document.getElementById('bcpu').style.width = cpu+'%'; document.getElementById('pcpu').textContent = cpu+'%';
+  document.getElementById('bmem').style.width = mem+'%'; document.getElementById('pmem').textContent = mem+'%';
+  document.getElementById('bdisk').style.width = dsk+'%'; document.getElementById('pdisk').textContent = dsk+'%';
+  document.getElementById('bnet').style.width = net+'%'; document.getElementById('pnet').textContent = net+'%';
+}
+
+function doMetrics() {
+  var row = document.getElementById('mrow');
+  row.innerHTML = '';
+  for (var i = 0; i < 12; i++) {
+    var v = 15 + Math.floor(Math.random()*75);
+    var b = document.createElement('div');
+    b.className = 'mbar';
+    b.style.height = v + '%';
+    b.setAttribute('data-v', v);
+    row.appendChild(b);
+  }
+}
+doMetrics();
+
+function refreshAll() { doMetrics(); updateHealth(); tprint('System refreshed.', 's'); }
+
+function switchNav(v) {
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var el = document.getElementById('nav-' + v);
+  if (el) el.classList.add('active');
+}
+
+setInterval(updateHealth, 8000);
+setInterval(doMetrics, 15000);
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live 360° Virtual Campus Tour | Parul University</title>
+  <meta name="description" content="Take an interactive 360° Virtual Live Tour of Parul University campus. Explore academic blocks, research labs, hostels, libraries, and sports facilities in real-time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./tour.css" />
+</head>
+<body>
+
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <header class="navbar scrolled" id="navbar">
+    <div class="container nav-container">
+      <a href="./index.html" class="logo" id="logoLink" aria-label="Parul University Home">
+        <div class="logo-emblem" id="logoEmblem">
+          <svg class="emblem-ring" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="36" stroke="url(#ringGradTour)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+            <circle cx="40" cy="40" r="30" stroke="url(#ringGradTour)" stroke-width="1" opacity="0.4"/>
+            <circle cx="40" cy="40" r="24" fill="url(#centerGradTour)" />
+            <!-- Aayush Singh Monogram Emblem -->
+            <text x="40" y="37" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="900" font-style="italic" fill="white" letter-spacing="-0.3">Aayush</text>
+            <text x="40" y="49" text-anchor="middle" font-family="Georgia, serif" font-size="6.8" font-weight="700" fill="rgba(255,255,255,0.9)" letter-spacing="1.2">SINGH</text>
+            <defs>
+              <linearGradient id="ringGradTour" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c084fc"/>
+                <stop offset="50%" stop-color="#9f7aea"/>
+                <stop offset="100%" stop-color="#d4a843"/>
+              </linearGradient>
+              <linearGradient id="centerGradTour" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#7c3aed"/>
+                <stop offset="50%" stop-color="#9f7aea"/>
+                <stop offset="100%" stop-color="#67a6d3"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="emblem-year">Est. 2009</div>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="./index.html#home" class="nav-link">Home</a>
+        <a href="./index.html#courses" class="nav-link">Courses</a>
+        <a href="./index.html#placements" class="nav-link">Placements</a>
+        <a href="#tourViewer" class="nav-link active">360° Live Tour</a>
+        <a href="#schedule" class="nav-link">Live Sessions</a>
+        <a href="#bookVisit" class="nav-link">Book Physical Visit</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon" id="themeIcon">☀️</span>
+        </button>
+        <a href="./index.html#admissions" class="btn-apply">Apply Now →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================== TOUR HERO ======================== -->
+  <section class="tour-hero">
+    <div class="container text-center">
+      <div class="section-badge">
+        <span class="pulse-dot"></span> Interactive Experience
+      </div>
+      <h1 class="hero-uni-name" style="display: block; margin: 10px auto 16px;">Parul University</h1>
+      <h2 class="tour-hero-title">Live 360° Virtual Campus Tour</h2>
+      <p class="tour-hero-desc">
+        Explore our 200+ acre vibrant campus from anywhere in the world. Switch between 360° views, interact with landmarks, and join live student-guided walk-throughs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================== 360 INTERACTIVE TOUR VIEWER ======================== -->
+  <section id="tourViewer" class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="tour-viewer-card glass-card">
+
+        <!-- Viewer Screen Header Bar -->
+        <div class="viewer-header">
+          <div class="viewer-title">
+            <span class="live-tag"><span class="live-dot"></span> LIVE 360° PANORAMA</span>
+            <span id="currentSpotName" class="spot-title">Main University Building & Quad</span>
+          </div>
+          <div class="viewer-controls">
+            <button class="v-btn" id="audioToggleBtn" title="Audio Guide">
+              <span id="audioIcon">🔊</span> Audio Guide: <strong id="audioState">ON</strong>
+            </button>
+            <button class="v-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+              <span>⛶</span> Fullscreen
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Display Canvas -->
+        <div class="viewer-viewport" id="viewport">
+          <img src="./public/images/parul_main_gate.png" id="panoramaImage" alt="Parul University Main Gate 360 View" class="viewport-img" />
+
+          <!-- Interactive 360 Pin Hotspots overlayed on screen -->
+          <div class="pin-hotspot active" style="top: 40%; left: 52%;" data-spot="main">
+            <div class="pin-pulse"></div>
+            <div class="pin-icon">🏛️</div>
+            <div class="pin-tooltip">Main Admin & Quad</div>
+          </div>
+          <div class="pin-hotspot" style="top: 35%; left: 22%;" data-spot="library">
+            <div class="pin-pulse"></div>
+            <div class="pin-icon">📚</div>
+            <div class="pin-tooltip">Central Library</div>
+          </div>
+          <div class="pin-hotspot" style="top: 55%; left: 75%;" data-spot="tech">
+            <div class="pin-pulse"></div>
+            <div class="pin-icon">💻</div>
+            <div class="pin-tooltip">AI & Robotics Lab</div>
+          </div>
+          <div class="pin-hotspot" style="top: 65%; left: 35%;" data-spot="sports">
+            <div class="pin-pulse"></div>
+            <div class="pin-icon">🏟️</div>
+            <div class="pin-tooltip">Sports & Aquatic Complex</div>
+          </div>
+          <div class="pin-hotspot" style="top: 28%; left: 82%;" data-spot="lounge">
+            <div class="pin-pulse"></div>
+            <div class="pin-icon">☕</div>
+            <div class="pin-tooltip">Student Food Court & Lounge</div>
+          </div>
+
+          <!-- Panoramic Navigation Controls Overlay -->
+          <div class="pan-controls">
+            <button class="pan-btn" id="panLeft">◀ Left</button>
+            <button class="pan-btn" id="panReset">🔄 Reset View</button>
+            <button class="pan-btn" id="panRight">Right ▶</button>
+          </div>
+        </div>
+
+        <!-- Landmark Selector Carousel Bar -->
+        <div class="landmark-bar">
+          <button class="landmark-card active" data-spot="maingate" data-img="./public/images/parul_main_gate.png" data-name="Grand Main Entrance Gate" data-desc="The iconic grand arch entrance of Parul University welcoming students with national flags, palm trees, and modern security gateways.">
+            <span class="l-icon">⛩️</span>
+            <div>
+              <div class="l-name">Main Gate</div>
+              <div class="l-sub">Grand Entrance</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="collage" data-img="./public/images/parul_campus_collage.png" data-name="Parul Campus Collage Overview" data-desc="Comprehensive high-definition collage showcasing Main Gate, Main Building, Central Library, and Sports Complex.">
+            <span class="l-icon">🖼️</span>
+            <div>
+              <div class="l-name">Campus Collage</div>
+              <div class="l-sub">Full Overview</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="main" data-img="./public/images/parul_main.png" data-name="Main Administrative Building" data-desc="The iconic heart of Parul University with administrative blocks, lush lawns, and central amphitheatre.">
+            <span class="l-icon">🏛️</span>
+            <div>
+              <div class="l-name">Main Building</div>
+              <div class="l-sub">Admin Block</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="library" data-img="./public/images/campus_library.png" data-name="Central Digital Library" data-desc="5-story state-of-the-art library housing over 1,00,000 books, e-journals, and high-speed digital research bays.">
+            <span class="l-icon">📚</span>
+            <div>
+              <div class="l-name">Central Library</div>
+              <div class="l-sub">Digital Knowledge Hub</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="tech" data-img="./public/images/robotics_lab.png" data-name="AI & Neural Robotics Lab" data-desc="Advanced research center equipped with industrial robot arms, AI supercomputing clusters, and IoT hardware labs.">
+            <span class="l-icon">💻</span>
+            <div>
+              <div class="l-name">Robotics & AI Lab</div>
+              <div class="l-sub">Innovation Center</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="lounge" data-img="./public/images/student_lounge.png" data-name="Student Commons & Food Court" data-desc="Vibrant student pavilion featuring 10+ multicuisine eateries, espresso bars, and co-working study lounges.">
+            <span class="l-icon">☕</span>
+            <div>
+              <div class="l-name">Student Commons</div>
+              <div class="l-sub">Food & Social Hub</div>
+            </div>
+          </button>
+
+          <button class="landmark-card" data-spot="sports" data-img="./public/images/sports_complex.png" data-name="Olympic Sports & Fitness Complex" data-desc="Multi-purpose sports arena with Olympic-size swimming pool, indoor basketball stadium, gym, and cricket grounds.">
+            <span class="l-icon">🏟️</span>
+            <div>
+              <div class="l-name">Sports Complex</div>
+              <div class="l-sub">Athletics & Arena</div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Info Details Drawer -->
+        <div class="spot-info-box" id="spotInfoBox">
+          <div class="info-content">
+            <h3 id="infoTitle" class="info-title">Main University Building & Quad</h3>
+            <p id="infoDesc" class="info-desc">
+              The iconic heart of Parul University with administrative blocks, lush lawns, and central amphitheatre.
+            </p>
+            <div class="info-tags">
+              <span class="info-chip">📍 Central Zone</span>
+              <span class="info-chip">⏰ Open 24/7 for Students</span>
+              <span class="info-chip">📶 Wi-Fi 6 Enabled</span>
+            </div>
+          </div>
+          <a href="./index.html#admissions" class="btn-primary" style="align-self: center;">
+            <span>Apply For Admission</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== LIVE GUIDED STREAM SESSIONS ======================== -->
+  <section id="schedule" class="section" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">📹 Student-Led Live Walks</div>
+        <h2>Upcoming <span class="gradient-text">Live Tour Webinars</span></h2>
+        <p>Join live interactive video tours hosted by Parul University student ambassadors. Ask questions in real-time!</p>
+      </div>
+
+      <div class="sessions-grid">
+
+        <div class="session-card glass-card">
+          <div class="session-status live">● LIVE NOW</div>
+          <div class="session-time">Today · 4:00 PM IST</div>
+          <h3>Engineering & AI Super Labs Tour</h3>
+          <p>Walk through our robotics, quantum computing, and computer vision research facilities with CSE senior students.</p>
+          <div class="session-host">
+            <div class="host-avatar">AK</div>
+            <div>
+              <div class="host-name">Ananya Kapoor</div>
+              <div class="host-role">Host · B.Tech CSE (4th Year)</div>
+            </div>
+          </div>
+          <button class="btn-primary full-width" onclick="alert('🔴 Joining Live Campus Stream... Welcome to Parul University AI Labs Tour!')">
+            <span>Join Live Broadcast</span>
+          </button>
+        </div>
+
+        <div class="session-card glass-card">
+          <div class="session-status upcoming">⏰ TOMORROW</div>
+          <div class="session-time">Tomorrow · 11:00 AM IST</div>
+          <h3>Campus Hostel, Dining & Student Life Walk</h3>
+          <p>Get an authentic insider view of residential hostels, international food court, gym, and campus recreation.</p>
+          <div class="session-host">
+            <div class="host-avatar">RV</div>
+            <div>
+              <div class="host-name">Rohan Verma</div>
+              <div class="host-role">Host · MBA Student Council</div>
+            </div>
+          </div>
+          <button class="btn-outline full-width" onclick="alert('✅ Reminder set! We will send you a email and SMS link 15 mins before stream.')">
+            <span>Set Reminder</span>
+          </button>
+        </div>
+
+        <div class="session-card glass-card">
+          <div class="session-status upcoming">🗓️ THIS SATURDAY</div>
+          <div class="session-time">Saturday · 2:00 PM IST</div>
+          <h3>Medical, Pharmacy & Paramedical Hospital Tour</h3>
+          <p>Explore Parul Sevashram Hospital, simulation clinical wards, anatomy labs, and pharmaceutical research centers.</p>
+          <div class="session-host">
+            <div class="host-avatar">DS</div>
+            <div>
+              <div class="host-name">Dr. Sneha Patel</div>
+              <div class="host-role">Host · Medical Resident</div>
+            </div>
+          </div>
+          <button class="btn-outline full-width" onclick="alert('✅ Slot Booked for Saturday Medical Campus Walkthrough!')">
+            <span>Book Live Slot</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== BOOK PHYSICAL CAMPUS VISIT ======================== -->
+  <section id="bookVisit" class="section">
+    <div class="container">
+      <div class="admissions-grid">
+
+        <div class="admissions-info">
+          <div class="section-badge">📍 In-Person Experience</div>
+          <h2>Want to Visit <span class="gradient-text">Parul Campus</span> in Person?</h2>
+          <p>We welcome prospective students and parents for one-on-one guided physical campus tours with dedicated counselors.</p>
+
+          <div class="admission-steps">
+            <div class="a-step">
+              <div class="a-step-num">01</div>
+              <div>
+                <div class="a-step-title">Free Campus Shuttle Bus</div>
+                <div class="a-step-desc">Pick up from Vadodara Railway Station & Airport</div>
+              </div>
+            </div>
+            <div class="a-step">
+              <div class="a-step-num">02</div>
+              <div>
+                <div class="a-step-title">Complimentary Guest Stay</div>
+                <div class="a-step-desc">On-campus guest house accommodation for visiting parents</div>
+              </div>
+            </div>
+            <div class="a-step">
+              <div class="a-step-num">03</div>
+              <div>
+                <div class="a-step-title">Instant Counseling</div>
+                <div class="a-step-desc">Meet HODs & get instant eligibility evaluations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admission-form-wrap glass-card">
+          <h3 class="form-title">Schedule Campus Visit</h3>
+          <form id="visitForm" class="admission-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="vName">Full Name</label>
+                <input type="text" id="vName" placeholder="Your name" required />
+              </div>
+              <div class="form-field">
+                <label for="vPhone">Mobile Number</label>
+                <input type="tel" id="vPhone" placeholder="+91 XXXXX XXXXX" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="vDate">Preferred Visit Date</label>
+                <input type="date" id="vDate" required />
+              </div>
+              <div class="form-field">
+                <label for="vGuests">Number of Visitors</label>
+                <select id="vGuests">
+                  <option>1 Person (Student)</option>
+                  <option selected>2-3 Persons (Student & Family)</option>
+                  <option>4+ Group Visit</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="vInterest">Primary Interest</label>
+              <select id="vInterest">
+                <option>Engineering & Computer Science</option>
+                <option>Management & Commerce (MBA/BBA)</option>
+                <option>Medical & Health Sciences</option>
+                <option>Pharmacy / Biotechnology</option>
+                <option>Hostel & Campus Facilities</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary full-width">
+              <span>Book My Campus Visit Pass</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border:none;">
+        <p>© 2026 Parul University. All rights reserved. | Live Virtual Campus Tour Portal</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./src/main.js"></script>
+  <script src="./tour.js"></script>
+</body>
+</html>

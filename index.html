@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parul University | Empowering 1 Lakh+ Students | 60 LPA Highest Package</title>
+  <meta name="description"
+    content="Parul University - Home to 1 Lakh+ active students, 200+ courses, and a highest placement package of ₹60 LPA. Join India's most vibrant university campus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="bgParticles"></div>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="logo" id="logoLink" aria-label="Parul University Home">
+        <div class="logo-emblem" id="logoEmblem">
+          <svg class="emblem-ring" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer decorative ring -->
+            <circle cx="40" cy="40" r="36" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="4 3"
+              opacity="0.6" />
+            <!-- Inner solid ring -->
+            <circle cx="40" cy="40" r="30" stroke="url(#ringGrad)" stroke-width="1" opacity="0.4" />
+            <!-- Filled centre -->
+            <circle cx="40" cy="40" r="24" fill="url(#centerGrad)" />
+            <!-- Star accents -->
+            <path d="M40 10 L41.5 14 L46 14 L42.5 17 L44 21 L40 18.5 L36 21 L37.5 17 L34 14 L38.5 14Z"
+              fill="rgba(255,255,255,0.5)" transform="scale(0.5) translate(40, 0)" />
+            <!-- Aayush Singh Monogram Emblem -->
+            <text x="40" y="37" text-anchor="middle" font-family="Georgia, serif" font-size="9" font-weight="900"
+              font-style="italic" fill="white" letter-spacing="-0.3">Aayush</text>
+            <text x="40" y="49" text-anchor="middle" font-family="Georgia, serif" font-size="6.8" font-weight="700"
+              fill="rgba(255,255,255,0.9)" letter-spacing="1.2">SINGH</text>
+            <!-- Small dots at compass points -->
+            <circle cx="40" cy="6" r="2" fill="url(#ringGrad)" opacity="0.7" />
+            <circle cx="74" cy="40" r="2" fill="url(#ringGrad)" opacity="0.7" />
+            <circle cx="40" cy="74" r="2" fill="url(#ringGrad)" opacity="0.7" />
+            <circle cx="6" cy="40" r="2" fill="url(#ringGrad)" opacity="0.7" />
+            <defs>
+              <linearGradient id="ringGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#c084fc" />
+                <stop offset="50%" stop-color="#9f7aea" />
+                <stop offset="100%" stop-color="#d4a843" />
+              </linearGradient>
+              <linearGradient id="centerGrad" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#7c3aed" />
+                <stop offset="50%" stop-color="#9f7aea" />
+                <stop offset="100%" stop-color="#67a6d3" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="emblem-year">Est. 2009</div>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" id="navHome">Home</a>
+        <a href="#stats" class="nav-link" id="navStats">About</a>
+        <a href="#courses" class="nav-link" id="navCourses">Courses</a>
+        <a href="#placements" class="nav-link" id="navPlacements">Placements</a>
+        <a href="#campus" class="nav-link" id="navCampus">Campus</a>
+        <a href="./tour.html" class="nav-link" style="color: var(--pu-purple-light); font-weight:700;">🎥 360° Live
+          Tour</a>
+        <a href="#contact" class="nav-link" id="navContact">Contact</a>
+        <a href="./admin.html" class="nav-link" style="color: #f59e0b; font-weight:700;">⚙️ Admin</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        <a href="#admissions" class="btn-apply" id="applyNowBtn">Apply Now →</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================== HERO ======================== -->
+  <section id="home" class="hero-section">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-grid">
+      <div class="hero-content" id="heroContent">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          🏆 Ranked Among India's Top Universities 2026
+        </div>
+
+        <!-- Stylish University Name -->
+        <div class="hero-uni-name-block">
+          <span class="hero-uni-name" id="heroUniName">Parul University</span>
+        </div>
+
+        <h1 class="hero-sub-title">
+          Where <span class="gradient-text">Dreams</span> Take Flight
+        </h1>
+        <p class="hero-desc">
+          Parul University — a powerhouse of education with <strong>200+ programs</strong>, industry-leading placements
+          reaching <strong>₹60 LPA</strong>, and a thriving community of over <strong>1,00,000 students</strong>.
+        </p>
+        <div class="hero-actions">
+          <a href="#courses" class="btn-primary" id="exploreProgramsBtn">
+            <span>Explore 200+ Courses</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#placements" class="btn-outline" id="viewPlacementsBtn">
+            View Placements
+          </a>
+        </div>
+
+        <div class="hero-highlights">
+          <div class="highlight-chip" id="chip1">
+            <span class="chip-icon">💰</span>
+            <span>₹60 LPA Highest Package</span>
+          </div>
+          <div class="highlight-chip" id="chip2">
+            <span class="chip-icon">🎓</span>
+            <span>1,00,000+ Students</span>
+          </div>
+          <div class="highlight-chip" id="chip3">
+            <span class="chip-icon">📚</span>
+            <span>200+ Courses</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" id="heroVisual">
+        <div class="hero-card-main glass-card">
+          <img src="./public/images/parul_main_gate.png" alt="Parul University Main Entrance Gate Vadodara" class="hero-img" id="heroMainImage" />
+          <div class="hero-card-overlay">
+            <a href="./tour.html" class="live-badge" style="text-decoration:none; cursor:pointer;">
+              <span class="live-dot"></span> 🎥 Live 360° Campus Tour Available →
+            </a>
+          </div>
+        </div>
+
+        <div class="floating-stat stat-1 glass-card" id="floatStat1">
+          <div class="fstat-num">₹60 LPA</div>
+          <div class="fstat-label">Highest Package</div>
+        </div>
+        <div class="floating-stat stat-2 glass-card" id="floatStat2">
+          <div class="fstat-num">1L+</div>
+          <div class="fstat-label">Active Students</div>
+        </div>
+        <div class="floating-stat stat-3 glass-card" id="floatStat3">
+          <div class="fstat-num">200+</div>
+          <div class="fstat-label">Programs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" id="scrollHint">
+      <div class="scroll-arrow"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ======================== STATS BANNER ======================== -->
+  <section id="stats" class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-block" id="statBlock1">
+          <div class="stat-icon">🎓</div>
+          <div class="stat-num counter" data-target="100000" data-suffix="+">0</div>
+          <div class="stat-label">Active Students</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block" id="statBlock2">
+          <div class="stat-icon">📚</div>
+          <div class="stat-num counter" data-target="200" data-suffix="+">0</div>
+          <div class="stat-label">Courses Available</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block" id="statBlock3">
+          <div class="stat-icon">💰</div>
+          <div class="stat-num">₹60 LPA</div>
+          <div class="stat-label">Highest Package</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block" id="statBlock4">
+          <div class="stat-icon">🏛️</div>
+          <div class="stat-num counter" data-target="35" data-suffix="+">0</div>
+          <div class="stat-label">Departments</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block" id="statBlock5">
+          <div class="stat-icon">🌍</div>
+          <div class="stat-num counter" data-target="50" data-suffix="+">0</div>
+          <div class="stat-label">Countries Represented</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-block" id="statBlock6">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-num counter" data-target="500" data-suffix="+">0</div>
+          <div class="stat-label">Placement Partners</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== COURSES ======================== -->
+  <section id="courses" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">📚 Academic Excellence</div>
+        <h2>Explore Our <span class="gradient-text">200+ Programs</span></h2>
+        <p>From engineering and management to arts and health sciences — find your perfect program at Parul University.
+        </p>
+      </div>
+
+      <div class="course-controls">
+        <div class="search-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" id="courseSearch" class="search-input" placeholder="Search courses, departments..." />
+        </div>
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-btn active" data-cat="all" id="filterAll">All Programs</button>
+          <button class="filter-btn" data-cat="engineering" id="filterEng">Engineering & Tech</button>
+          <button class="filter-btn" data-cat="management" id="filterMgmt">Management</button>
+          <button class="filter-btn" data-cat="medical" id="filterMed">Medical & Health</button>
+          <button class="filter-btn" data-cat="law" id="filterLaw">Law & Arts</button>
+          <button class="filter-btn" data-cat="design" id="filterDes">Design & Media</button>
+        </div>
+      </div>
+
+      <div class="course-grid" id="courseGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="courses-footer">
+        <p>Showing top programs. Parul University offers <strong>200+ courses</strong> across all disciplines.</p>
+        <a href="#admissions" class="btn-outline" id="viewAllCoursesBtn">View All Programs →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== PLACEMENTS ======================== -->
+  <section id="placements" class="section placement-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">🚀 Career Excellence</div>
+        <h2>Placements That <span class="gradient-text">Redefine Success</span></h2>
+        <p>Our students are placed at the world's most prestigious companies with packages that inspire.</p>
+      </div>
+
+      <div class="placement-hero-banner glass-card" id="placementBanner">
+        <div class="placement-highlight">
+          <div class="placement-big-num">₹60 LPA</div>
+          <div class="placement-big-label">Highest Package Offered</div>
+        </div>
+        <div class="placement-divider-v"></div>
+        <div class="placement-stats-col">
+          <div class="p-stat" id="pStat1">
+            <span class="p-stat-num">₹8.5 LPA</span>
+            <span class="p-stat-label">Average Package</span>
+          </div>
+          <div class="p-stat" id="pStat2">
+            <span class="p-stat-num">95%</span>
+            <span class="p-stat-label">Placement Rate</span>
+          </div>
+          <div class="p-stat" id="pStat3">
+            <span class="p-stat-num">500+</span>
+            <span class="p-stat-label">Recruiting Companies</span>
+          </div>
+          <div class="p-stat" id="pStat4">
+            <span class="p-stat-num">3,000+</span>
+            <span class="p-stat-label">Offers Per Year</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="recruiters-title">Top Recruiting Companies</h3>
+      <div class="recruiter-marquee-wrap">
+        <div class="recruiter-marquee" id="recruiterMarquee">
+          <div class="recruiter-track" id="recruiterTrack">
+            <div class="rec-chip">🔵 Microsoft</div>
+            <div class="rec-chip">🟠 Amazon</div>
+            <div class="rec-chip">🔴 Google</div>
+            <div class="rec-chip">🟣 Infosys</div>
+            <div class="rec-chip">🔵 TCS</div>
+            <div class="rec-chip">🟤 Wipro</div>
+            <div class="rec-chip">🟡 Deloitte</div>
+            <div class="rec-chip">🔵 Accenture</div>
+            <div class="rec-chip">🟢 HCL</div>
+            <div class="rec-chip">🔴 Tech Mahindra</div>
+            <div class="rec-chip">🟠 Cognizant</div>
+            <div class="rec-chip">🔵 IBM</div>
+            <div class="rec-chip">🟣 Oracle</div>
+            <div class="rec-chip">🔴 Samsung</div>
+            <div class="rec-chip">🟢 L&T</div>
+            <!-- duplicate for seamless loop -->
+            <div class="rec-chip">🔵 Microsoft</div>
+            <div class="rec-chip">🟠 Amazon</div>
+            <div class="rec-chip">🔴 Google</div>
+            <div class="rec-chip">🟣 Infosys</div>
+            <div class="rec-chip">🔵 TCS</div>
+            <div class="rec-chip">🟤 Wipro</div>
+            <div class="rec-chip">🟡 Deloitte</div>
+            <div class="rec-chip">🔵 Accenture</div>
+            <div class="rec-chip">🟢 HCL</div>
+            <div class="rec-chip">🔴 Tech Mahindra</div>
+            <div class="rec-chip">🟠 Cognizant</div>
+            <div class="rec-chip">🔵 IBM</div>
+            <div class="rec-chip">🟣 Oracle</div>
+            <div class="rec-chip">🔴 Samsung</div>
+            <div class="rec-chip">🟢 L&T</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card glass-card" id="tCard1">
+          <div class="testimonial-package">₹60 LPA</div>
+          <p class="testimonial-text">"Parul University's training and placement cell is exceptional. I received an
+            offer from a top tech giant right after graduation."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RK</div>
+            <div>
+              <div class="author-name">Rahul Kumar</div>
+              <div class="author-role">B.Tech CSE · Google India</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card glass-card" id="tCard2">
+          <div class="testimonial-package">₹32 LPA</div>
+          <p class="testimonial-text">"The industry-connected curriculum and mock interviews at PU helped me land my
+            dream role in finance and consulting."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PS</div>
+            <div>
+              <div class="author-name">Priya Shah</div>
+              <div class="author-role">MBA Finance · Deloitte</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card glass-card" id="tCard3">
+          <div class="testimonial-package">₹28 LPA</div>
+          <p class="testimonial-text">"As a pharmacy graduate, I never imagined landing such a high-paying role. PU's
+            network opened doors I didn't know existed."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AM</div>
+            <div>
+              <div class="author-name">Arjun Mehta</div>
+              <div class="author-role">B.Pharm · Johnson & Johnson</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CAMPUS LIFE ======================== -->
+  <section id="campus" class="section campus-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">🏛️ Campus Life</div>
+        <h2>Experience the <span class="gradient-text">Parul Campus</span></h2>
+        <p>Spread across a sprawling campus with world-class facilities, innovation hubs, and vibrant student culture.
+        </p>
+      </div>
+
+      <div class="campus-feature-grid">
+        <div class="campus-main-card glass-card" id="campusMainCard">
+          <img src="./public/images/parul_main_gate.png" alt="Parul University Grand Main Entrance Gate Vadodara"
+            class="campus-main-img" />
+          <div class="campus-main-overlay">
+            <h3>Grand Main Entrance Gate, Vadodara</h3>
+            <p>Welcome to 200+ acres of world-class academic excellence & campus life</p>
+          </div>
+        </div>
+        <div class="campus-side-grid">
+          <div class="campus-mini-card glass-card" id="campusMini1" style="grid-column: span 2;">
+            <img src="./public/images/parul_campus_collage.png" alt="Parul University Campus Collage"
+              class="campus-mini-img" style="height: 100%; object-fit: cover;" />
+            <div class="campus-mini-label">Campus Overview Collage</div>
+          </div>
+          <div class="campus-mini-card glass-card" id="campusMini2">
+            <img src="./public/images/campus_library.png" alt="Library" class="campus-mini-img" />
+            <div class="campus-mini-label">Central Library</div>
+          </div>
+          <div class="campus-mini-card glass-card" id="campusMini3">
+            <img src="./public/images/robotics_lab.png" alt="Robotics Lab" class="campus-mini-img" />
+            <div class="campus-mini-label">Research Labs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="facilities-row">
+        <div class="facility-chip" id="fac1">🏟️ Olympic Sports Arena</div>
+        <div class="facility-chip" id="fac2">📡 Advanced Research Labs</div>
+        <div class="facility-chip" id="fac3">🍽️ 10+ Cafeterias</div>
+        <div class="facility-chip" id="fac4">🏨 On-Campus Hostels</div>
+        <div class="facility-chip" id="fac5">📚 Digital Library</div>
+        <div class="facility-chip" id="fac6">🚌 Transport Facility</div>
+        <div class="facility-chip" id="fac7">🏥 Medical Center</div>
+        <div class="facility-chip" id="fac8">🎭 Cultural Amphitheatre</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== ADMISSIONS ======================== -->
+  <section id="admissions" class="section admissions-section">
+    <div class="container">
+      <div class="admissions-grid">
+        <div class="admissions-info">
+          <div class="section-badge">📝 Admissions 2026</div>
+          <h2>Start Your Journey at<br /><span class="gradient-text">Parul University</span></h2>
+          <p>Applications are open for academic year 2026–27. Join 1 lakh+ students and begin your success story.</p>
+
+          <div class="admission-steps">
+            <div class="a-step" id="aStep1">
+              <div class="a-step-num">01</div>
+              <div>
+                <div class="a-step-title">Choose Your Program</div>
+                <div class="a-step-desc">Browse 200+ UG, PG & PhD courses</div>
+              </div>
+            </div>
+            <div class="a-step" id="aStep2">
+              <div class="a-step-num">02</div>
+              <div>
+                <div class="a-step-title">Fill Application Form</div>
+                <div class="a-step-desc">Complete the online application in minutes</div>
+              </div>
+            </div>
+            <div class="a-step" id="aStep3">
+              <div class="a-step-num">03</div>
+              <div>
+                <div class="a-step-title">Entrance / Merit</div>
+                <div class="a-step-desc">JEE, NEET, MAT or PU direct merit</div>
+              </div>
+            </div>
+            <div class="a-step" id="aStep4">
+              <div class="a-step-num">04</div>
+              <div>
+                <div class="a-step-title">Confirm Admission</div>
+                <div class="a-step-desc">Pay fees & get your welcome kit</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admission-form-wrap glass-card" id="admissionFormWrap">
+          <h3 class="form-title">Request Information</h3>
+          <form id="admissionForm" class="admission-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="aName">Full Name</label>
+                <input type="text" id="aName" placeholder="e.g. Rahul Singh" required />
+              </div>
+              <div class="form-field">
+                <label for="aPhone">Phone Number</label>
+                <input type="tel" id="aPhone" placeholder="+91 XXXXX XXXXX" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="aEmail">Email Address</label>
+              <input type="email" id="aEmail" placeholder="you@example.com" required />
+            </div>
+            <div class="form-field">
+              <label for="aCourse">Program of Interest</label>
+              <select id="aCourse">
+                <option>B.Tech Computer Science</option>
+                <option>B.Tech Artificial Intelligence</option>
+                <option>MBA (General Management)</option>
+                <option>MBBS / BDS</option>
+                <option>B.Pharm / M.Pharm</option>
+                <option>BCA / MCA</option>
+                <option>B.Com / M.Com</option>
+                <option>BBA</option>
+                <option>BA LLB / LLB</option>
+                <option>B.Design / Fashion Design</option>
+                <option>Other Program</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="aLevel">Academic Level</label>
+              <select id="aLevel">
+                <option>Undergraduate (UG)</option>
+                <option>Postgraduate (PG)</option>
+                <option>Doctorate (PhD)</option>
+                <option>Diploma / Certificate</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary full-width" id="submitInquiry">
+              <span>Submit Inquiry</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CONTACT ======================== -->
+  <section id="contact" class="section contact-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-badge">📍 Find Us</div>
+        <h2>Get in <span class="gradient-text">Touch</span></h2>
+        <p>Our admissions team is ready to guide you through every step.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card glass-card" id="cCard1">
+          <div class="contact-icon">📍</div>
+          <h4>Campus Address</h4>
+          <p>P.O. Limda, Waghodia Road<br />Vadodara, Gujarat – 391760</p>
+        </div>
+        <div class="contact-card glass-card" id="cCard2">
+          <div class="contact-icon">📞</div>
+          <h4>Admissions Helpline</h4>
+          <p>1800-123-1456<br />(Toll Free, Mon–Sat, 9AM–6PM)</p>
+        </div>
+        <div class="contact-card glass-card" id="cCard3">
+          <div class="contact-icon">📧</div>
+          <h4>Email Us</h4>
+          <p>admissions@paruluniversity.ac.in<br />info@paruluniversity.ac.in</p>
+        </div>
+        <div class="contact-card glass-card" id="cCard4">
+          <div class="contact-icon">🌐</div>
+          <h4>Online Portal</h4>
+          <p>www.paruluniversity.ac.in<br />Apply online 24/7</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer" id="mainFooter">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-emblem logo-emblem--sm">
+              <svg class="emblem-ring" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="36" stroke="url(#ringGrad2)" stroke-width="1.5" stroke-dasharray="4 3"
+                  opacity="0.6" />
+                <circle cx="40" cy="40" r="30" stroke="url(#ringGrad2)" stroke-width="1" opacity="0.4" />
+                <circle cx="40" cy="40" r="24" fill="url(#centerGrad2)" />
+                <text x="40" y="37" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="900"
+                  font-style="italic" fill="white" letter-spacing="-0.5">Parul</text>
+                <text x="40" y="49" text-anchor="middle" font-family="Georgia, serif" font-size="7.5" font-weight="600"
+                  fill="rgba(255,255,255,0.85)" letter-spacing="2">UNIV.</text>
+                <circle cx="40" cy="6" r="2" fill="url(#ringGrad2)" opacity="0.7" />
+                <circle cx="74" cy="40" r="2" fill="url(#ringGrad2)" opacity="0.7" />
+                <circle cx="40" cy="74" r="2" fill="url(#ringGrad2)" opacity="0.7" />
+                <circle cx="6" cy="40" r="2" fill="url(#ringGrad2)" opacity="0.7" />
+                <defs>
+                  <linearGradient id="ringGrad2" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#c084fc" />
+                    <stop offset="50%" stop-color="#9f7aea" />
+                    <stop offset="100%" stop-color="#d4a843" />
+                  </linearGradient>
+                  <linearGradient id="centerGrad2" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#7c3aed" />
+                    <stop offset="50%" stop-color="#9f7aea" />
+                    <stop offset="100%" stop-color="#67a6d3" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="emblem-year">Est. 2009</div>
+            </div>
+          </div>
+          <p class="footer-tagline">
+            Empowering minds, transforming futures.<br />
+            Gujarat's most vibrant university campus.
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" id="fbBtn" aria-label="Facebook">f</a>
+            <a href="#" class="social-btn" id="twBtn" aria-label="Twitter">t</a>
+            <a href="#" class="social-btn" id="liBtn" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-btn" id="igBtn" aria-label="Instagram">ig</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#courses">All Programs</a></li>
+            <li><a href="#placements">Placements</a></li>
+            <li><a href="#campus">Campus Life</a></li>
+            <li><a href="#admissions">Apply Now</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Programs</h4>
+          <ul>
+            <li><a href="#courses">Engineering & Tech</a></li>
+            <li><a href="#courses">Management (MBA)</a></li>
+            <li><a href="#courses">Medical & Pharmacy</a></li>
+            <li><a href="#courses">Law & Humanities</a></li>
+            <li><a href="#courses">Design & Media</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Campus Info</h4>
+          <ul>
+            <li>P.O. Limda, Waghodia Road</li>
+            <li>Vadodara, Gujarat 391760</li>
+            <li>📞 1800-123-1456</li>
+            <li>✉️ admissions@paruluniversity.ac.in</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Parul University. All rights reserved. | NAAC Accredited | UGC Recognized | AICTE Approved</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== CHATBOT ======================== -->
+  <div class="chatbot-container" id="chatbotContainer">
+    <div class="chat-panel glass-card" id="chatPanel">
+      <div class="chat-header-bar">
+        <div class="chat-avatar">PU</div>
+        <div>
+          <div class="chat-bot-name">Parul AI Assistant</div>
+          <div class="chat-bot-status"><span class="live-dot"></span> Online</div>
+        </div>
+        <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-msg bot-msg">
+          Hi! 👋 I'm your Parul University assistant.<br />
+          Ask me anything about <strong>courses, placements, fees, or admissions</strong>!
+        </div>
+      </div>
+      <form class="chat-input-row" id="chatForm">
+        <input type="text" id="chatInput" placeholder="Type your question..." autocomplete="off" />
+        <button type="submit" class="chat-send" id="chatSend" aria-label="Send">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+          </svg>
+        </button>
+      </form>
+    </div>
+    <button class="chat-fab" id="chatFab" aria-label="Open chat">
+      <span class="chat-fab-icon" id="chatFabIcon">💬</span>
+      <span class="chat-notif" id="chatNotif">1</span>
+    </button>
+  </div>
+
+  <!-- ======================== PROGRAM MODAL ======================== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box glass-card" id="modalBox">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="./src/main.js"></script>
+</body>
+
+</html>
