@@ -13,8 +13,8 @@
   }, { passive: true });
 
   // ─── HAMBURGER / MOBILE MENU ─────────────────────────────────
-  const hamburger   = document.getElementById('hamburger');
-  const mobileMenu  = document.getElementById('mobileMenu');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
   const mobileLinks = document.querySelectorAll('.mobile-link');
 
   function closeMobileMenu() {
@@ -32,11 +32,11 @@
   mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
 
   // ─── MODAL ───────────────────────────────────────────────────
-  const overlay    = document.getElementById('modalOverlay');
+  const overlay = document.getElementById('modalOverlay');
   const modalClose = document.getElementById('modalClose');
   const signupForm = document.getElementById('signupForm');
 
-  const openModal  = () => { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const openModal = () => { overlay.classList.add('open'); document.body.style.overflow = 'hidden'; };
   const closeModal = () => { overlay.classList.remove('open'); document.body.style.overflow = ''; };
 
   const modalTriggers = [
@@ -67,7 +67,7 @@
   // Form submit
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name  = document.getElementById('signupName').value.trim();
+    const name = document.getElementById('signupName').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
 
     if (!name || !email) return;
@@ -91,30 +91,30 @@
     toast.className = 'toast';
     toast.innerHTML = message;
     Object.assign(toast.style, {
-      position:     'fixed',
-      bottom:       '28px',
-      right:        '28px',
-      background:   'linear-gradient(135deg,#6366f1,#8b5cf6)',
-      color:        'white',
-      padding:      '14px 24px',
+      position: 'fixed',
+      bottom: '28px',
+      right: '28px',
+      background: 'linear-gradient(135deg,#6366f1,#8b5cf6)',
+      color: 'white',
+      padding: '14px 24px',
       borderRadius: '12px',
-      fontSize:     '0.92rem',
-      fontWeight:   '600',
-      fontFamily:   'Inter, sans-serif',
-      boxShadow:    '0 8px 32px rgba(99,102,241,0.4)',
-      zIndex:       '9999',
-      transform:    'translateY(60px)',
-      opacity:      '0',
-      transition:   'all 0.35s cubic-bezier(0.4,0,0.2,1)',
+      fontSize: '0.92rem',
+      fontWeight: '600',
+      fontFamily: 'Inter, sans-serif',
+      boxShadow: '0 8px 32px rgba(99,102,241,0.4)',
+      zIndex: '9999',
+      transform: 'translateY(60px)',
+      opacity: '0',
+      transition: 'all 0.35s cubic-bezier(0.4,0,0.2,1)',
     });
     document.body.appendChild(toast);
     requestAnimationFrame(() => {
       toast.style.transform = 'translateY(0)';
-      toast.style.opacity   = '1';
+      toast.style.opacity = '1';
     });
     setTimeout(() => {
       toast.style.transform = 'translateY(60px)';
-      toast.style.opacity   = '0';
+      toast.style.opacity = '0';
       setTimeout(() => toast.remove(), 400);
     }, 3500);
   }
@@ -180,7 +180,7 @@
     }, step);
   }
 
-  const statEls  = document.querySelectorAll('.stat-num[data-target]');
+  const statEls = document.querySelectorAll('.stat-num[data-target]');
   let countersRun = false;
 
   function runCounters() {
@@ -206,13 +206,13 @@
   setTimeout(animateProgressBars, 600);
 
   // ─── TESTIMONIALS SLIDER ─────────────────────────────────────
-  const track     = document.getElementById('testimonialsTrack');
-  const dotsEl    = document.getElementById('testiDots');
-  const prevBtn   = document.getElementById('testiPrev');
-  const nextBtn   = document.getElementById('testiNext');
-  const slides    = track.querySelectorAll('.testimonial-card');
-  const total     = slides.length;
-  let current     = 0;
+  const track = document.getElementById('testimonialsTrack');
+  const dotsEl = document.getElementById('testiDots');
+  const prevBtn = document.getElementById('testiPrev');
+  const nextBtn = document.getElementById('testiNext');
+  const slides = track.querySelectorAll('.testimonial-card');
+  const total = slides.length;
+  let current = 0;
   let autoSlide;
 
   // Build dots
