@@ -61,7 +61,13 @@
         <div class="profile-top">
           <div class="profile-avatar" id="profileAvatar">A</div>
           <div class="profile-info">
-            <h2 id="profileName">Loading...</h2>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
+              <h2 id="profileName" style="margin-bottom: 0;">Loading...</h2>
+              <span class="online-status-chip" id="onlineStatusChip">
+                <span class="dot"></span>
+                <span>Active &bull; Online</span>
+              </span>
+            </div>
             <p class="profile-email">
               <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
               <span id="profileEmail">loading...</span>

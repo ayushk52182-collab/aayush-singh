@@ -1,5 +1,6 @@
 /* =============================================================
    SUPABASE CONFIG — Authentication & Database Client
+   Supports: Email/Password, Google OAuth, Unique Emails & Online Status
    ============================================================= */
 
 // ⚠️ REPLACE THESE with your actual Supabase project credentials
@@ -33,10 +34,10 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
       console.error('❌ Failed to initialize Supabase client:', err);
     }
   } else {
-    console.info('⚡ Supabase running in Local Demo Mode. Configure SUPABASE_URL & SUPABASE_ANON_KEY in supabase-config.js to connect to live Supabase.');
+    console.info('⚡ Supabase running in Local Demo Mode. Configure SUPABASE_URL & SUPABASE_ANON_KEY in supabase-config.js to connect live.');
   }
 
-  // Local demo storage helpers (fallback when credentials not yet set)
+  // Local demo storage keys
   const DEMO_USERS_KEY = 'supabase_demo_profiles';
   const DEMO_SESSION_KEY = 'supabase_demo_session';
 
@@ -73,33 +74,86 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
   // ─────────────────────────────────────────────
 
   /**
-   * Sign up a new user with email/password and save profile to database
+   * Check if an email is already registered
+   * Ensures each email address can only be used once!
+   * @param {string} email
+   * @returns {Promise<boolean>}
+   */
+  async function isEmailRegistered(email) {
+    const cleanEmail = email.trim().toLowerCase();
+    if (supabase) {
+      // Check in profiles table
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', cleanEmail)
+        .maybeSingle();
+
+      if (!error && data) return true;
+      return false;
+    }
+
+    const users = getDemoUsers();
+    return users.some(u => u.email.toLowerCase() === cleanEmail);
+  }
+
+  /**
+   * Sign up manually with email, password, and full name
+   * Enforces: Each email address can be used only once!
    * @param {string} email
    * @param {string} password
    * @param {string} fullName
    * @returns {Promise<{data, error}>}
    */
   async function signUp(email, password, fullName) {
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanName = fullName.trim();
+
     if (supabase) {
-      // 1. Create auth user in Supabase Auth
+      // 1. Check if email already registered in profiles
+      const alreadyExists = await isEmailRegistered(cleanEmail);
+      if (alreadyExists) {
+        return {
+          data: null,
+          error: { message: 'This email address is already registered. Each email address can be used only once. Please log in.' }
+        };
+      }
+
+      // 2. Create auth user in Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
+        email: cleanEmail,
         password,
         options: {
-          data: { full_name: fullName }
+          data: { full_name: cleanName }
         }
       });
 
-      if (authError) return { data: null, error: authError };
+      if (authError) {
+        if (authError.message.toLowerCase().includes('already') || authError.message.toLowerCase().includes('registered')) {
+          return {
+            data: null,
+            error: { message: 'This email address is already registered. Each email address can be used only once.' }
+          };
+        }
+        return { data: null, error: authError };
+      }
 
-      // 2. Insert profile into the 'profiles' database table
+      // Supabase email identity check: if identities is empty array, user was already registered
+      if (authData.user && Array.isArray(authData.user.identities) && authData.user.identities.length === 0) {
+        return {
+          data: null,
+          error: { message: 'This email address is already registered. Each email address can be used only once. Please log in.' }
+        };
+      }
+
+      // 3. Insert or update profile into the 'profiles' table
       if (authData.user) {
         const { error: profileError } = await supabase
           .from('profiles')
           .upsert({
             id: authData.user.id,
-            full_name: fullName,
-            email: email,
+            full_name: cleanName,
+            email: cleanEmail,
             created_at: new Date().toISOString()
           }, { onConflict: 'id' });
 
@@ -113,23 +167,26 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 
     // --- Fallback Demo Mode ---
     const users = getDemoUsers();
-    const existing = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const existing = users.find(u => u.email.toLowerCase() === cleanEmail);
     if (existing) {
-      return { data: null, error: { message: 'User already registered with this email.' } };
+      return {
+        data: null,
+        error: { message: 'This email address is already registered. Each email address can be used only once.' }
+      };
     }
 
     const newUser = {
       id: 'demo-user-' + Math.random().toString(36).substr(2, 9),
-      email: email,
+      email: cleanEmail,
       password: password,
-      user_metadata: { full_name: fullName },
+      user_metadata: { full_name: cleanName },
       created_at: new Date().toISOString()
     };
 
     const newProfile = {
       id: newUser.id,
-      full_name: fullName,
-      email: email,
+      full_name: cleanName,
+      email: cleanEmail,
       created_at: newUser.created_at
     };
 
@@ -149,15 +206,17 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
   }
 
   /**
-   * Sign in with email and password
+   * Sign in manually with email and password
    * @param {string} email
    * @param {string} password
    * @returns {Promise<{data, error}>}
    */
   async function signIn(email, password) {
+    const cleanEmail = email.trim().toLowerCase();
+
     if (supabase) {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: cleanEmail,
         password
       });
       return { data, error };
@@ -166,7 +225,7 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
     // --- Fallback Demo Mode ---
     const users = getDemoUsers();
     const userMatch = users.find(
-      u => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+      u => u.email.toLowerCase() === cleanEmail && u.password === password
     );
 
     if (userMatch) {
@@ -178,8 +237,8 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
       return { data: { user: userMatch, session: session }, error: null };
     }
 
-    // Also support default demo account if no users created yet
-    if (email === 'demo@paruluniversity.ac.in' && password === 'Demo@1234') {
+    // Default demo account
+    if (cleanEmail === 'demo@paruluniversity.ac.in' && password === 'Demo@1234') {
       const defaultUser = {
         id: 'demo-admin-id',
         email: 'demo@paruluniversity.ac.in',
@@ -192,6 +251,57 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
     }
 
     return { data: null, error: { message: 'Invalid email or password.' } };
+  }
+
+  /**
+   * Sign in / Sign up with Google OAuth
+   * @returns {Promise<{data, error}>}
+   */
+  async function signInWithGoogle() {
+    if (supabase) {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/dashboard.html'
+        }
+      });
+      return { data, error };
+    }
+
+    // --- Fallback Demo Google OAuth Simulation ---
+    const demoGoogleUser = {
+      id: 'google-user-' + Date.now(),
+      email: 'aayush.google@gmail.com',
+      user_metadata: {
+        full_name: 'Aayush Singh (Google)',
+        avatar_url: 'https://lh3.googleusercontent.com/a/default-user'
+      },
+      created_at: new Date().toISOString()
+    };
+
+    const session = {
+      access_token: 'google-demo-token-' + Date.now(),
+      user: demoGoogleUser
+    };
+    setDemoSession(session);
+
+    // Save profile to demo list if not already present
+    const users = getDemoUsers();
+    const existing = users.find(u => u.email === demoGoogleUser.email);
+    if (!existing) {
+      users.push({
+        ...demoGoogleUser,
+        profile: {
+          id: demoGoogleUser.id,
+          full_name: demoGoogleUser.user_metadata.full_name,
+          email: demoGoogleUser.email,
+          created_at: demoGoogleUser.created_at
+        }
+      });
+      saveDemoUsers(users);
+    }
+
+    return { data: { user: demoGoogleUser, session }, error: null };
   }
 
   /**
@@ -253,7 +363,7 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
       return {
         data: {
           id: userId,
-          full_name: session.user.user_metadata?.full_name || 'User',
+          full_name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'User',
           email: session.user.email,
           created_at: session.user.created_at
         },
@@ -274,28 +384,83 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
   }
 
   /**
-   * Update the navbar based on auth state
+   * Get user initials for avatars
+   */
+  function getInitials(name) {
+    if (!name) return 'U';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+    return parts[0][0].toUpperCase();
+  }
+
+  /**
+   * Update the website navigation once user is online
+   * Displays the account holder's name with an active online badge!
    */
   async function updateNavAuth() {
     const authNavLink = document.getElementById('authNavLink');
     const signupNavLink = document.getElementById('signupNavLink');
-    if (!authNavLink) return;
+    const userOnlinePill = document.getElementById('userOnlinePill');
+    const navUserName = document.getElementById('navUserName');
+    const navUserAvatar = document.getElementById('navUserAvatar');
 
-    const { data } = await getSession();
-    if (data && data.session) {
-      authNavLink.textContent = '📊 Dashboard';
-      authNavLink.href = './dashboard.html';
-      authNavLink.style.color = '#68b29b';
-      if (signupNavLink) signupNavLink.style.display = 'none';
-    } else {
-      authNavLink.textContent = '🔐 Login';
-      authNavLink.href = './login.html';
-      authNavLink.style.color = '#c084fc';
-      if (signupNavLink) signupNavLink.style.display = 'inline-block';
+    try {
+      const { data } = await getSession();
+      if (data && data.session && data.session.user) {
+        const user = data.session.user;
+        const { data: profile } = await getProfile(user.id);
+        const fullName = profile?.full_name ||
+                         user.user_metadata?.full_name ||
+                         user.user_metadata?.name ||
+                         user.email?.split('@')[0] ||
+                         'Learner';
+
+        // 1. Display the account holder's name and avatar in the online pill
+        if (userOnlinePill) {
+          userOnlinePill.style.display = 'inline-flex';
+          userOnlinePill.href = './dashboard.html';
+        }
+        if (navUserName) {
+          navUserName.textContent = fullName;
+        }
+        if (navUserAvatar) {
+          navUserAvatar.textContent = getInitials(fullName);
+        }
+
+        // 2. Convert Login link to Dashboard link
+        if (authNavLink) {
+          authNavLink.textContent = '📊 Dashboard';
+          authNavLink.href = './dashboard.html';
+          authNavLink.style.color = '#10b981';
+          authNavLink.style.display = 'inline-block';
+        }
+
+        // 3. Hide Sign Up link since user is already online
+        if (signupNavLink) {
+          signupNavLink.style.display = 'none';
+        }
+      } else {
+        // User is offline / logged out
+        if (userOnlinePill) {
+          userOnlinePill.style.display = 'none';
+        }
+        if (authNavLink) {
+          authNavLink.textContent = '🔐 Login';
+          authNavLink.href = './login.html';
+          authNavLink.style.color = '#c084fc';
+          authNavLink.style.display = 'inline-block';
+        }
+        if (signupNavLink) {
+          signupNavLink.style.display = 'inline-block';
+        }
+      }
+    } catch (e) {
+      console.error('Nav auth update error:', e);
     }
   }
 
-  // Check if live or demo mode
   function isLiveMode() {
     return isLive;
   }
@@ -306,12 +471,15 @@ const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
   window.SupabaseAuth = {
     client: supabase,
     isLiveMode,
+    isEmailRegistered,
     signUp,
     signIn,
+    signInWithGoogle,
     signOut,
     getSession,
     getUser,
     getProfile,
+    getInitials,
     onAuthStateChange,
     updateNavAuth
   };
