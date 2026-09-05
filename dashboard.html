@@ -149,10 +149,22 @@
       // ─── Load Dashboard ───
       async function loadDashboard() {
         try {
-          // Check session
-          const { data: sessionData } = await window.SupabaseAuth.getSession();
+          // Allow async processing if returning from OAuth redirect
+          const hasOAuthParams = window.location.hash.includes('access_token') || window.location.search.includes('code=');
+          let sessionData = null;
 
-          if (!sessionData.session) {
+          for (let attempt = 0; attempt < (hasOAuthParams ? 10 : 2); attempt++) {
+            const res = await window.SupabaseAuth.getSession();
+            if (res?.data?.session) {
+              sessionData = res.data;
+              break;
+            }
+            if (hasOAuthParams) {
+              await new Promise(r => setTimeout(r, 250));
+            }
+          }
+
+          if (!sessionData || !sessionData.session) {
             // Not logged in — redirect to login
             window.location.href = './login.html';
             return;
@@ -161,10 +173,14 @@
           const user = sessionData.session.user;
 
           // Fetch profile from database
-          const { data: profile, error: profileError } = await window.SupabaseAuth.getProfile(user.id);
+          const { data: profile } = await window.SupabaseAuth.getProfile(user.id);
 
           // Use profile data if available, fall back to auth user metadata
-          const fullName = profile?.full_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+          const fullName = profile?.full_name ||
+                           user.user_metadata?.full_name ||
+                           user.user_metadata?.name ||
+                           user.email?.split('@')[0] ||
+                           'Account Holder';
           const email = profile?.email || user.email || '—';
           const createdAt = profile?.created_at || user.created_at;
 
