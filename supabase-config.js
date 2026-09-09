@@ -243,12 +243,12 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
         <form id="googleConnectForm">
           <div class="form-group" style="margin-bottom:14px;">
             <label class="form-label" for="googleUserRealName" style="font-size:13px; font-weight:700;">Google Account Holder Name</label>
-            <input type="text" class="form-input" id="googleUserRealName" placeholder="e.g. Aayush Singh" required style="width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; outline:none;" />
+            <input type="text" class="form-input" id="googleUserRealName" placeholder="e.g. Rahul Sharma or Jane Doe" required style="width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; outline:none;" />
           </div>
 
           <div class="form-group" style="margin-bottom:18px;">
             <label class="form-label" for="googleUserRealEmail" style="font-size:13px; font-weight:700;">Google Email Address (@gmail.com)</label>
-            <input type="email" class="form-input" id="googleUserRealEmail" placeholder="e.g. aayushsingh@gmail.com" required style="width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; outline:none;" />
+            <input type="email" class="form-input" id="googleUserRealEmail" placeholder="e.g. yourname@gmail.com" required style="width:100%; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; outline:none;" />
           </div>
 
           <button type="submit" class="google-modal-btn" id="googleSubmitRealBtn">
