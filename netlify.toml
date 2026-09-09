@@ -1,9 +1,9 @@
 # ─────────────────────────────────────────────
-#  Netlify Configuration — EduSphere
+#  Netlify Configuration — Parul University Portal
 # ─────────────────────────────────────────────
 
 [build]
-  publish = "elearn"
+  publish = "."
   command = ""
 
 [[headers]]
@@ -28,8 +28,3 @@
   for = "*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
-[[redirects]]
-  from   = "/*"
-  to     = "/index.html"
-  status = 200

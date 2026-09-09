@@ -260,10 +260,13 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
 
     document.body.appendChild(overlay);
 
-    document.getElementById('closeGoogleModalBtn').addEventListener('click', () => {
-      overlay.remove();
-      callback({ error: { message: 'Google sign-in cancelled.' } });
-    });
+    const closeBtn = overlay.querySelector('#closeGoogleModalBtn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        overlay.remove();
+        callback({ error: { message: 'Google sign-in cancelled.' } });
+      });
+    }
 
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
@@ -272,11 +275,15 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
       }
     });
 
-    document.getElementById('googleConnectForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('googleUserRealName').value.trim();
-      const email = document.getElementById('googleUserRealEmail').value.trim().toLowerCase();
-      const errBox = document.getElementById('googleModalError');
+    const googleForm = overlay.querySelector('#googleConnectForm');
+    if (googleForm) {
+      googleForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nameEl = overlay.querySelector('#googleUserRealName');
+        const emailEl = overlay.querySelector('#googleUserRealEmail');
+        const name = nameEl ? nameEl.value.trim() : '';
+        const email = emailEl ? emailEl.value.trim().toLowerCase() : '';
+        const errBox = overlay.querySelector('#googleModalError');
 
       if (!name || !email) {
         errBox.textContent = 'Please provide both your name and Google email address.';
@@ -328,6 +335,7 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
       overlay.remove();
       callback({ data: { user: googleUser, session }, error: null });
     });
+    }
   }
 
   async function signInWithGoogle() {
@@ -497,7 +505,7 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
         if (authNavLink) {
           authNavLink.textContent = '🔐 Login';
           authNavLink.href = './login.html';
-          authNavLink.style.color = '#c084fc';
+          authNavLink.style.color = '';
           authNavLink.style.display = 'inline-block';
         }
         if (signupNavLink) {

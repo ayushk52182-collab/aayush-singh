@@ -77,6 +77,7 @@ function initBgParticles() {
 // ===== 2. NAVBAR SCROLL =====
 function initNavbar() {
   const navbar = document.getElementById('navbar');
+  if (!navbar) return;
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section[id]');
 
@@ -110,19 +111,24 @@ function initTheme() {
   const btn = document.getElementById('themeToggle');
   const icon = document.getElementById('themeIcon');
   const html = document.documentElement;
-  const saved = localStorage.getItem('pu_theme') || 'light';
+  const saved = localStorage.getItem('pu_theme') || localStorage.getItem('pu-theme') || 'light';
   applyTheme(saved);
 
-  btn.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    localStorage.setItem('pu_theme', next);
-  });
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('pu_theme', next);
+      localStorage.setItem('pu-theme', next);
+    });
+  }
 
   function applyTheme(theme) {
     html.setAttribute('data-theme', theme);
-    icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    if (icon) {
+      icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
   }
 }
 
@@ -130,6 +136,7 @@ function initTheme() {
 function initMobileMenu() {
   const toggle = document.getElementById('mobileToggle');
   const navLinks = document.getElementById('navLinks');
+  if (!toggle || !navLinks) return;
 
   toggle.addEventListener('click', () => {
     navLinks.classList.toggle('mobile-open');
@@ -222,6 +229,7 @@ function renderCourses(list) {
 function initCourseFilters() {
   const searchInput = document.getElementById('courseSearch');
   const filterBtns = document.querySelectorAll('.filter-btn');
+  if (!searchInput) return;
   let currentCat = 'all';
   let currentQuery = '';
 
@@ -288,14 +296,17 @@ function openCourseModal(id) {
     </button>
   `;
 
-  document.getElementById('modalContent').innerHTML = html;
-  document.getElementById('modalOverlay').classList.add('open');
+  const mContent = document.getElementById('modalContent');
+  const mOverlay = document.getElementById('modalOverlay');
+  if (mContent) mContent.innerHTML = html;
+  if (mOverlay) mOverlay.classList.add('open');
 }
 
 // ===== 9. MODAL =====
 function initModal() {
   const overlay = document.getElementById('modalOverlay');
   const closeBtn = document.getElementById('modalClose');
+  if (!overlay || !closeBtn) return;
 
   closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
   overlay.addEventListener('click', (e) => {
@@ -315,21 +326,22 @@ function initChatbot() {
   const input = document.getElementById('chatInput');
   const notif = document.getElementById('chatNotif');
   const fabIcon = document.getElementById('chatFabIcon');
+  if (!fab || !panel || !closeBtn || !form || !input) return;
 
   fab.addEventListener('click', () => {
     panel.classList.toggle('open');
-    notif.style.display = 'none';
+    if (notif) notif.style.display = 'none';
     if (panel.classList.contains('open')) {
-      fabIcon.textContent = '✕';
+      if (fabIcon) fabIcon.textContent = '✕';
       input.focus();
     } else {
-      fabIcon.textContent = '💬';
+      if (fabIcon) fabIcon.textContent = '💬';
     }
   });
 
   closeBtn.addEventListener('click', () => {
     panel.classList.remove('open');
-    fabIcon.textContent = '💬';
+    if (fabIcon) fabIcon.textContent = '💬';
   });
 
   form.addEventListener('submit', (e) => {
@@ -380,30 +392,39 @@ function initAdmissionForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('aName').value;
+    const aNameEl = document.getElementById('aName');
+    const name = aNameEl ? aNameEl.value : 'Applicant';
     const btn = document.getElementById('submitInquiry');
-    btn.disabled = true;
-    btn.innerHTML = '<span>Submitting...</span>';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span>Submitting...</span>';
+    }
 
     setTimeout(() => {
-      document.getElementById('modalContent').innerHTML = `
-        <div style="text-align: center; padding: 20px 0;">
-          <div style="font-size: 4rem; margin-bottom: 20px;">🎉</div>
-          <h2 style="font-family: Outfit; font-weight: 800; font-size: 1.6rem; margin-bottom: 12px;">Welcome, ${name}!</h2>
-          <p style="color: var(--text-secondary); margin-bottom: 28px;">Your inquiry has been submitted. An admissions counselor will contact you within <strong>24 hours</strong>.</p>
-          <div style="padding: 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; margin-bottom: 24px;">
-            <p style="font-weight: 700; color: #10b981; font-size: 1rem;">📞 Need immediate help?</p>
-            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Call us: <strong>1800-123-1456</strong> (Toll Free, Mon–Sat, 9AM–6PM)</p>
+      const mContent = document.getElementById('modalContent');
+      const mOverlay = document.getElementById('modalOverlay');
+      if (mContent) {
+        mContent.innerHTML = `
+          <div style="text-align: center; padding: 20px 0;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🎉</div>
+            <h2 style="font-family: Outfit; font-weight: 800; font-size: 1.6rem; margin-bottom: 12px;">Welcome, ${name}!</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 28px;">Your inquiry has been submitted. An admissions counselor will contact you within <strong>24 hours</strong>.</p>
+            <div style="padding: 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; margin-bottom: 24px;">
+              <p style="font-weight: 700; color: #10b981; font-size: 1rem;">📞 Need immediate help?</p>
+              <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 6px;">Call us: <strong>1800-123-1456</strong> (Toll Free, Mon–Sat, 9AM–6PM)</p>
+            </div>
+            <button class="btn-primary full-width" onclick="const mo=document.getElementById('modalOverlay'); if(mo) mo.classList.remove('open')">
+              <span>Done</span>
+            </button>
           </div>
-          <button class="btn-primary full-width" onclick="document.getElementById('modalOverlay').classList.remove('open')">
-            <span>Done</span>
-          </button>
-        </div>
-      `;
-      document.getElementById('modalOverlay').classList.add('open');
+        `;
+      }
+      if (mOverlay) mOverlay.classList.add('open');
       form.reset();
-      btn.disabled = false;
-      btn.innerHTML = '<span>Submit Inquiry</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Submit Inquiry</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
     }, 1200);
   });
 }
@@ -432,13 +453,18 @@ function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const href = a.getAttribute('href');
-      if (href === '#') return;
-      const target = document.querySelector(href);
-      if (!target) return;
-      e.preventDefault();
-      const navH = document.getElementById('navbar').offsetHeight;
-      const top = target.getBoundingClientRect().top + window.scrollY - navH;
-      window.scrollTo({ top, behavior: 'smooth' });
+      if (href === '#' || href === '#!') return;
+      try {
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const navbar = document.getElementById('navbar');
+        const navH = navbar ? navbar.offsetHeight : 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - navH;
+        window.scrollTo({ top, behavior: 'smooth' });
+      } catch (err) {
+        // Ignore invalid CSS selectors
+      }
     });
   });
 }

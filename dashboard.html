@@ -108,17 +108,19 @@
 
       // ─── Theme Toggle ───
       const themeToggle = document.getElementById('themeToggle');
-      const savedTheme = localStorage.getItem('pu-theme') || 'light';
+      const savedTheme = localStorage.getItem('pu_theme') || localStorage.getItem('pu-theme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
-      themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pu-theme', next);
-        themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
-      });
+      if (themeToggle) {
+        themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        themeToggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('pu_theme', next);
+          localStorage.setItem('pu-theme', next);
+          themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
+      }
 
       // ─── Elements ───
       const loadingState = document.getElementById('loadingState');

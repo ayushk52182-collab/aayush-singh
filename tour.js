@@ -133,8 +133,10 @@ function initVisitForm() {
 
   visitForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('vName').value;
-    const date = document.getElementById('vDate').value;
+    const nameInput = document.getElementById('vName');
+    const dateInput = document.getElementById('vDate');
+    const name = nameInput ? nameInput.value : 'Guest';
+    const date = dateInput ? dateInput.value : 'the scheduled date';
 
     alert(`🎉 Physical Campus Visit Confirmed!\n\nWelcome ${name}!\nYour visit pass for Parul University Vadodara Campus on ${date} has been generated.\n\nA complimentary shuttle bus details and campus entry QR code have been sent to your mobile number.`);
     visitForm.reset();
