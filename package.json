@@ -1,0 +1,32 @@
+{
+  "name": "learn-with-aayush",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vite build"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.109.0",
+    "@react-three/fiber": "^8.17.0",
+    "framer-motion": "^11.3.0",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.441.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.168.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "esbuild@0.21.5": true
+  }
+}
