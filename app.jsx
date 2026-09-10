@@ -386,6 +386,26 @@ const LoginPage = ({ onLogin }) => {
         <div className="bg-symbol sym-b">&lt;/&gt;</div>
         <div className="bg-symbol sym-c">01</div>
         <div className="bg-symbol sym-d">101</div>
+        <div className="bg-floating-c-card glass-card">
+          <div className="window-bar">
+            <span className="dot red"></span>
+            <span className="dot yellow"></span>
+            <span className="dot green"></span>
+            <span className="window-title">quick_sort.c</span>
+          </div>
+          <pre className="code-block">
+            <code>
+              <span className="code-keyword">void</span> <span className="code-func">quickSort</span>(<span className="code-keyword">int</span> *a, <span className="code-keyword">int</span> low, <span className="code-keyword">int</span> high) &#123;<br/>
+              &nbsp;&nbsp;<span className="code-keyword">if</span> (low &lt; high) &#123;<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="code-keyword">int</span> pi = partition(a, low, high);<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, low, pi - 1);<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, pi + 1, high);<br/>
+              &nbsp;&nbsp;&#125;<br/>
+              &#125;
+            </code>
+          </pre>
+        </div>
+
         <div className="bg-badge bg-c">C</div>
         <div className="bg-badge bg-py">PY</div>
         <div className="bg-learning-ring"></div>
@@ -393,19 +413,56 @@ const LoginPage = ({ onLogin }) => {
 
       <div className="glass-panel login-card 3d-login-card">
         <div className="login-header">
+          <div className="login-top-actions-bar">
+            <button
+              type="button"
+              onClick={() => onLogin('Guest Learner')}
+              className="login-action-btn-pill"
+              title="Explore the Roadmap directly as a Guest"
+            >
+              <Icon name="compass" size={13} />
+              <span>Explore as Guest</span>
+            </button>
+
+            <a
+              href="/c-roadmap.html"
+              className="login-action-btn-pill"
+              title="View Standalone Full HTML Roadmap"
+            >
+              <Icon name="code-2" size={13} />
+              <span>Full HTML</span>
+            </a>
+
+            <div className="login-live-status-pill">
+              <span className="live-status-pulse"></span>
+              <span>Academy v2.0</span>
+            </div>
+          </div>
+
+          <div className="login-brand-crest">
+            <div className="brand-crest-emblem">
+              <span>A</span>
+            </div>
+          </div>
+
           <div className="top-badge-row">
             <span className="badge-3d">
-              <Icon name={mode === 'login' ? 'layers' : 'user-plus'} size={13} />
-              {mode === 'login' ? 'CYBERPUNK CODE ACADEMY' : 'NEW LEARNER PROTOCOL'}
+              <Icon name={mode === 'login' ? 'sparkles' : 'user-plus'} size={13} />
+              {mode === 'login' ? 'LEARN WITH AAYUSH • CODE ACADEMY' : 'NEW LEARNER PROTOCOL'}
             </span>
           </div>
+
           <h2 className="login-title">
-            {mode === 'login' ? 'Welcome Back, Learner' : 'Create Learner Account'}
+            {mode === 'login' ? (
+              <>Welcome Back, <span className="gradient-text">Learner</span></>
+            ) : (
+              <>Create <span className="gradient-text">Learner Account</span></>
+            )}
           </h2>
           <p className="login-subtitle">
             {mode === 'login'
-              ? 'Continue your coding journey and track your learning progress.'
-              : 'Register your account to unlock the interactive 3D learning platform.'}
+              ? 'Enter your credentials or continue with Google to resume your C, Python & Striver DSA Sheet progress.'
+              : 'Register your account to unlock personalized milestone tracking and 3D visualizers.'}
           </p>
         </div>
 

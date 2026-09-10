@@ -12,7 +12,10 @@ import {
   User,
   Mail,
   AlertCircle,
-  Plus
+  Plus,
+  Compass,
+  Code2,
+  Sparkles
 } from 'lucide-react';
 import { TEMP_USERNAME, TEMP_PASSWORD } from '../utils/constants';
 
@@ -276,10 +279,23 @@ const LoginPage = ({ onLogin }) => {
         </div>
 
         <div className="bg-floating-c-card glass-card">
-          <div className="c-code-header">
+          <div className="window-bar">
+            <span className="dot red"></span>
+            <span className="dot yellow"></span>
+            <span className="dot green"></span>
             <span className="window-title">quick_sort.c</span>
           </div>
-          <code>void quickSort(int *a, int low, int high);</code>
+          <pre className="code-block">
+            <code>
+              <span className="code-keyword">void</span> <span className="code-func">quickSort</span>(<span className="code-keyword">int</span> *a, <span className="code-keyword">int</span> low, <span className="code-keyword">int</span> high) &#123;<br/>
+              &nbsp;&nbsp;<span className="code-keyword">if</span> (low &lt; high) &#123;<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span className="code-keyword">int</span> pi = partition(a, low, high);<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, low, pi - 1);<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, pi + 1, high);<br/>
+              &nbsp;&nbsp;&#125;<br/>
+              &#125;
+            </code>
+          </pre>
         </div>
 
         <div className="bg-badge bg-c">C</div>
@@ -294,45 +310,58 @@ const LoginPage = ({ onLogin }) => {
         transition={{ type: 'spring', damping: 20, delay: 0.2 }}
       >
         <div className="login-header">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', width: '100%' }}>
-            <a
-              href="/"
-              className="login-back-home-btn"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '0.76rem',
-                color: 'var(--text-secondary)',
-                textDecoration: 'none',
-                fontWeight: 600,
-                padding: '4px 10px',
-                borderRadius: '8px',
-                background: 'rgba(249, 115, 22, 0.08)',
-                border: '1px solid rgba(249, 115, 22, 0.2)',
-                transition: 'all 0.2s ease'
-              }}
-              title="Return to Main University Portal"
+          {/* Redesigned Upper Utility Bar */}
+          <div className="login-top-actions-bar">
+            <button
+              type="button"
+              onClick={() => onLogin('Guest Learner')}
+              className="login-action-btn-pill"
+              title="Explore the Interactive Roadmap directly as a Guest"
             >
-              <ArrowLeft size={13} />
-              <span>Main Portal</span>
+              <Compass size={13} />
+              <span>Explore as Guest</span>
+            </button>
+
+            <a
+              href="/c-roadmap.html"
+              className="login-action-btn-pill"
+              title="View Standalone Full HTML Roadmap"
+            >
+              <Code2 size={13} />
+              <span>Full HTML</span>
             </a>
+
+            <div className="login-live-status-pill">
+              <span className="live-status-pulse"></span>
+              <span>Academy v2.0</span>
+            </div>
+          </div>
+
+          {/* Redesigned Glowing Brand Emblem */}
+          <div className="login-brand-crest">
+            <div className="brand-crest-emblem">
+              <span>A</span>
+            </div>
           </div>
 
           <div className="top-badge-row">
             <span className="badge-cyber">
-              {mode === 'login' ? <Layers size={13} /> : <UserPlus size={13} />}
-              {mode === 'login' ? 'CYBERPUNK CODE ACADEMY' : 'NEW LEARNER PROTOCOL'}
+              {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
+              {mode === 'login' ? 'LEARN WITH AAYUSH • CODE ACADEMY' : 'NEW LEARNER PROTOCOL'}
             </span>
           </div>
 
           <h2 className="login-title">
-            {mode === 'login' ? 'Welcome Back, Learner' : 'Create Learner Account'}
+            {mode === 'login' ? (
+              <>Welcome Back, <span className="gradient-text">Learner</span></>
+            ) : (
+              <>Create <span className="gradient-text">Learner Account</span></>
+            )}
           </h2>
           <p className="login-subtitle">
             {mode === 'login'
-              ? 'Continue your coding journey and track your learning progress.'
-              : 'Register your account to unlock the interactive 3D learning platform.'}
+              ? 'Enter your credentials or continue with Google to resume your C, Python & Striver DSA Sheet progress.'
+              : 'Register your account to unlock personalized milestone tracking and interactive 3D visualizers.'}
           </p>
         </div>
 
