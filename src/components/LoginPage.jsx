@@ -665,35 +665,37 @@ long long maxSubarraySum(vector<int>& arr) {
                   <motion.form
                     key="signup-form"
                     onSubmit={handleSignupSubmit}
-                    className="login-form"
+                    className="login-form signup-compact-form"
                     initial={{ opacity: 0, x: 15 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -15 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div className="form-group">
-                      <label>Full Name</label>
-                      <input
-                        type="text"
-                        className="login-input"
-                        placeholder="e.g. Rahul Sharma"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        required
-                        autoFocus
-                      />
-                    </div>
+                    <div className="signup-fields-grid">
+                      <div className="form-group">
+                        <label>Full Name</label>
+                        <input
+                          type="text"
+                          className="login-input"
+                          placeholder="e.g. Rahul Sharma"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          required
+                          autoFocus
+                        />
+                      </div>
 
-                    <div className="form-group">
-                      <label>Username</label>
-                      <input
-                        type="text"
-                        className="login-input"
-                        placeholder="e.g. rahul_coder"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                      />
+                      <div className="form-group">
+                        <label>Username</label>
+                        <input
+                          type="text"
+                          className="login-input"
+                          placeholder="e.g. rahul_coder"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div className="form-group">
@@ -708,47 +710,49 @@ long long maxSubarraySum(vector<int>& arr) {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label>Password (min 6 characters)</label>
-                      <div className="password-input-wrapper">
-                        <input
-                          type={showPassword ? 'text' : 'password'}
-                          className="login-input"
-                          placeholder="Create strong password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          required
-                        />
-                        <button
-                          type="button"
-                          className="toggle-password-btn"
-                          onClick={() => setShowPassword(!showPassword)}
-                          aria-label={showPassword ? 'Hide password' : 'Show password'}
-                        >
-                          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                        </button>
+                    <div className="signup-fields-grid">
+                      <div className="form-group">
+                        <label>Password (min 6 chars)</label>
+                        <div className="password-input-wrapper">
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            className="login-input"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="toggle-password-btn"
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                          >
+                            {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                          </button>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="form-group">
-                      <label>Confirm Password</label>
-                      <div className="password-input-wrapper">
-                        <input
-                          type={showConfirmPassword ? 'text' : 'password'}
-                          className="login-input"
-                          placeholder="Confirm your password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          required
-                        />
-                        <button
-                          type="button"
-                          className="toggle-password-btn"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
-                        >
-                          {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                        </button>
+                      <div className="form-group">
+                        <label>Confirm Password</label>
+                        <div className="password-input-wrapper">
+                          <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            className="login-input"
+                            placeholder="Confirm"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="toggle-password-btn"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                          >
+                            {showConfirmPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -924,29 +928,31 @@ long long maxSubarraySum(vector<int>& arr) {
                 </button>
               </form>
             ) : (
-              <form onSubmit={handleSignupSubmit} className="mobile-form">
-                <div className="mobile-input-group">
-                  <label>Full Name</label>
-                  <input
-                    type="text"
-                    className="mobile-input"
-                    placeholder="e.g. Priya Sharma"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                </div>
+              <form onSubmit={handleSignupSubmit} className="mobile-form signup-compact-mobile">
+                <div className="signup-fields-grid">
+                  <div className="mobile-input-group">
+                    <label>Full Name</label>
+                    <input
+                      type="text"
+                      className="mobile-input"
+                      placeholder="Priya Sharma"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                  </div>
 
-                <div className="mobile-input-group">
-                  <label>Username</label>
-                  <input
-                    type="text"
-                    className="mobile-input"
-                    placeholder="e.g. priya_coder"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
+                  <div className="mobile-input-group">
+                    <label>Username</label>
+                    <input
+                      type="text"
+                      className="mobile-input"
+                      placeholder="priya_coder"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="mobile-input-group">
@@ -954,47 +960,49 @@ long long maxSubarraySum(vector<int>& arr) {
                   <input
                     type="email"
                     className="mobile-input"
-                    placeholder="e.g. priya@gmail.com"
+                    placeholder="priya@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
 
-                <div className="mobile-input-group">
-                  <label>Password (min 6 chars)</label>
-                  <div className="mobile-password-wrapper">
+                <div className="signup-fields-grid">
+                  <div className="mobile-input-group">
+                    <label>Password</label>
+                    <div className="mobile-password-wrapper">
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        className="mobile-input"
+                        placeholder="Min 6 chars"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="mobile-password-toggle"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="mobile-input-group">
+                    <label>Confirm</label>
                     <input
-                      type={showPassword ? 'text' : 'password'}
+                      type={showConfirmPassword ? 'text' : 'password'}
                       className="mobile-input"
-                      placeholder="Create password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Confirm"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                     />
-                    <button
-                      type="button"
-                      className="mobile-password-toggle"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
                   </div>
                 </div>
 
-                <div className="mobile-input-group">
-                  <label>Confirm Password</label>
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    className="mobile-input"
-                    placeholder="Re-enter password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <button type="submit" className="mobile-submit-btn">
+                <button type="submit" className="mobile-submit-btn" style={{ height: '46px', marginTop: '4px' }}>
                   Create Account →
                 </button>
               </form>
