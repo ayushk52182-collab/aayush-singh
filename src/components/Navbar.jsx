@@ -9,6 +9,7 @@ import {
   BrainCircuit,
   Boxes,
   LogOut,
+  LogIn,
   Search,
   Sun,
   Moon,
@@ -25,7 +26,7 @@ const navItems = [
   { key: 'practice', label: 'C IDE', icon: TerminalIcon },
 ];
 
-const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, onOpenSearch }) => {
+const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, onOpenSearch, onOpenSignIn }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileRef = useRef(null);
 
@@ -39,8 +40,9 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const isGuest = !user || user === 'Guest Learner' || user === 'Guest';
   const displayName = typeof user === 'string' && user.trim().length > 0 ? user.trim() : 'Aayush Singh';
-  const initials = displayName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'AS';
+  const initials = isGuest ? 'GL' : (displayName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'AS');
 
   const handleExit = (e) => {
     if (e && typeof e.stopPropagation === 'function') {
@@ -106,6 +108,35 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
           {theme === 'dark' ? <Sun size={17} color="var(--amber-gold)" /> : <Moon size={17} color="var(--orange-primary)" />}
         </button>
 
+        {/* Guest Sign-In CTA Button */}
+        {isGuest && (
+          <button
+            type="button"
+            className="nav-signin-cta-btn"
+            onClick={onOpenSignIn}
+            title="Sign in with your Google or Student account to unlock videos"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '5px 12px',
+              borderRadius: '9999px',
+              background: 'linear-gradient(135deg, #f97316, #ea580c)',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '0.78rem',
+              border: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(249, 115, 22, 0.35)',
+              transition: 'all 0.2s ease',
+              marginRight: '6px'
+            }}
+          >
+            <LogIn size={13} />
+            <span>Sign In</span>
+          </button>
+        )}
+
         {/* Profile Chip & Dropdown */}
         <div className="nav-profile-container" ref={profileRef} style={{ position: 'relative' }}>
           <div
@@ -121,10 +152,10 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
               {initials}
             </div>
             <div className="user-details">
-              <span className="user-profile-name">{displayName}</span>
-              <span className="user-role" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#10b981', fontWeight: '700', fontSize: '0.72rem' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 6px #10b981' }}></span>
-                Online
+              <span className="user-profile-name">{isGuest ? 'Guest Explorer' : displayName}</span>
+              <span className="user-role" style={{ display: 'flex', alignItems: 'center', gap: '5px', color: isGuest ? '#f59e0b' : '#10b981', fontWeight: '700', fontSize: '0.72rem' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: isGuest ? '#f59e0b' : '#10b981', display: 'inline-block', boxShadow: isGuest ? '0 0 6px #f59e0b' : '0 0 6px #10b981' }}></span>
+                {isGuest ? 'Guest Mode' : 'Online'}
               </span>
             </div>
             <ChevronDown

@@ -1794,7 +1794,12 @@ Click '▶ Run' to compile and execute your C code...
       syncUserIdentityUI();
       closeGoogleModal();
       updateProgressDisplay();
-      alert(`Switched to account: ${user.name}`);
+      alert(`Signed in as: ${user.name}! Video playback unlocked.`);
+      if (pendingVideoModal) {
+        const { title, videoId, topicId } = pendingVideoModal;
+        pendingVideoModal = null;
+        openVideoModal(title, videoId, topicId);
+      }
     }
 
     function handleRegisterNewGoogleAccount() {
@@ -2063,10 +2068,19 @@ Click '▶ Run' to compile and execute your C code...
       if (activeNav) activeNav.classList.add('active');
     }
 
-    /* --- 6. VIDEO MODAL ENGINE --- */
+    /* --- 6. VIDEO MODAL ENGINE (LOCKED FOR GUEST EXPLORERS) --- */
     let currentModalTopicId = null;
+    let pendingVideoModal = null;
 
     function openVideoModal(title, videoId, topicId) {
+      // Guard: Guest users can explore tabs but must log in to play video
+      if (!currentUser || currentUser.name === 'Guest Learner' || !currentUser.email || currentUser.email.includes('guest@')) {
+        pendingVideoModal = { title, videoId, topicId };
+        alert(`🔒 Video Playback Locked\n\nYou can freely explore the curriculum and problem sets in Guest Mode, but video masterclasses require signing in.\n\nPlease sign in with your account to watch: "${title}".`);
+        openGoogleModal();
+        return;
+      }
+
       currentModalTopicId = topicId;
       document.getElementById('modalVideoTitle').textContent = title;
       document.getElementById('videoIframePlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;

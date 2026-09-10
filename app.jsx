@@ -1836,6 +1836,10 @@ const App = () => {
   };
 
   const handleTopicClick = (topic) => {
+    if (!user || user === 'Guest Learner' || user === 'Guest') {
+      setToastMessage("🔒 Video Locked: Please sign in with your account to watch video masterclasses.");
+      return;
+    }
     if (topic.url) {
       setActiveVideo(topic);
     } else {

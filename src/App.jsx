@@ -11,6 +11,7 @@ import VideoPlayerModal from './components/VideoPlayerModal';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import SearchModal from './components/SearchModal';
+import AuthRequiredModal from './components/AuthRequiredModal';
 
 // DSA Striver A2Z Components
 import DSACoursePage from './components/dsa/DSACoursePage';
@@ -41,6 +42,8 @@ const App = () => {
   const [activeTab, setActiveTab] = useState(getInitialTab);
   const [toastMessage, setToastMessage] = useState(null);
   const [activeVideo, setActiveVideo] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [pendingVideoAction, setPendingVideoAction] = useState(null);
 
   // DSA view states
   const [activeDsaLesson, setActiveDsaLesson] = useState(null);
@@ -102,12 +105,21 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // DSA Lesson Handlers
+  // Guest check: Guests can explore all tabs but must log in to play videos
+  const isGuest = !user || user === 'Guest Learner' || user === 'Guest';
+
+  // DSA Lesson Handlers (Locked for guests)
   const handleSelectDsaLesson = useCallback((lesson) => {
+    if (!user || user === 'Guest Learner' || user === 'Guest') {
+      setPendingVideoAction({ type: 'dsa', data: lesson });
+      setIsAuthModalOpen(true);
+      setToastMessage("🔒 Please sign in first to watch DSA video lessons.");
+      return;
+    }
     setActiveDsaLesson(lesson);
     setActiveTab('dsa');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [user]);
 
   const handleCompleteDsaLesson = useCallback((lessonId, sectionId, title) => {
     markDsaLessonComplete(lessonId, sectionId, title);
@@ -125,8 +137,14 @@ const App = () => {
     setToastMessage("🏆 Problem solved successfully! +50 Algorithmic XP");
   }, [updateDsaProblemProgress]);
 
-  // Continue Learning Engine: automatically finds last watched or earliest unfinished
+  // Continue Learning Engine (Locked for guests)
   const handleContinueLearning = useCallback((targetLesson) => {
+    if (!user || user === 'Guest Learner' || user === 'Guest') {
+      setPendingVideoAction({ type: 'dsa', data: targetLesson });
+      setIsAuthModalOpen(true);
+      setToastMessage("🔒 Please sign in first to watch video lessons.");
+      return;
+    }
     if (targetLesson) {
       handleSelectDsaLesson(targetLesson);
     } else if (lastWatchedLesson?.lessonId) {
@@ -137,13 +155,35 @@ const App = () => {
       const all = getAllA2ZLessons();
       handleSelectDsaLesson(all[0]);
     }
-  }, [handleSelectDsaLesson, lastWatchedLesson]);
+  }, [user, handleSelectDsaLesson, lastWatchedLesson]);
 
-  // C / Python Video Handlers (Preserved)
+  // C / Python Video Handlers (Locked for guests)
   const handleTopicClick = useCallback((topic) => {
+    if (!user || user === 'Guest Learner' || user === 'Guest') {
+      setPendingVideoAction({ type: 'topic', data: topic });
+      setIsAuthModalOpen(true);
+      setToastMessage("🔒 Please sign in first to watch video masterclasses.");
+      return;
+    }
     if (topic.url) setActiveVideo(topic);
     else setToastMessage("Video link coming soon.");
-  }, []);
+  }, [user]);
+
+  // Modal Login Success: unlocks and automatically plays pending video
+  const handleModalLoginSuccess = useCallback((userName) => {
+    handleLogin(userName);
+    setIsAuthModalOpen(false);
+    setToastMessage(`Welcome back, ${userName}! Video playback unlocked.`);
+    if (pendingVideoAction) {
+      if (pendingVideoAction.type === 'topic' && pendingVideoAction.data?.url) {
+        setActiveVideo(pendingVideoAction.data);
+      } else if (pendingVideoAction.type === 'dsa' && pendingVideoAction.data) {
+        setActiveDsaLesson(pendingVideoAction.data);
+        setActiveTab('dsa');
+      }
+      setPendingVideoAction(null);
+    }
+  }, [handleLogin, pendingVideoAction]);
 
   const handleNextUnit = useCallback(() => {
     if (!activeVideo) return;
@@ -181,6 +221,7 @@ const App = () => {
               theme={theme}
               toggleTheme={toggleTheme}
               onOpenSearch={() => setIsSearchOpen(true)}
+              onOpenSignIn={() => setIsAuthModalOpen(true)}
             />
 
             <AnimatePresence mode="wait">
@@ -306,6 +347,21 @@ const App = () => {
         onClose={() => setIsSearchOpen(false)}
         onSelectLesson={handleSelectDsaLesson}
         onSelectProblem={handleSelectDsaProblem}
+      />
+
+      {/* Video Guest Lock Modal */}
+      <AuthRequiredModal
+        isOpen={isAuthModalOpen}
+        onClose={() => {
+          setIsAuthModalOpen(false);
+          setPendingVideoAction(null);
+        }}
+        onLogin={handleModalLoginSuccess}
+        onSwitchToFullLogin={() => {
+          setIsAuthModalOpen(false);
+          handleLogout();
+        }}
+        videoTitle={pendingVideoAction?.data?.title || pendingVideoAction?.data?.name}
       />
 
       {/* Toast Notifications */}
