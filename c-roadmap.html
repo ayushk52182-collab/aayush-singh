@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn with Aayush | Interactive 3D C, Python & Striver DSA Academy</title>
+  <meta name="description" content="Master C Language, Python 3.12+, and Striver A2Z DSA Sheet with an immersive interactive learning platform. Engineered by Aayush Singh.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    /* Standalone High-Performance Enhancements & Transitions */
+    :root {
+      --font-code: 'Fira Code', monospace;
+      --font-heading: 'Syne', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Orbitron', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Ambient Cyber Grid Background */
+    .cyber-bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 100% 50%, rgba(234, 88, 12, 0.08) 0%, transparent 40%),
+        linear-gradient(to right, var(--bg-grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--bg-grid-line) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    /* Top Navbar */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 2rem;
+      background: rgba(18, 18, 36, 0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+    }
+
+    html[data-theme="light"] .top-navbar {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .nav-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-emblem-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
+    }
+
+    .brand-title-wrap h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-family: var(--font-heading);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .brand-title-wrap span {
+      font-size: 0.72rem;
+      color: var(--neon-cyan);
+      font-family: var(--font-code);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links-list {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-link-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-link-item:hover, .nav-link-item.active {
+      color: var(--neon-cyan);
+    }
+
+    .nav-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .search-btn-trigger {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 10px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .search-btn-trigger:hover {
+      border-color: var(--neon-cyan);
+      color: var(--text-main);
+    }
+
+    .kbd-shortcut {
+      padding: 0.15rem 0.35rem;
+      background: rgba(249, 115, 22, 0.15);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: var(--font-code);
+      color: var(--neon-cyan);
+    }
+
+    .theme-toggle-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      color: var(--neon-cyan);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+      border-color: var(--neon-cyan);
+    }
+
+    .user-profile-chip {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.35rem 0.75rem 0.35rem 0.45rem;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 9999px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .user-avatar-initials {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-name-text {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .status-dot-online {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    .profile-dropdown-menu {
+      position: absolute;
+      top: 120%;
+      right: 0;
+      width: 240px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 0.75rem;
+      box-shadow: var(--glow-card);
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 200;
+      backdrop-filter: blur(20px);
+    }
+
+    .profile-dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-user-header {
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 0.5rem;
+    }
+
+    .dropdown-user-email {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s ease;
+    }
+
+    .dropdown-action-btn:hover {
+      background: rgba(249, 115, 22, 0.1);
+      color: var(--neon-cyan);
+    }
+
+    .dropdown-action-btn.exit-btn {
+      color: #ef4444;
+    }
+    .dropdown-action-btn.exit-btn:hover {
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      max-width: 1280px;
+      margin: 2.5rem auto 2rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero-glow-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(24, 20, 42, 0.95), rgba(18, 14, 28, 0.92));
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 3.5rem 3rem;
+      box-shadow: var(--glow-card);
+      overflow: hidden;
+    }
+
+    html[data-theme="light"] .hero-glow-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 237, 0.94));
+    }
+
+    .hero-announcement-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: var(--neon-cyan);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-main-title {
+      font-family: var(--font-heading);
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0 0 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .gradient-hero-text {
+      background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtext {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      line-height: 1.6;
+      margin: 0 0 2rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 14px;
+      background: var(--card-bg-elevated);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-hero-secondary:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      transform: translateY(-2px);
+    }
+
+    .hero-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 2rem;
+    }
+
+    .kpi-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .kpi-number {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--neon-cyan);
+      line-height: 1;
+    }
+
+    .kpi-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Path Selector Tabs */
+    .path-selector-wrap {
+      max-width: 1280px;
+      margin: 1rem auto 2.5rem;
+      padding: 0 1.5rem;
+    }
+
+    .path-tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .path-tab-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.15rem 1.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .path-tab-card:hover {
+      border-color: var(--neon-cyan);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-card);
+    }
+
+    .path-tab-card.active {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(234, 88, 12, 0.06));
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.25);
+    }
+
+    .tab-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .path-tab-card.active .tab-icon-box {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .tab-text-info h3 {
+      margin: 0 0 0.2rem;
+      font-size: 0.98rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+    }
+
+    .tab-text-info p {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Content Panes */
+    .content-pane {
+      display: none;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .content-pane.active {
+      display: block;
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Headers */
+    .section-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-badge-pill {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      color: var(--neon-cyan);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .section-heading-h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    /* Progress Tracker Card */
+    .progress-tracker-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 1.25rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--glow-card);
+      flex-wrap: wrap;
+    }
+
+    .progress-info-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .progress-percent-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: conic-gradient(var(--neon-cyan) var(--progress-deg, 45deg), rgba(249, 115, 22, 0.15) 0deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .progress-percent-inner {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: var(--neon-cyan);
+    }
+
+    .progress-track-outer {
+      flex: 1;
+      min-width: 240px;
+      height: 10px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .progress-track-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f97316, #fb923c);
+      width: 25%;
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    .reset-progress-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .reset-progress-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+    }
+
+    /* Phase Cards & Curriculum Grid */
+    .curriculum-phases-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .curriculum-phase-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--glow-card);
+      transition: all 0.25s ease;
+    }
+
+    .curriculum-phase-card:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-card-hover);
+    }
+
+    .phase-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--card-bg-elevated);
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .phase-badge-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .phase-num-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.1));
+      border: 1px solid rgba(249, 115, 22, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--neon-cyan);
+      font-size: 1.15rem;
+    }
+
+    .phase-title-text h3 {
+      margin: 0 0 0.25rem;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .phase-title-text p {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .phase-meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--neon-cyan);
+      font-family: var(--font-code);
+    }
+
+    .topics-list-container {
+      padding: 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .topic-row-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .topic-row-item:hover {
+      border-color: var(--neon-cyan);
+      transform: translateX(4px);
+    }
+
+    .topic-left-details {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .topic-check-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 2px solid var(--card-border);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+    }
+
+    .topic-check-btn.completed {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+
+    .topic-title-info h4 {
+      margin: 0 0 0.2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .topic-title-info span {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-code);
+    }
+
+    .topic-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-watch-lecture {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-watch-lecture:hover {
+      opacity: 0.92;
+      transform: scale(1.02);
+    }
+
+    /* DSA Problem Table */
+    .dsa-search-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .dsa-filter-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill-btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill-btn.active, .filter-pill-btn:hover {
+      background: rgba(249, 115, 22, 0.15);
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+    }
+
+    .dsa-problems-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--glow-card);
+    }
+
+    .dsa-problems-table th {
+      background: var(--card-bg-elevated);
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .dsa-problems-table td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 0.88rem;
+    }
+
+    .dsa-problems-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dsa-problems-table tr:hover td {
+      background: rgba(249, 115, 22, 0.04);
+    }
+
+    .diff-badge {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: var(--font-code);
+      text-transform: uppercase;
+    }
+
+    .diff-badge.easy {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+
+    .diff-badge.medium {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+      border: 1px solid rgba(234, 179, 8, 0.35);
+    }
+
+    .diff-badge.hard {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    /* Live In-Browser C Playground */
+    .playground-layout-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--glow-card);
+    }
+
+    @media (max-width: 960px) {
+      .playground-layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .editor-pane-box {
+      display: flex;
+      flex-direction: column;
+      background: #080811;
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .editor-top-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: #121224;
+      border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .preset-selector-select {
+      background: #090914;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: #f5f5f7;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: var(--font-code);
+      cursor: pointer;
+    }
+
+    .editor-code-textarea {
+      width: 100%;
+      height: 380px;
+      background: #080811;
+      color: #38bdf8;
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      padding: 1rem;
+      border: none;
+      resize: vertical;
+      outline: none;
+      box-sizing: border-box;
+      line-height: 1.5;
+    }
+
+    .terminal-pane-box {
+      display: flex;
+      flex-direction: column;
+      background: #06060c;
+      border: 1px solid rgba(249, 115, 22, 0.25);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .terminal-top-header {
+      padding: 0.75rem 1.25rem;
+      background: #10101c;
+      border-bottom: 1px solid rgba(249, 115, 22, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--neon-cyan);
+    }
+
+    .terminal-output-content {
+      padding: 1.25rem;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: #22c55e;
+      height: 380px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    /* Modal Styling */
+    .interactive-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 4, 10, 0.85);
+      backdrop-filter: blur(14px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .interactive-modal-overlay.open {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .video-modal-card {
+      width: 100%;
+      max-width: 960px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .video-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .video-modal-header h3 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .modal-close-btn:hover {
+      color: #ef4444;
+    }
+
+    .video-player-frame-wrap {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #000;
+    }
+
+    .video-player-frame-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.75rem;
+      background: var(--card-bg);
+      border-top: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Google Auth Modal */
+    .google-modal-box {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg-elevated);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+      position: relative;
+    }
+
+    .google-header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .google-users-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .google-user-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      color: var(--text-main);
+    }
+
+    .google-user-item-btn:hover {
+      border-color: var(--neon-cyan);
+      background: rgba(249, 115, 22, 0.1);
+    }
+
+    .google-input-field {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      box-sizing: border-box;
+      margin-bottom: 0.85rem;
+    }
+
+    .google-input-field:focus {
+      outline: none;
+      border-color: var(--neon-cyan);
+    }
+
+    /* Footer */
+    .master-site-footer {
+      border-top: 1px solid var(--card-border);
+      background: var(--card-bg-elevated);
+      padding: 3rem 1.5rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-inner-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-inner-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-bottom-bar {
+      max-width: 1280px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Grid Background -->
+  <div class="cyber-bg-canvas"></div>
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="top-navbar" id="topNavbar">
+    <a href="#" class="nav-brand-group">
+      <div class="brand-emblem-badge">A</div>
+      <div class="brand-title-wrap">
+        <h1>LEARN WITH AAYUSH</h1>
+        <span>Cyberpunk Code Academy</span>
+      </div>
+    </a>
+
+    <nav>
+      <ul class="nav-links-list">
+        <li><a class="nav-link-item active" onclick="switchMainTab('c-tab')">C Roadmap</a></li>
+        <li><a class="nav-link-item" onclick="switchMainTab('python-tab')">Python 3.12+</a></li>
+        <li><a class="nav-link-item" onclick="switchMainTab('dsa-tab')">Striver DSA Sheet</a></li>
+        <li><a class="nav-link-item" onclick="switchMainTab('playground-tab')">Code Playground</a></li>
+        <li><a class="nav-link-item" href="#notesSection">Handbooks & Notes</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions-group">
+      <button class="search-btn-trigger" onclick="openSearchModal()" title="Search Topics">
+        <i data-lucide="search" style="width:16px;height:16px;"></i>
+        <span>Search</span>
+        <span class="kbd-shortcut">Ctrl K</span>
+      </button>
+
+      <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+        <i data-lucide="sun" id="themeIcon" style="width:18px;height:18px;"></i>
+      </button>
+
+      <!-- Profile Chip -->
+      <div class="user-profile-chip" id="profileChip" onclick="toggleProfileDropdown(event)">
+        <div class="user-avatar-initials" id="navAvatarInitials">AS</div>
+        <span class="user-name-text" id="navUserName">Aayush Singh</span>
+        <span class="status-dot-online"></span>
+
+        <!-- Dropdown Menu -->
+        <div class="profile-dropdown-menu" id="profileDropdown">
+          <div class="dropdown-user-header">
+            <strong id="dropdownFullName">Aayush Singh</strong>
+            <div class="dropdown-user-email" id="dropdownUserEmail">aayushsingh@gmail.com</div>
+          </div>
+          <button class="dropdown-action-btn" onclick="openGoogleModal()">
+            <i data-lucide="user-check" style="width:16px;height:16px;"></i>
+            Switch / Add Google Account
+          </button>
+          <button class="dropdown-action-btn" onclick="resetUserProgress()">
+            <i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i>
+            Reset Roadmap Tracking
+          </button>
+          <button class="dropdown-action-btn exit-btn" onclick="handleExitSession()">
+            <i data-lucide="log-out" style="width:16px;height:16px;"></i>
+            Exit Session / Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-container">
+    <div class="hero-glow-card">
+      <div class="hero-announcement-pill">
+        <i data-lucide="sparkles" style="width:14px;height:14px;"></i>
+        <span>V2.0 LIVE • 3D C, PYTHON & STRIVER A2Z DSA SHEET</span>
+      </div>
+
+      <h1 class="hero-main-title">
+        Master C Language & Python <br>
+        <span class="gradient-hero-text">The Visual, High-Performance Way</span>
+      </h1>
+
+      <p class="hero-subtext">
+        Engineered by Aayush Singh for students, engineers, and competitive programmers. Master hardware foundations, low-level pointers, dynamic heap memory, and 450+ Striver DSA problems with structured interactive roadmaps and embedded YouTube masterclasses.
+      </p>
+
+      <div class="hero-cta-row">
+        <a href="#curriculumSection" class="btn-hero-primary" onclick="switchMainTab('c-tab')">
+          <i data-lucide="compass" style="width:18px;height:18px;"></i>
+          Launch C Roadmap
+        </a>
+        <button class="btn-hero-secondary" onclick="switchMainTab('playground-tab')">
+          <i data-lucide="terminal" style="width:18px;height:18px;"></i>
+          Live Code Playground
+        </button>
+        <button class="btn-hero-secondary" onclick="switchMainTab('dsa-tab')">
+          <i data-lucide="layers" style="width:18px;height:18px;"></i>
+          Striver DSA Sheet
+        </button>
+      </div>
+
+      <div class="hero-kpi-grid">
+        <div class="kpi-stat-item">
+          <div class="kpi-number">50+</div>
+          <div class="kpi-label">Masterclass Lectures</div>
+        </div>
+        <div class="kpi-stat-item">
+          <div class="kpi-number">450+</div>
+          <div class="kpi-label">Striver DSA Problems</div>
+        </div>
+        <div class="kpi-stat-item">
+          <div class="kpi-number">100%</div>
+          <div class="kpi-label">Free & Open Source</div>
+        </div>
+        <div class="kpi-stat-item">
+          <div class="kpi-number">GCC / C</div>
+          <div class="kpi-label">In-Browser Playground</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATH SELECTOR TABS ================= -->
+  <section class="path-selector-wrap" id="curriculumSection">
+    <div class="path-tabs-bar">
+      <div class="path-tab-card active" id="tab-btn-c" onclick="switchMainTab('c-tab')">
+        <div class="tab-icon-box">⚡</div>
+        <div class="tab-text-info">
+          <h3>C Language Mastery</h3>
+          <p>5 Phases • Pointers & Heap Memory</p>
+        </div>
+      </div>
+
+      <div class="path-tab-card" id="tab-btn-python" onclick="switchMainTab('python-tab')">
+        <div class="tab-icon-box">🐍</div>
+        <div class="tab-text-info">
+          <h3>Python 3.12+ Fast-Track</h3>
+          <p>5 Phases • Modern OOPs & Modules</p>
+        </div>
+      </div>
+
+      <div class="path-tab-card" id="tab-btn-dsa" onclick="switchMainTab('dsa-tab')">
+        <div class="tab-icon-box">🎯</div>
+        <div class="tab-text-info">
+          <h3>Striver A2Z DSA Sheet</h3>
+          <p>450+ Problems • Video Solutions</p>
+        </div>
+      </div>
+
+      <div class="path-tab-card" id="tab-btn-playground" onclick="switchMainTab('playground-tab')">
+        <div class="tab-icon-box">💻</div>
+        <div class="tab-text-info">
+          <h3>Live Code Playground</h3>
+          <p>Interactive C Code & Terminal</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TAB 1: C LANGUAGE CURRICULUM ================= -->
+  <main class="content-pane active" id="c-tab">
+    <div class="section-title-wrap">
+      <div>
+        <span class="section-badge-pill">Curriculum Timeline</span>
+        <h2 class="section-heading-h2">C Programming Architecture</h2>
+      </div>
+    </div>
+
+    <!-- Live Progress Bar -->
+    <div class="progress-tracker-bar">
+      <div class="progress-info-left">
+        <div class="progress-percent-circle" id="cProgressCircle">
+          <div class="progress-percent-inner" id="cProgressPercentText">0%</div>
+        </div>
+        <div>
+          <strong style="font-size:1rem;display:block;">Your C Learning Journey</strong>
+          <span style="font-size:0.82rem;color:var(--text-muted);" id="cProgressStatsText">0 of 20 units completed</span>
+        </div>
+      </div>
+
+      <div class="progress-track-outer">
+        <div class="progress-track-fill" id="cProgressTrackFill" style="width: 0%;"></div>
+      </div>
+
+      <button class="reset-progress-btn" onclick="resetUserProgress()">Reset Progress</button>
+    </div>
+
+    <!-- 5 Phases Grid -->
+    <div class="curriculum-phases-grid" id="cPhasesContainer">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+  </main>
+
+  <!-- ================= TAB 2: PYTHON 3.12+ CURRICULUM ================= -->
+  <main class="content-pane" id="python-tab">
+    <div class="section-title-wrap">
+      <div>
+        <span class="section-badge-pill">Modern Python</span>
+        <h2 class="section-heading-h2">Python 3.12+ Fast-Track Roadmap</h2>
+      </div>
+    </div>
+
+    <div class="curriculum-phases-grid" id="pythonPhasesContainer">
+      <!-- Populated dynamically by JavaScript -->
+    </div>
+  </main>
+
+  <!-- ================= TAB 3: STRIVER DSA SHEET ================= -->
+  <main class="content-pane" id="dsa-tab">
+    <div class="section-title-wrap">
+      <div>
+        <span class="section-badge-pill">Interview Preparation</span>
+        <h2 class="section-heading-h2">Striver A2Z Data Structures & Algorithms</h2>
+      </div>
+    </div>
+
+    <div class="dsa-search-filter-bar">
+      <div class="dsa-filter-btn-group">
+        <button class="filter-pill-btn active" onclick="filterDsaTable('all', this)">All (450+)</button>
+        <button class="filter-pill-btn" onclick="filterDsaTable('Easy', this)">Easy</button>
+        <button class="filter-pill-btn" onclick="filterDsaTable('Medium', this)">Medium</button>
+        <button class="filter-pill-btn" onclick="filterDsaTable('Hard', this)">Hard</button>
+      </div>
+
+      <input type="text" id="dsaSearchInput" placeholder="Search DSA problems..." class="google-input-field" style="max-width:280px;margin-bottom:0;" oninput="handleDsaSearch(this.value)">
+    </div>
+
+    <table class="dsa-problems-table">
+      <thead>
+        <tr>
+          <th style="width:48px;">Status</th>
+          <th>Problem Title</th>
+          <th>Topic</th>
+          <th>Difficulty</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="dsaProblemsTbody">
+        <!-- Populated dynamically by JavaScript -->
+      </tbody>
+    </table>
+  </main>
+
+  <!-- ================= TAB 4: LIVE CODE PLAYGROUND ================= -->
+  <main class="content-pane" id="playground-tab">
+    <div class="section-title-wrap">
+      <div>
+        <span class="section-badge-pill">Interactive Terminal</span>
+        <h2 class="section-heading-h2">Live C Code Playground</h2>
+      </div>
+    </div>
+
+    <div class="playground-layout-grid">
+      <!-- Editor Column -->
+      <div class="editor-pane-box">
+        <div class="editor-top-controls">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#eab308;"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;"></span>
+            <span style="font-family:var(--font-code);font-size:0.8rem;color:var(--text-muted);margin-left:0.5rem;">main.c</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <select class="preset-selector-select" id="codePresetSelect" onchange="loadCodePreset(this.value)">
+              <option value="hello">Preset: Hello World</option>
+              <option value="fibonacci">Preset: Fibonacci Recursion</option>
+              <option value="pointers">Preset: Pointer Arithmetic</option>
+              <option value="malloc">Preset: Dynamic Array (malloc)</option>
+              <option value="bubblesort">Preset: Bubble Sort</option>
+            </select>
+            <button class="btn-hero-primary" style="padding:0.4rem 1rem;font-size:0.82rem;" onclick="runPlaygroundCode()">
+              <i data-lucide="play" style="width:14px;height:14px;"></i> Run
+            </button>
+          </div>
+        </div>
+
+        <textarea class="editor-code-textarea" id="cCodeInput" spellcheck="false"></textarea>
+      </div>
+
+      <!-- Terminal Column -->
+      <div class="terminal-pane-box">
+        <div class="terminal-top-header">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <i data-lucide="terminal" style="width:14px;height:14px;"></i>
+            <span>GCC Virtual Console</span>
+          </div>
+          <button style="background:transparent;border:none;color:var(--text-dim);cursor:pointer;" onclick="clearTerminal()">Clear</button>
+        </div>
+        <div class="terminal-output-content" id="terminalOutput">
+Click '▶ Run' to compile and execute your C code...
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= HANDBOOKS & NOTES SECTION ================= -->
+  <section class="hero-container" id="notesSection">
+    <div class="hero-glow-card" style="padding:2.5rem;">
+      <div class="section-title-wrap" style="margin-bottom:1.5rem;">
+        <div>
+          <span class="section-badge-pill">Study Notes & CheatSheets</span>
+          <h2 class="section-heading-h2">Official Handbooks & Visual Notes</h2>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.5rem;">
+        <div class="curriculum-phase-card" style="padding:1.5rem;">
+          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;">📖 C Programming Masterclass PDF</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">Comprehensive 120-page handwritten notes covering pointers, structures, and memory maps.</p>
+          <a href="https://go.fliplink.me/view/aayush-c-notes" target="_blank" class="btn-hero-primary" style="padding:0.5rem 1rem;font-size:0.82rem;">View FlipBook Notes</a>
+        </div>
+
+        <div class="curriculum-phase-card" style="padding:1.5rem;">
+          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;">⚡ Quick Syntax & Pointer Cheatsheet</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">One-page reference card for format specifiers, operator precedence, and malloc patterns.</p>
+          <button class="btn-hero-secondary" onclick="alert('Downloading high-res Cheatsheet PDF...')" style="padding:0.5rem 1rem;font-size:0.82rem;">Download Cheatsheet</button>
+        </div>
+
+        <div class="curriculum-phase-card" style="padding:1.5rem;">
+          <h4 style="margin:0 0 0.5rem;font-size:1.05rem;">🎯 Striver A2Z Practice Tracker</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1.25rem;">Direct Google Sheets template to bookmark solved problems, time complexity, and notes.</p>
+          <a href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2" target="_blank" class="btn-hero-secondary" style="padding:0.5rem 1rem;font-size:0.82rem;">Open Striver Sheet</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= IN-APP VIDEO PLAYER MODAL ================= -->
+  <div class="interactive-modal-overlay" id="videoPlayerModal" onclick="closeModalOnBackdrop(event, 'videoPlayerModal')">
+    <div class="video-modal-card">
+      <div class="video-modal-header">
+        <h3 id="modalVideoTitle">Loading Masterclass...</h3>
+        <button class="modal-close-btn" onclick="closeVideoModal()">✕</button>
+      </div>
+      <div class="video-player-frame-wrap">
+        <iframe id="videoIframePlayer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-modal-footer">
+        <div style="font-size:0.82rem;color:var(--text-muted);" id="modalVideoSubtitle">
+          Interactive Code Academy • Video Masterclass
+        </div>
+        <button class="btn-hero-primary" style="padding:0.5rem 1rem;font-size:0.82rem;" id="modalMarkCompleteBtn" onclick="toggleActiveVideoComplete()">
+          <i data-lucide="check-circle" style="width:14px;height:14px;"></i> Mark Completed
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE AUTH & ACCOUNT SWITCHER MODAL ================= -->
+  <div class="interactive-modal-overlay" id="googleAuthModal" onclick="closeModalOnBackdrop(event, 'googleAuthModal')">
+    <div class="google-modal-box">
+      <div class="google-header-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.35 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.16 0 9.94 0 12s.45 3.84 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <h3 style="margin:0;font-family:var(--font-heading);font-size:1.25rem;">Sign In with Google</h3>
+      </div>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 1rem;">Choose a profile or enter a new account. Each user gets isolated learning progress.</p>
+
+      <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">Existing Profiles</div>
+      <div class="google-users-list" id="savedGoogleUsersList">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div style="border-top:1px solid var(--card-border);padding-top:1rem;margin-top:1rem;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Use Another Account</div>
+        <input type="text" id="newGoogleNameInput" placeholder="Full Name (e.g. Priya Sharma)" class="google-input-field">
+        <input type="email" id="newGoogleEmailInput" placeholder="Google Email (e.g. priya@gmail.com)" class="google-input-field">
+        <button class="btn-hero-primary" style="width:100%;justify-content:center;" onclick="handleRegisterNewGoogleAccount()">
+          Continue with this Account
+        </button>
+      </div>
+
+      <button class="modal-close-btn" style="position:absolute;top:1.25rem;right:1.25rem;" onclick="closeGoogleModal()">✕</button>
+    </div>
+  </div>
+
+  <!-- ================= SEARCH MODAL ================= -->
+  <div class="interactive-modal-overlay" id="searchModalOverlay" onclick="closeModalOnBackdrop(event, 'searchModalOverlay')">
+    <div class="google-modal-box" style="max-width:540px;">
+      <h3 style="margin:0 0 1rem;font-family:var(--font-heading);">Quick Topic Search</h3>
+      <input type="text" id="globalSearchInput" placeholder="Search C pointers, Python loops, DSA trees..." class="google-input-field" oninput="performGlobalSearch(this.value)">
+      <div class="google-users-list" id="globalSearchResults" style="max-height:280px;">
+        <!-- Filtered results -->
+      </div>
+      <button class="modal-close-btn" style="position:absolute;top:1.25rem;right:1.25rem;" onclick="closeSearchModal()">✕</button>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="master-site-footer">
+    <div class="footer-inner-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+          <div class="brand-emblem-badge" style="width:36px;height:36px;font-size:1rem;">A</div>
+          <h3 style="margin:0;font-family:var(--font-heading);font-size:1.15rem;">Learn with Aayush</h3>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;max-width:440px;">
+          An immersive educational ecosystem engineered to demystify low-level systems programming, algorithmic thinking, and computer science interview preparation.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin:0 0 1rem;font-size:0.95rem;">Learning Pathways</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem;font-size:0.85rem;">
+          <li><a href="#" onclick="switchMainTab('c-tab')" style="color:var(--text-muted);text-decoration:none;">C Language Mastery</a></li>
+          <li><a href="#" onclick="switchMainTab('python-tab')" style="color:var(--text-muted);text-decoration:none;">Python 3.12+ Path</a></li>
+          <li><a href="#" onclick="switchMainTab('dsa-tab')" style="color:var(--text-muted);text-decoration:none;">Striver A2Z DSA Sheet</a></li>
+          <li><a href="#" onclick="switchMainTab('playground-tab')" style="color:var(--text-muted);text-decoration:none;">GCC Code Playground</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="margin:0 0 1rem;font-size:0.95rem;">Student Resources</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem;font-size:0.85rem;">
+          <li><a href="#notesSection" style="color:var(--text-muted);text-decoration:none;">FlipBook Notes PDF</a></li>
+          <li><a href="https://takeuforward.org" target="_blank" style="color:var(--text-muted);text-decoration:none;">TakeUForward DSA</a></li>
+          <li><a href="https://github.com/ayushk52182-collab/aayush-singh" target="_blank" style="color:var(--text-muted);text-decoration:none;">GitHub Repository</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <span>© 2026 Learn with Aayush. Designed & Engineered by Aayush Singh. All rights reserved.</span>
+      <span>Cyberpunk Obsidian & Warm Sunlight Studio Architecture</span>
+    </div>
+  </footer>
+
+  <!-- ================= STANDALONE JAVASCRIPT ENGINE ================= -->
+  <script>
+    /* --- 1. DATASETS (C & Python Curriculum & DSA Problems) --- */
+    const C_CURRICULUM = [
+      {
+        id: "01",
+        title: "Foundations & Low-Level I/O",
+        badge: "Phase 01",
+        label: "Week 1 Target",
+        topics: [
+          { id: "c_1_1", title: "GCC, MinGW & Toolchain Setup", duration: "24m", videoId: "z2jDamkbBF0", desc: "Setting up VS Code with GCC compiler and debugger." },
+          { id: "c_1_2", title: "Types: int, float, char, Specifiers", duration: "38m", videoId: "neLud9ah2hQ", desc: "Memory representation, byte sizes and signed/unsigned types." },
+          { id: "c_1_3", title: "I/O: printf / scanf Deep Dive", duration: "42m", videoId: "bm1rFiuXGDc", desc: "Buffer traps, field widths, and format flags." },
+          { id: "c_1_4", title: "Operators: Bitwise & Ternary Logic", duration: "35m", videoId: "_yU4vi6JhPk", desc: "Bit shifts, masking, XOR operations, and ternary conditions." }
+        ]
+      },
+      {
+        id: "02",
+        title: "Control Flow & Loops",
+        badge: "Phase 02",
+        label: "Logic Building",
+        topics: [
+          { id: "c_2_1", title: "Branching: if-else & switch-case", duration: "32m", videoId: "3e5aN_cW19o", desc: "Control flow paths, jump tables, and fallthrough." },
+          { id: "c_2_2", title: "Loops: while, for & do-while", duration: "45m", videoId: "b8k_N009-q4", desc: "Loop invariants, counter patterns, and iterations." },
+          { id: "c_2_3", title: "Algorithmic Pattern Printing", duration: "52m", videoId: "XG_fQvU61Xo", desc: "Nested loop geometry, pyramids, diamonds, and matrices." },
+          { id: "c_2_4", title: "Jump Controls: break, continue, goto", duration: "28m", videoId: "t_k_qX78v1Q", desc: "Early loop termination, skipping cycles, and labeled jumps." }
+        ]
+      },
+      {
+        id: "03",
+        title: "Functions, Arrays & Strings",
+        badge: "Phase 03",
+        label: "Modular Memory",
+        topics: [
+          { id: "c_3_1", title: "Functions & Stack Frame Architecture", duration: "48m", videoId: "V_3_4V2_7Zk", desc: "Call stack, activation records, call-by-value." },
+          { id: "c_3_2", title: "1D & 2D Arrays in Contiguous Memory", duration: "54m", videoId: "c_arr_1234", desc: "Row-major order, memory offsets, and boundary traps." },
+          { id: "c_3_3", title: "Null-Terminated Strings & string.h", duration: "41m", videoId: "c_str_5678", desc: "ASCII buffers, strlen, strcpy, strcmp, and buffer overflow." },
+          { id: "c_3_4", title: "Recursion Visualized: Call Trees", duration: "56m", videoId: "c_rec_9101", desc: "Base cases, recursive call stack, and stack overflows." }
+        ]
+      },
+      {
+        id: "04",
+        title: "Pointers & Heap Memory",
+        badge: "Phase 04",
+        label: "Low-Level Power",
+        topics: [
+          { id: "c_4_1", title: "Pointer Addresses & Dereferencing (* &)", duration: "62m", videoId: "c_ptr_1122", desc: "Memory addresses, pointer syntax, and pointer to pointer." },
+          { id: "c_4_2", title: "Pointer Arithmetic & Array Pointer Decay", duration: "58m", videoId: "c_ptr_3344", desc: "Stepping through RAM, subscript equivalence, void pointers." },
+          { id: "c_4_3", title: "Dynamic Memory: malloc, calloc, free", duration: "65m", videoId: "c_ptr_5566", desc: "Heap allocation, memory leaks, dangling pointers, Valgrind." },
+          { id: "c_4_4", title: "User-Defined Types: struct, union, enum", duration: "50m", videoId: "c_str_7788", desc: "Memory alignment, struct padding, and bit fields." }
+        ]
+      },
+      {
+        id: "05",
+        title: "Files, Preprocessor & Projects",
+        badge: "Phase 05",
+        label: "Systems Capstone",
+        topics: [
+          { id: "c_5_1", title: "File I/O: fopen, fread, fwrite, fseek", duration: "48m", videoId: "c_fil_9900", desc: "Buffered file streams, binary mode, and error handling." },
+          { id: "c_5_2", title: "Binary vs Text File Handling", duration: "36m", videoId: "c_fil_1133", desc: "Serialization of structures directly into disk." },
+          { id: "c_5_3", title: "Preprocessor Directives & Macros", duration: "44m", videoId: "c_pre_5577", desc: "#define, #ifdef, header guards, and multi-file builds." },
+          { id: "c_5_4", title: "Capstone: Student Database & Banking CLI", duration: "75m", videoId: "c_cap_2244", desc: "Full terminal project with persistent file records." }
+        ]
+      }
+    ];
+
+    const PYTHON_CURRICULUM = [
+      {
+        id: "py_01",
+        title: "Python Foundations & Types",
+        badge: "Phase 01",
+        label: "Week 1 Fast-Track",
+        topics: [
+          { id: "py_1_1", title: "Python 3.12+ Setup & REPL", duration: "25m", videoId: "py_setup_1", desc: "Interactive shell, virtual environments, pip packages." },
+          { id: "py_1_2", title: "Dynamic Typing, Variables & String F-strings", duration: "35m", videoId: "py_types_2", desc: "Everything is an object, type casting, slicing." },
+          { id: "py_1_3", title: "Arithmetic, Logical & Membership Operators", duration: "30m", videoId: "py_ops_3", desc: "is vs ==, in keyword, floor division." },
+          { id: "py_1_4", title: "Terminal Input / Output Tricks", duration: "28m", videoId: "py_io_4", desc: "sys.stdin vs input(), print formatting." }
+        ]
+      },
+      {
+        id: "py_02",
+        title: "Control Flow & Collections",
+        badge: "Phase 02",
+        label: "Core Structures",
+        topics: [
+          { id: "py_2_1", title: "if-elif-else & Structural Pattern Matching", duration: "34m", videoId: "py_match_1", desc: "Python 3.10+ match-case statement." },
+          { id: "py_2_2", title: "for-in loops, range() & enumerate()", duration: "40m", videoId: "py_loops_2", desc: "Iterating like a Python pro." },
+          { id: "py_2_3", title: "Lists, Tuples, Sets & Dictionaries", duration: "55m", videoId: "py_data_3", desc: "Hash maps, mutability, hashable keys." },
+          { id: "py_2_4", title: "List, Dict & Set Comprehensions", duration: "38m", videoId: "py_comp_4", desc: "One-line algorithmic transformations." }
+        ]
+      }
+    ];
+
+    const DSA_PROBLEMS_LIST = [
+      { id: "dsa_1", title: "Two Sum (Hashing Pattern)", topic: "Arrays & Hashing", diff: "Easy", videoId: "UXDSeD9mN-k", link: "https://leetcode.com/problems/two-sum/" },
+      { id: "dsa_2", title: "Best Time to Buy and Sell Stock", topic: "Arrays & Sliding Window", diff: "Easy", videoId: "excAOvwF_Wk", link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+      { id: "dsa_3", title: "Contains Duplicate", topic: "Arrays & Hashing", diff: "Easy", videoId: "3OamzN90kPg", link: "https://leetcode.com/problems/contains-duplicate/" },
+      { id: "dsa_4", title: "Maximum Subarray (Kadane's Algorithm)", topic: "Arrays & Dynamic Programming", diff: "Medium", videoId: "5WZl3MMT0Eg", link: "https://leetcode.com/problems/maximum-subarray/" },
+      { id: "dsa_5", title: "Merge Sorted Array (Two Pointers)", topic: "Arrays & Two Pointers", diff: "Easy", videoId: "P1Ic85Rarzk", link: "https://leetcode.com/problems/merge-sorted-array/" },
+      { id: "dsa_6", title: "Reverse Linked List (Iterative & Recursive)", topic: "Linked Lists", diff: "Easy", videoId: "G0_I-ZF0S38", link: "https://leetcode.com/problems/reverse-linked-list/" },
+      { id: "dsa_7", title: "Detect Cycle in Linked List (Floyd's Tortoise)", topic: "Linked Lists", diff: "Easy", videoId: "gBTe7lFR3vc", link: "https://leetcode.com/problems/linked-list-cycle/" },
+      { id: "dsa_8", title: "Trapping Rain Water (Two Pointers)", topic: "Two Pointers & Arrays", diff: "Hard", videoId: "ZI2z58304Qk", link: "https://leetcode.com/problems/trapping-rain-water/" },
+      { id: "dsa_9", title: "Valid Parentheses (Stack)", topic: "Stack", diff: "Easy", videoId: "WTzjTskDFMg", link: "https://leetcode.com/problems/valid-parentheses/" },
+      { id: "dsa_10", title: "Binary Tree Inorder Traversal", topic: "Binary Trees", diff: "Easy", videoId: "g_S5WlizOSc", link: "https://leetcode.com/problems/binary-tree-inorder-traversal/" },
+      { id: "dsa_11", title: "Maximum Depth of Binary Tree", topic: "Binary Trees", diff: "Easy", videoId: "hTM38LrPtma", link: "https://leetcode.com/problems/maximum-depth-of-binary-tree/" },
+      { id: "dsa_12", title: "Lowest Common Ancestor in BST", topic: "Binary Search Trees", diff: "Medium", videoId: "gs2LMfuOR9k", link: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/" },
+      { id: "dsa_13", title: "Number of Islands (BFS / DFS)", topic: "Graphs", diff: "Medium", videoId: "pV2kpPD66nE", link: "https://leetcode.com/problems/number-of-islands/" },
+      { id: "dsa_14", title: "Climbing Stairs (DP)", topic: "Dynamic Programming", diff: "Easy", videoId: "Y0lT9Fck7q8", link: "https://leetcode.com/problems/climbing-stairs/" },
+      { id: "dsa_15", title: "Longest Increasing Subsequence (Binary Search)", topic: "Dynamic Programming", diff: "Medium", videoId: "cjWnW0hdF1Y", link: "https://leetcode.com/problems/longest-increasing-subsequence/" }
+    ];
+
+    const CODE_PRESETS = {
+      hello: `#include <stdio.h>\n\nint main() {\n    printf("========================================\\n");\n    printf("🚀 Hello, Cyberpunk Academy Learner!\\n");\n    printf("Engineered by Aayush Singh\\n");\n    printf("========================================\\n");\n    return 0;\n}`,
+      fibonacci: `#include <stdio.h>\n\nint fibonacci(int n) {\n    if (n <= 1) return n;\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nint main() {\n    int terms = 8;\n    printf("Fibonacci Sequence (first %d terms):\\n", terms);\n    for (int i = 0; i < terms; i++) {\n        printf("%d ", fibonacci(i));\n    }\n    printf("\\n");\n    return 0;\n}`,
+      pointers: `#include <stdio.h>\n\nint main() {\n    int score = 95;\n    int *ptr = &score;\n\n    printf("Score Value: %d\\n", score);\n    printf("Memory Address: %p\\n", (void*)ptr);\n    printf("Value via Pointer: %d\\n", *ptr);\n\n    *ptr = 100; // Mutating through pointer\n    printf("Mutated Score: %d\\n", score);\n    return 0;\n}`,
+      malloc: `#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 5;\n    int *arr = (int*)malloc(n * sizeof(int));\n    if (arr == NULL) {\n        printf("Heap allocation failed!\\n");\n        return 1;\n    }\n\n    for (int i = 0; i < n; i++) arr[i] = (i + 1) * 10;\n    printf("Dynamic Heap Array: ");\n    for (int i = 0; i < n; i++) printf("%d ", arr[i]);\n    printf("\\n");\n\n    free(arr); // Clean heap memory\n    printf("Memory successfully freed.\\n");\n    return 0;\n}`,
+      bubblesort: `#include <stdio.h>\n\nvoid bubbleSort(int arr[], int n) {\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - i - 1; j++) {\n            if (arr[j] > arr[j + 1]) {\n                int temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n}\n\nint main() {\n    int data[] = {64, 34, 25, 12, 22, 11, 90};\n    int size = sizeof(data) / sizeof(data[0]);\n\n    printf("Unsorted: ");\n    for (int i = 0; i < size; i++) printf("%d ", data[i]);\n    printf("\\n");\n\n    bubbleSort(data, size);\n\n    printf("Sorted:   ");\n    for (int i = 0; i < size; i++) printf("%d ", data[i]);\n    printf("\\n");\n    return 0;\n}`
+    };
+
+    /* --- 2. USER AUTHENTICATION & SESSION ENGINE --- */
+    let currentUser = JSON.parse(localStorage.getItem('roadmap_user') || 'null');
+    if (!currentUser) {
+      currentUser = { name: "Aayush Singh", email: "aayushsingh@gmail.com" };
+      localStorage.setItem('roadmap_user', JSON.stringify(currentUser));
+    }
+
+    let registeredUsers = JSON.parse(localStorage.getItem('roadmap_registered_users') || '[]');
+    if (registeredUsers.length === 0) {
+      registeredUsers = [
+        { name: "Aayush Singh", email: "aayushsingh@gmail.com" },
+        { name: "Priya Patel", email: "priyapatel@gmail.com" },
+        { name: "Rahul Sharma", email: "rahulsharma@gmail.com" }
+      ];
+      localStorage.setItem('roadmap_registered_users', JSON.stringify(registeredUsers));
+    }
+
+    function syncUserIdentityUI() {
+      const name = currentUser.name || "Aayush Singh";
+      const email = currentUser.email || "aayushsingh@gmail.com";
+      const initials = name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "AS";
+
+      document.getElementById('navUserName').textContent = name;
+      document.getElementById('navAvatarInitials').textContent = initials;
+      document.getElementById('dropdownFullName').textContent = name;
+      document.getElementById('dropdownUserEmail').textContent = email;
+    }
+
+    function toggleProfileDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('profileDropdown');
+      menu.classList.toggle('show');
+    }
+
+    document.addEventListener('click', () => {
+      const menu = document.getElementById('profileDropdown');
+      if (menu) menu.classList.remove('show');
+    });
+
+    function openGoogleModal() {
+      renderSavedGoogleUsers();
+      document.getElementById('googleAuthModal').classList.add('open');
+    }
+
+    function closeGoogleModal() {
+      document.getElementById('googleAuthModal').classList.remove('open');
+    }
+
+    function renderSavedGoogleUsers() {
+      const list = document.getElementById('savedGoogleUsersList');
+      list.innerHTML = "";
+      registeredUsers.forEach(u => {
+        const initials = u.name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+        const item = document.createElement('div');
+        item.className = 'google-user-item-btn';
+        item.innerHTML = `
+          <div class="user-avatar-initials" style="width:32px;height:32px;">${initials}</div>
+          <div style="flex:1;overflow:hidden;">
+            <strong style="display:block;font-size:0.85rem;">${u.name}</strong>
+            <span style="font-size:0.75rem;color:var(--text-muted);">${u.email}</span>
+          </div>
+        `;
+        item.onclick = () => selectGoogleAccount(u);
+        list.appendChild(item);
+      });
+    }
+
+    function selectGoogleAccount(user) {
+      currentUser = user;
+      localStorage.setItem('roadmap_user', JSON.stringify(user));
+      syncUserIdentityUI();
+      closeGoogleModal();
+      updateProgressDisplay();
+      alert(`Switched to account: ${user.name}`);
+    }
+
+    function handleRegisterNewGoogleAccount() {
+      const name = document.getElementById('newGoogleNameInput').value.trim();
+      const email = document.getElementById('newGoogleEmailInput').value.trim();
+
+      if (!name || !email) {
+        alert("Please enter both Full Name and Email.");
+        return;
+      }
+
+      // Check unique email rule
+      const existing = registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (existing && existing.name.toLowerCase() !== name.toLowerCase()) {
+        alert(`This email (${email}) already belongs to ${existing.name}. Please log in as ${existing.name} or use a unique email.`);
+        return;
+      }
+
+      const newUser = { name, email };
+      if (!existing) {
+        registeredUsers.push(newUser);
+        localStorage.setItem('roadmap_registered_users', JSON.stringify(registeredUsers));
+      }
+
+      selectGoogleAccount(newUser);
+      document.getElementById('newGoogleNameInput').value = "";
+      document.getElementById('newGoogleEmailInput').value = "";
+    }
+
+    function handleExitSession() {
+      if (confirm("Exit session and sign out?")) {
+        localStorage.removeItem('roadmap_user');
+        currentUser = { name: "Guest Learner", email: "guest@academy.local" };
+        syncUserIdentityUI();
+        alert("You have exited the session.");
+      }
+    }
+
+    /* --- 3. PROGRESS TRACKING --- */
+    function getUserProgressKey() {
+      return `progress_${currentUser.email || 'default'}`;
+    }
+
+    function getUserCompletedTopics() {
+      return JSON.parse(localStorage.getItem(getUserProgressKey()) || '[]');
+    }
+
+    function toggleTopicProgress(topicId) {
+      let completed = getUserCompletedTopics();
+      if (completed.includes(topicId)) {
+        completed = completed.filter(id => id !== topicId);
+      } else {
+        completed.push(topicId);
+      }
+      localStorage.setItem(getUserProgressKey(), JSON.stringify(completed));
+      updateProgressDisplay();
+    }
+
+    function resetUserProgress() {
+      if (confirm("Reset all progress for the current user?")) {
+        localStorage.removeItem(getUserProgressKey());
+        updateProgressDisplay();
+      }
+    }
+
+    function updateProgressDisplay() {
+      const completed = getUserCompletedTopics();
+      let totalTopics = 0;
+      C_CURRICULUM.forEach(p => totalTopics += p.topics.length);
+
+      let cDoneCount = 0;
+      C_CURRICULUM.forEach(p => {
+        p.topics.forEach(t => {
+          if (completed.includes(t.id)) cDoneCount++;
+        });
+      });
+
+      const pct = Math.round((cDoneCount / totalTopics) * 100);
+      document.getElementById('cProgressPercentText').textContent = `${pct}%`;
+      document.getElementById('cProgressStatsText').textContent = `${cDoneCount} of ${totalTopics} units completed`;
+      document.getElementById('cProgressTrackFill').style.width = `${pct}%`;
+      document.getElementById('cProgressCircle').style.setProperty('--progress-deg', `${Math.round(pct * 3.6)}deg`);
+
+      // Update checkboxes in DOM
+      document.querySelectorAll('.topic-check-btn').forEach(btn => {
+        const id = btn.getAttribute('data-topic-id');
+        if (completed.includes(id)) {
+          btn.classList.add('completed');
+          btn.innerHTML = '✓';
+        } else {
+          btn.classList.remove('completed');
+          btn.innerHTML = '';
+        }
+      });
+    }
+
+    /* --- 4. RENDER CURRICULUM & CARDS --- */
+    function renderCCurriculum() {
+      const container = document.getElementById('cPhasesContainer');
+      container.innerHTML = "";
+
+      C_CURRICULUM.forEach(phase => {
+        const card = document.createElement('div');
+        card.className = 'curriculum-phase-card';
+
+        let topicsHtml = "";
+        phase.topics.forEach(t => {
+          topicsHtml += `
+            <div class="topic-row-item">
+              <div class="topic-left-details">
+                <button class="topic-check-btn" data-topic-id="${t.id}" onclick="toggleTopicProgress('${t.id}')"></button>
+                <div class="topic-title-info">
+                  <h4>${t.title}</h4>
+                  <span>${t.desc}</span>
+                </div>
+              </div>
+              <div class="topic-actions-group">
+                <span class="phase-meta-badge">⏱ ${t.duration}</span>
+                <button class="btn-watch-lecture" onclick="openVideoModal('${t.title}', '${t.videoId}', '${t.id}')">
+                  ▶ Watch Lecture
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="phase-header-bar">
+            <div class="phase-badge-title-group">
+              <div class="phase-num-badge">${phase.id}</div>
+              <div class="phase-title-text">
+                <h3>${phase.title}</h3>
+                <p>${phase.topics.length} Interactive Modules & Code Walkthroughs</p>
+              </div>
+            </div>
+            <span class="phase-meta-badge">${phase.label}</span>
+          </div>
+          <div class="topics-list-container">
+            ${topicsHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderPythonCurriculum() {
+      const container = document.getElementById('pythonPhasesContainer');
+      container.innerHTML = "";
+
+      PYTHON_CURRICULUM.forEach(phase => {
+        const card = document.createElement('div');
+        card.className = 'curriculum-phase-card';
+
+        let topicsHtml = "";
+        phase.topics.forEach(t => {
+          topicsHtml += `
+            <div class="topic-row-item">
+              <div class="topic-left-details">
+                <button class="topic-check-btn" data-topic-id="${t.id}" onclick="toggleTopicProgress('${t.id}')"></button>
+                <div class="topic-title-info">
+                  <h4>${t.title}</h4>
+                  <span>${t.desc}</span>
+                </div>
+              </div>
+              <div class="topic-actions-group">
+                <span class="phase-meta-badge">⏱ ${t.duration}</span>
+                <button class="btn-watch-lecture" onclick="openVideoModal('${t.title}', '${t.videoId}', '${t.id}')">
+                  ▶ Watch Lecture
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="phase-header-bar">
+            <div class="phase-badge-title-group">
+              <div class="phase-num-badge">PY</div>
+              <div class="phase-title-text">
+                <h3>${phase.title}</h3>
+                <p>${phase.topics.length} Python Modules</p>
+              </div>
+            </div>
+            <span class="phase-meta-badge">${phase.label}</span>
+          </div>
+          <div class="topics-list-container">
+            ${topicsHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderDsaTable(filterDiff = 'all', searchQuery = '') {
+      const tbody = document.getElementById('dsaProblemsTbody');
+      tbody.innerHTML = "";
+
+      const completed = getUserCompletedTopics();
+      const filtered = DSA_PROBLEMS_LIST.filter(p => {
+        const matchesDiff = (filterDiff === 'all') || (p.diff.toLowerCase() === filterDiff.toLowerCase());
+        const matchesQuery = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || p.topic.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesDiff && matchesQuery;
+      });
+
+      filtered.forEach(p => {
+        const tr = document.createElement('tr');
+        const isDone = completed.includes(p.id);
+        tr.innerHTML = `
+          <td>
+            <button class="topic-check-btn ${isDone ? 'completed' : ''}" data-topic-id="${p.id}" onclick="toggleTopicProgress('${p.id}')">${isDone ? '✓' : ''}</button>
+          </td>
+          <td>
+            <strong>${p.title}</strong>
+          </td>
+          <td>
+            <span style="font-size:0.8rem;color:var(--text-muted);">${p.topic}</span>
+          </td>
+          <td>
+            <span class="diff-badge ${p.diff.toLowerCase()}">${p.diff}</span>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:0.5rem;">
+              <button class="btn-watch-lecture" style="padding:0.35rem 0.75rem;font-size:0.75rem;" onclick="openVideoModal('${p.title}', '${p.videoId}', '${p.id}')">
+                Solution Video
+              </button>
+              <a href="${p.link}" target="_blank" class="filter-pill-btn" style="text-decoration:none;font-size:0.75rem;padding:0.35rem 0.65rem;">
+                Practice ↗
+              </a>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterDsaTable(diff, btn) {
+      document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderDsaTable(diff, document.getElementById('dsaSearchInput').value);
+    }
+
+    function handleDsaSearch(val) {
+      renderDsaTable('all', val);
+    }
+
+    /* --- 5. TABS & SWITCHER --- */
+    function switchMainTab(tabId) {
+      document.querySelectorAll('.content-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+
+      document.querySelectorAll('.path-tab-card').forEach(c => c.classList.remove('active'));
+      const activeBtnId = `tab-btn-${tabId.replace('-tab', '')}`;
+      const activeBtn = document.getElementById(activeBtnId);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Sync Nav link active states
+      document.querySelectorAll('.nav-link-item').forEach(l => l.classList.remove('active'));
+      const activeNav = Array.from(document.querySelectorAll('.nav-link-item')).find(l => {
+        const text = l.textContent.toLowerCase();
+        if (tabId === 'c-tab') return text.includes('c roadmap');
+        if (tabId === 'python-tab') return text.includes('python');
+        if (tabId === 'dsa-tab') return text.includes('dsa');
+        if (tabId === 'playground-tab') return text.includes('playground');
+        return false;
+      });
+      if (activeNav) activeNav.classList.add('active');
+    }
+
+    /* --- 6. VIDEO MODAL ENGINE --- */
+    let currentModalTopicId = null;
+
+    function openVideoModal(title, videoId, topicId) {
+      currentModalTopicId = topicId;
+      document.getElementById('modalVideoTitle').textContent = title;
+      document.getElementById('videoIframePlayer').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+      const completed = getUserCompletedTopics();
+      const isDone = completed.includes(topicId);
+      const btn = document.getElementById('modalMarkCompleteBtn');
+      btn.innerHTML = isDone ? '✓ Completed' : '<i data-lucide="check-circle" style="width:14px;height:14px;"></i> Mark Completed';
+
+      document.getElementById('videoPlayerModal').classList.add('open');
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function closeVideoModal() {
+      document.getElementById('videoIframePlayer').src = "";
+      document.getElementById('videoPlayerModal').classList.remove('open');
+      currentModalTopicId = null;
+    }
+
+    function toggleActiveVideoComplete() {
+      if (currentModalTopicId) {
+        toggleTopicProgress(currentModalTopicId);
+        const completed = getUserCompletedTopics();
+        const isDone = completed.includes(currentModalTopicId);
+        const btn = document.getElementById('modalMarkCompleteBtn');
+        btn.innerHTML = isDone ? '✓ Completed' : 'Mark Completed';
+      }
+    }
+
+    function closeModalOnBackdrop(e, modalId) {
+      if (e.target.id === modalId) {
+        if (modalId === 'videoPlayerModal') closeVideoModal();
+        if (modalId === 'googleAuthModal') closeGoogleModal();
+        if (modalId === 'searchModalOverlay') closeSearchModal();
+      }
+    }
+
+    /* --- 7. CODE PLAYGROUND SIMULATOR --- */
+    function loadCodePreset(key) {
+      document.getElementById('cCodeInput').value = CODE_PRESETS[key] || CODE_PRESETS.hello;
+    }
+
+    function runPlaygroundCode() {
+      const code = document.getElementById('cCodeInput').value;
+      const term = document.getElementById('terminalOutput');
+
+      term.textContent = "Compiling with gcc -O3 -Wall main.c -o main.out...\nLinking symbols...\n";
+
+      setTimeout(() => {
+        if (code.includes('printf')) {
+          let outputLines = [];
+          const regex = /printf\s*\(\s*"([^"]*)"/g;
+          let match;
+          while ((match = regex.exec(code)) !== null) {
+            outputLines.push(match[1].replace(/\\n/g, '\n'));
+          }
+
+          if (outputLines.length > 0) {
+            term.textContent = "✔ Build Succeeded (0.04s)\n----------------------------------------\n" + outputLines.join('') + "\n----------------------------------------\nProcess returned 0 (0x0). Execution time: 0.002s";
+          } else {
+            term.textContent = "✔ Build Succeeded (0.04s)\nProgram executed with 0 console outputs.\nProcess returned 0.";
+          }
+        } else {
+          term.textContent = "✔ Build Succeeded.\nProcess finished with exit code 0.";
+        }
+      }, 350);
+    }
+
+    function clearTerminal() {
+      document.getElementById('terminalOutput').textContent = "Virtual console cleared. Ready for execution.\n";
+    }
+
+    /* --- 8. GLOBAL SEARCH --- */
+    function openSearchModal() {
+      document.getElementById('searchModalOverlay').classList.add('open');
+      document.getElementById('globalSearchInput').focus();
+    }
+
+    function closeSearchModal() {
+      document.getElementById('searchModalOverlay').classList.remove('open');
+    }
+
+    function performGlobalSearch(query) {
+      const resultsBox = document.getElementById('globalSearchResults');
+      resultsBox.innerHTML = "";
+
+      if (!query.trim()) return;
+
+      const q = query.toLowerCase();
+      let matches = [];
+
+      C_CURRICULUM.forEach(p => {
+        p.topics.forEach(t => {
+          if (t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)) {
+            matches.push({ title: t.title, badge: "C Roadmap", action: () => { closeSearchModal(); switchMainTab('c-tab'); } });
+          }
+        });
+      });
+
+      DSA_PROBLEMS_LIST.forEach(p => {
+        if (p.title.toLowerCase().includes(q) || p.topic.toLowerCase().includes(q)) {
+          matches.push({ title: p.title, badge: `DSA • ${p.diff}`, action: () => { closeSearchModal(); switchMainTab('dsa-tab'); } });
+        }
+      });
+
+      if (matches.length === 0) {
+        resultsBox.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);padding:1rem;text-align:center;">No matching topics found for "${query}"</div>`;
+        return;
+      }
+
+      matches.slice(0, 8).forEach(m => {
+        const item = document.createElement('div');
+        item.className = 'google-user-item-btn';
+        item.innerHTML = `
+          <div style="flex:1;">
+            <strong style="display:block;font-size:0.85rem;">${m.title}</strong>
+            <span style="font-size:0.75rem;color:var(--neon-cyan);">${m.badge}</span>
+          </div>
+        `;
+        item.onclick = m.action;
+        resultsBox.appendChild(item);
+      });
+    }
+
+    // Keyboard Shortcuts (Ctrl+K to search, Esc to close)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openSearchModal();
+      }
+      if (e.key === 'Escape') {
+        closeVideoModal();
+        closeGoogleModal();
+        closeSearchModal();
+      }
+    });
+
+    /* --- 9. THEME ENGINE --- */
+    function initTheme() {
+      const saved = localStorage.getItem('site_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      updateThemeIcon(saved);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('site_theme', next);
+      updateThemeIcon(next);
+    }
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('themeIcon');
+      if (icon) {
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
+
+    /* --- INITIALIZATION ON LOAD --- */
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      syncUserIdentityUI();
+      renderCCurriculum();
+      renderPythonCurriculum();
+      renderDsaTable();
+      loadCodePreset('hello');
+      updateProgressDisplay();
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
