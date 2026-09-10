@@ -1172,6 +1172,284 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
+
+    /* --- Mobile vs Desktop Distinct Interface --- */
+    .mobile-bottom-nav {
+      display: none;
+    }
+
+    .mobile-playground-toggle {
+      display: none;
+    }
+
+    .mobile-nav-pill {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(249, 115, 22, 0.15);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      color: var(--orange-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 74px !important;
+      }
+
+      .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 64px;
+        background: rgba(14, 12, 28, 0.94);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(249, 115, 22, 0.25);
+        z-index: 9999;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 4px;
+        padding-bottom: env(safe-area-inset-bottom, 0);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      html[data-theme="light"] .mobile-bottom-nav {
+        background: rgba(255, 255, 255, 0.96);
+        border-top: 1px solid rgba(249, 115, 22, 0.2);
+        box-shadow: 0 -4px 20px rgba(249, 115, 22, 0.12);
+      }
+
+      .mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 0.68rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 6px 2px;
+        transition: all 0.2s ease;
+        border-radius: 10px;
+      }
+
+      .mobile-nav-item.active {
+        color: var(--orange-primary);
+      }
+
+      .mobile-nav-item:active {
+        transform: scale(0.92);
+      }
+
+      .top-navbar {
+        padding: 0.6rem 1rem !important;
+      }
+
+      .nav-links-list {
+        display: none !important;
+      }
+
+      .brand-title-wrap span {
+        display: none !important;
+      }
+
+      .search-btn-trigger span,
+      .search-btn-trigger .kbd-shortcut {
+        display: none !important;
+      }
+
+      .search-btn-trigger {
+        padding: 0.5rem !important;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 10px !important;
+        justify-content: center !important;
+      }
+
+      .user-name-text {
+        display: none !important;
+      }
+
+      .user-profile-chip {
+        padding: 4px !important;
+      }
+
+      /* Hero section mobile */
+      .hero-container {
+        padding: 1rem 0.85rem !important;
+      }
+
+      .hero-glow-card {
+        padding: 1.75rem 1.25rem !important;
+        border-radius: 20px !important;
+      }
+
+      .hero-main-title {
+        font-size: 1.85rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.85rem !important;
+      }
+
+      .hero-subtext {
+        font-size: 0.92rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 1.25rem !important;
+      }
+
+      .hero-cta-row {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1.75rem !important;
+      }
+
+      .btn-hero-primary,
+      .btn-hero-secondary {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.8rem 1.25rem !important;
+        box-sizing: border-box !important;
+      }
+
+      .hero-kpi-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.75rem !important;
+      }
+
+      .kpi-stat-item {
+        padding: 0.85rem !important;
+      }
+
+      .kpi-number {
+        font-size: 1.35rem !important;
+      }
+
+      .kpi-label {
+        font-size: 0.72rem !important;
+      }
+
+      /* Path tabs bar on mobile */
+      .path-selector-wrap {
+        padding: 0 0.85rem !important;
+        margin: 0.75rem auto 1.5rem !important;
+      }
+
+      .path-tabs-bar {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem !important;
+      }
+
+      .path-tab-card {
+        padding: 0.8rem !important;
+        border-radius: 14px !important;
+      }
+
+      .path-tab-card h3 {
+        font-size: 0.85rem !important;
+      }
+
+      .path-tab-card p {
+        font-size: 0.68rem !important;
+      }
+
+      .tab-icon-box {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1.1rem !important;
+      }
+
+      /* Content pane & topic rows */
+      .content-pane {
+        padding: 0 0.85rem !important;
+      }
+
+      .topic-row-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+        padding: 1rem !important;
+      }
+
+      .topic-left-details {
+        min-width: 100% !important;
+      }
+
+      .topic-actions-group {
+        width: 100% !important;
+        justify-content: space-between !important;
+      }
+
+      .btn-watch-lecture {
+        flex: 1 !important;
+        justify-content: center !important;
+        padding: 0.6rem 1rem !important;
+      }
+
+      /* Mobile Code Playground */
+      .mobile-playground-toggle {
+        display: flex !important;
+        gap: 8px;
+        background: rgba(249, 115, 22, 0.08);
+        padding: 4px;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+      }
+
+      .mob-pg-tab-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px 12px;
+        border-radius: 9px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .mob-pg-tab-btn.active {
+        background: var(--card-bg, #ffffff);
+        color: var(--orange-primary);
+        box-shadow: 0 2px 10px rgba(249, 115, 22, 0.2);
+      }
+
+      .editor-pane-box.mobile-hidden,
+      .terminal-pane-box.mobile-hidden {
+        display: none !important;
+      }
+
+      .editor-code-textarea {
+        height: 260px !important;
+      }
+
+      .terminal-output-content {
+        height: 260px !important;
+      }
+
+      /* Footer mobile */
+      .footer-bottom-bar {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        text-align: center !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1187,6 +1465,7 @@
         <h1>LEARN WITH AAYUSH</h1>
         <span>Cyberpunk Code Academy</span>
       </div>
+      <span class="mobile-nav-pill" id="mobileNavPill"><i data-lucide="smartphone" style="width:12px;height:12px;"></i> Mobile</span>
     </a>
 
     <nav>
@@ -1433,6 +1712,18 @@
       </div>
     </div>
 
+        <!-- Mobile Playground Segmented Controls -->
+    <div class="mobile-playground-toggle" id="mobilePlaygroundToggle">
+      <button class="mob-pg-tab-btn active" id="mobPgEditorBtn" onclick="switchMobilePlaygroundView('editor')">
+        <i data-lucide="code-2" style="width:15px;height:15px;"></i>
+        <span>Code Editor</span>
+      </button>
+      <button class="mob-pg-tab-btn" id="mobPgConsoleBtn" onclick="switchMobilePlaygroundView('console')">
+        <i data-lucide="terminal" style="width:15px;height:15px;"></i>
+        <span>Terminal Output</span>
+      </button>
+    </div>
+
     <div class="playground-layout-grid">
       <!-- Editor Column -->
       <div class="editor-pane-box">
@@ -1579,6 +1870,30 @@ Click '▶ Run' to compile and execute your C code...
       <button class="modal-close-btn" style="position:absolute;top:1.25rem;right:1.25rem;" onclick="closeSearchModal()">✕</button>
     </div>
   </div>
+
+  <!-- ================= MOBILE APP BOTTOM NAVIGATION BAR ================= -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile Navigation">
+    <button class="mobile-nav-item active" id="mobTab-c" onclick="switchMainTab('c-tab')">
+      <i data-lucide="cpu" style="width:20px;height:20px;"></i>
+      <span>C Roadmap</span>
+    </button>
+    <button class="mobile-nav-item" id="mobTab-python" onclick="switchMainTab('python-tab')">
+      <i data-lucide="terminal" style="width:20px;height:20px;"></i>
+      <span>Python</span>
+    </button>
+    <button class="mobile-nav-item" id="mobTab-dsa" onclick="switchMainTab('dsa-tab')">
+      <i data-lucide="layers" style="width:20px;height:20px;"></i>
+      <span>DSA Sheet</span>
+    </button>
+    <button class="mobile-nav-item" id="mobTab-playground" onclick="switchMainTab('playground-tab')">
+      <i data-lucide="play-circle" style="width:20px;height:20px;"></i>
+      <span>Playground</span>
+    </button>
+    <button class="mobile-nav-item" id="mobTab-notes" onclick="scrollToNotes()">
+      <i data-lucide="book-open" style="width:20px;height:20px;"></i>
+      <span>Notes</span>
+    </button>
+  </nav>
 
   <!-- ================= FOOTER ================= -->
   <footer class="master-site-footer">

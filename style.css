@@ -3294,3 +3294,174 @@ html[data-theme="dark"] .google-modal-privacy-footer {
   background: rgba(4, 4, 10, 0.88) !important;
 }
 
+
+/* =============================================================
+   MOBILE VS DESKTOP RESPONSIVE ARCHITECTURE
+   ============================================================= */
+
+/* Desktop-Only & Mobile-Only Utility Classes */
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: flex !important;
+  }
+}
+
+/* --- Mobile Bottom App Navigation Bar (React App) --- */
+.mobile-app-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-app-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(14, 12, 28, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(249, 115, 22, 0.25);
+    z-index: 9999;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 6px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  html[data-theme="light"] .mobile-app-bottom-bar {
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid rgba(249, 115, 22, 0.2);
+    box-shadow: 0 -4px 20px rgba(249, 115, 22, 0.12);
+  }
+
+  .mobile-bottom-nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #a3a3b8);
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 6px 2px;
+    transition: all 0.2s ease;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  .mobile-bottom-nav-btn.active {
+    color: var(--orange-primary, #f97316);
+  }
+
+  .mobile-bottom-nav-btn:active {
+    transform: scale(0.94);
+  }
+
+  /* React App Shell Mobile Adjustments */
+  .app-shell {
+    padding-bottom: 74px !important;
+  }
+
+  .nav-bar .nav-links {
+    display: none !important;
+  }
+
+  .nav-bar {
+    padding: 0.65rem 1rem !important;
+  }
+
+  .nav-user-area .user-name {
+    display: none !important;
+  }
+
+  .nav-search-trigger .search-shortcut {
+    display: none !important;
+  }
+
+  /* Login Page Mobile Optimization */
+  .login-3d-bg-container {
+    display: none !important;
+  }
+
+  .login-overlay {
+    padding: 1rem 0.85rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+    min-height: 100vh !important;
+  }
+
+  .login-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 1.6rem 1.2rem !important;
+    border-radius: 20px !important;
+    margin: 0 !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .login-top-actions-bar {
+    gap: 6px !important;
+    margin-bottom: 1.15rem !important;
+  }
+
+  .login-action-btn-pill {
+    padding: 5px 9px !important;
+    font-size: 0.72rem !important;
+  }
+
+  .login-brand-crest {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .brand-crest-emblem {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 1.3rem !important;
+  }
+
+  .login-title {
+    font-size: 1.4rem !important;
+  }
+
+  .login-subtitle {
+    font-size: 0.82rem !important;
+    margin-bottom: 1.15rem !important;
+  }
+
+  .auth-tab-row {
+    margin-bottom: 1.15rem !important;
+  }
+
+  .btn-google-cyber {
+    padding: 0.85rem 1rem !important;
+    font-size: 0.86rem !important;
+    min-height: 48px !important;
+  }
+
+  .login-input {
+    padding: 0.8rem 1rem !important;
+    font-size: 0.95rem !important;
+    min-height: 46px !important;
+  }
+
+  .login-submit-btn {
+    padding: 0.85rem !important;
+    font-size: 0.95rem !important;
+    min-height: 48px !important;
+  }
+}

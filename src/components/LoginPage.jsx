@@ -20,6 +20,26 @@ import {
 import { TEMP_USERNAME, TEMP_PASSWORD } from '../utils/constants';
 
 const LoginPage = ({ onLogin }) => {
+  const [isMobileDevice, setIsMobileDevice] = useState(() => {
+    return typeof window !== 'undefined' && (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768);
+  });
+
+  useEffect(() => {
+    const checkDevice = () => {
+      const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      setIsMobileDevice(isMob);
+      if (isMob) {
+        document.documentElement.classList.add('is-mobile-browser');
+        document.documentElement.classList.remove('is-desktop-browser');
+      } else {
+        document.documentElement.classList.add('is-desktop-browser');
+        document.documentElement.classList.remove('is-mobile-browser');
+      }
+    };
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
+  }, []);
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -272,7 +292,8 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div className="login-overlay">
-      <div className="login-3d-bg-container">
+      {!isMobileDevice && (
+      <div className="login-3d-bg-container desktop-only">
         <div className="bg-floating-code-window glass-card">
           <div className="window-bar">
             <span className="dot red"></span>
@@ -314,6 +335,7 @@ const LoginPage = ({ onLogin }) => {
         <div className="bg-badge bg-py">PY</div>
         <div className="bg-learning-ring"></div>
       </div>
+      )}
 
       <motion.div
         className="glass-card login-card"
@@ -345,7 +367,7 @@ const LoginPage = ({ onLogin }) => {
 
             <div className="login-live-status-pill">
               <span className="live-status-pulse"></span>
-              <span>Academy v2.0</span>
+              <span>{isMobileDevice ? "Mobile Edition" : "Academy v2.0"}</span>
             </div>
           </div>
 

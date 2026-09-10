@@ -16,6 +16,14 @@ import {
   ChevronDown
 } from 'lucide-react';
 
+const mobileNavItems = [
+  { key: 'dashboard', label: 'Home', icon: LayoutDashboard },
+  { key: 'c', label: 'C Roadmap', icon: Code2 },
+  { key: 'dsa', label: 'DSA', icon: Boxes },
+  { key: 'python', label: 'Python', icon: TerminalIcon },
+  { key: 'practice', label: 'C IDE', icon: TerminalIcon },
+];
+
 const navItems = [
   { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { key: 'dsa', label: 'DSA Roadmap', icon: Boxes },
@@ -53,6 +61,7 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
   };
 
   return (
+    <>
     <motion.nav
       className="nav-bar"
       initial={{ y: -60, opacity: 0 }}
@@ -246,6 +255,22 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
         </button>
       </div>
     </motion.nav>
+
+    {/* Mobile Bottom Navigation Bar */}
+    <nav className="mobile-app-bottom-bar" aria-label="Mobile Navigation">
+      {mobileNavItems.map(({ key, label, icon: Icon }) => (
+        <button
+          key={key}
+          type="button"
+          className={`mobile-bottom-nav-btn ${activeTab === key ? 'active' : ''}`}
+          onClick={() => onSelectTab(key)}
+        >
+          <Icon size={18} />
+          <span>{label}</span>
+        </button>
+      ))}
+    </nav>
+    </>
   );
 };
 
