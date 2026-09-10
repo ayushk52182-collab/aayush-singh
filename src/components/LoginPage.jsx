@@ -22,7 +22,8 @@ import {
   CheckCircle2,
   Terminal,
   Cpu,
-  BookOpen
+  BookOpen,
+  Lock
 } from 'lucide-react';
 import { TEMP_USERNAME, TEMP_PASSWORD } from '../utils/constants';
 
@@ -615,23 +616,27 @@ long long maxSubarraySum(vector<int>& arr) {
                   >
                     <div className="form-group">
                       <label>Username or Email</label>
-                      <input
-                        type="text"
-                        className="login-input"
-                        placeholder="e.g. your_username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                        autoFocus
-                      />
+                      <div className="input-with-icon-wrapper">
+                        <User size={16} className="input-left-icon" />
+                        <input
+                          type="text"
+                          className="login-input input-has-left-icon"
+                          placeholder="e.g. your_username"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          required
+                          autoFocus
+                        />
+                      </div>
                     </div>
 
                     <div className="form-group">
                       <label>Password</label>
-                      <div className="password-input-wrapper">
+                      <div className="input-with-icon-wrapper password-input-wrapper">
+                        <Lock size={16} className="input-left-icon" />
                         <input
                           type={showPassword ? 'text' : 'password'}
-                          className="login-input"
+                          className="login-input input-has-left-icon"
                           placeholder="Enter your password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
@@ -676,49 +681,59 @@ long long maxSubarraySum(vector<int>& arr) {
                     <div className="signup-fields-grid">
                       <div className="form-group">
                         <label>Full Name</label>
-                        <input
-                          type="text"
-                          className="login-input"
-                          placeholder="e.g. Rahul Sharma"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          required
-                          autoFocus
-                        />
+                        <div className="input-with-icon-wrapper">
+                          <User size={16} className="input-left-icon" />
+                          <input
+                            type="text"
+                            className="login-input input-has-left-icon"
+                            placeholder="e.g. Rahul Sharma"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            required
+                            autoFocus
+                          />
+                        </div>
                       </div>
 
                       <div className="form-group">
                         <label>Username</label>
-                        <input
-                          type="text"
-                          className="login-input"
-                          placeholder="e.g. rahul_coder"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                          required
-                        />
+                        <div className="input-with-icon-wrapper">
+                          <User size={16} className="input-left-icon" />
+                          <input
+                            type="text"
+                            className="login-input input-has-left-icon"
+                            placeholder="e.g. rahul_coder"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
 
                     <div className="form-group">
                       <label>Email Address</label>
-                      <input
-                        type="email"
-                        className="login-input"
-                        placeholder="e.g. rahul@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
+                      <div className="input-with-icon-wrapper">
+                        <Mail size={16} className="input-left-icon" />
+                        <input
+                          type="email"
+                          className="login-input input-has-left-icon"
+                          placeholder="e.g. rahul@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div className="signup-fields-grid">
                       <div className="form-group">
                         <label>Password (min 6 chars)</label>
-                        <div className="password-input-wrapper">
+                        <div className="input-with-icon-wrapper password-input-wrapper">
+                          <Lock size={16} className="input-left-icon" />
                           <input
                             type={showPassword ? 'text' : 'password'}
-                            className="login-input"
+                            className="login-input input-has-left-icon"
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -737,10 +752,11 @@ long long maxSubarraySum(vector<int>& arr) {
 
                       <div className="form-group">
                         <label>Confirm Password</label>
-                        <div className="password-input-wrapper">
+                        <div className="input-with-icon-wrapper password-input-wrapper">
+                          <Lock size={16} className="input-left-icon" />
                           <input
                             type={showConfirmPassword ? 'text' : 'password'}
-                            className="login-input"
+                            className="login-input input-has-left-icon"
                             placeholder="Confirm"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -900,22 +916,26 @@ long long maxSubarraySum(vector<int>& arr) {
               <form onSubmit={handleLoginSubmit} className="mobile-form">
                 <div className="mobile-input-group">
                   <label>Username or Email</label>
-                  <input
-                    type="text"
-                    className="mobile-input"
-                    placeholder="Enter username or email"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
+                  <div className="input-with-icon-wrapper">
+                    <User size={16} className="input-left-icon" />
+                    <input
+                      type="text"
+                      className="mobile-input input-has-left-icon"
+                      placeholder="Enter username or email"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="mobile-input-group">
                   <label>Password</label>
-                  <div className="mobile-password-wrapper">
+                  <div className="input-with-icon-wrapper mobile-password-wrapper">
+                    <Lock size={16} className="input-left-icon" />
                     <input
                       type={showPassword ? 'text' : 'password'}
-                      className="mobile-input"
+                      className="mobile-input input-has-left-icon"
                       placeholder="Enter password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -940,48 +960,58 @@ long long maxSubarraySum(vector<int>& arr) {
                 <div className="signup-fields-grid">
                   <div className="mobile-input-group">
                     <label>Full Name</label>
-                    <input
-                      type="text"
-                      className="mobile-input"
-                      placeholder="Priya Sharma"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
+                    <div className="input-with-icon-wrapper">
+                      <User size={16} className="input-left-icon" />
+                      <input
+                        type="text"
+                        className="mobile-input input-has-left-icon"
+                        placeholder="Priya Sharma"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
 
                   <div className="mobile-input-group">
                     <label>Username</label>
-                    <input
-                      type="text"
-                      className="mobile-input"
-                      placeholder="priya_coder"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                    />
+                    <div className="input-with-icon-wrapper">
+                      <User size={16} className="input-left-icon" />
+                      <input
+                        type="text"
+                        className="mobile-input input-has-left-icon"
+                        placeholder="priya_coder"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
 
                 <div className="mobile-input-group">
                   <label>Email Address</label>
-                  <input
-                    type="email"
-                    className="mobile-input"
-                    placeholder="priya@gmail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+                  <div className="input-with-icon-wrapper">
+                    <Mail size={16} className="input-left-icon" />
+                    <input
+                      type="email"
+                      className="mobile-input input-has-left-icon"
+                      placeholder="priya@gmail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
 
                 <div className="signup-fields-grid">
                   <div className="mobile-input-group">
                     <label>Password</label>
-                    <div className="mobile-password-wrapper">
+                    <div className="input-with-icon-wrapper mobile-password-wrapper">
+                      <Lock size={16} className="input-left-icon" />
                       <input
                         type={showPassword ? 'text' : 'password'}
-                        className="mobile-input"
+                        className="mobile-input input-has-left-icon"
                         placeholder="Min 6 chars"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -999,14 +1029,24 @@ long long maxSubarraySum(vector<int>& arr) {
 
                   <div className="mobile-input-group">
                     <label>Confirm</label>
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      className="mobile-input"
-                      placeholder="Confirm"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
+                    <div className="input-with-icon-wrapper mobile-password-wrapper">
+                      <Lock size={16} className="input-left-icon" />
+                      <input
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        className="mobile-input input-has-left-icon"
+                        placeholder="Confirm"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="mobile-password-toggle"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
+                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
