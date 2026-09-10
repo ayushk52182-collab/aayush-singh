@@ -527,27 +527,27 @@ long long maxSubarraySum(vector<int>& arr) {
                   </div>
                 </div>
 
-                <div className="login-brand-crest">
+                <div className="login-brand-crest" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto 0.55rem' }}>
                   <div className="brand-crest-emblem">
                     <span>A</span>
                   </div>
                 </div>
 
-                <div className="top-badge-row">
-                  <span className="badge-cyber">
+                <div className="top-badge-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto 0.35rem', textAlign: 'center' }}>
+                  <span className="badge-cyber" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textAlign: 'center', margin: '0 auto' }}>
                     {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
-                    {mode === 'login' ? 'LEARN WITH AAYUSH • SIGN IN' : 'NEW LEARNER REGISTRATION'}
+                    <span>{mode === 'login' ? 'LEARN WITH AAYUSH • SIGN IN' : 'NEW LEARNER REGISTRATION'}</span>
                   </span>
                 </div>
 
-                <h2 className="login-title">
+                <h2 className="login-title" style={{ textAlign: 'center', width: '100%', margin: '0 auto 0.25rem', display: 'block' }}>
                   {mode === 'login' ? (
                     <>Welcome Back, <span className="gradient-text">Learner</span></>
                   ) : (
                     <>Create <span className="gradient-text">Learner Account</span></>
                   )}
                 </h2>
-                <p className="login-subtitle">
+                <p className="login-subtitle" style={{ textAlign: 'center', width: '100%', margin: '0 auto', display: 'block' }}>
                   {mode === 'login'
                     ? 'Enter your credentials or continue with Google to resume your learning progress.'
                     : 'Register to unlock isolated milestone tracking and interactive visualizers.'}

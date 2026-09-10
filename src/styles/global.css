@@ -7242,3 +7242,50 @@ html[data-theme="dark"] .mobile-input {
   height: 42px !important;
   font-size: 15px !important;
 }
+
+
+/* Direct Perfect Alignment between Badge and Welcome Back Title */
+.login-header,
+.desktop-card .login-header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.top-badge-row,
+.desktop-card .top-badge-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 auto 0.35rem !important;
+}
+
+.badge-cyber,
+.desktop-card .badge-cyber {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+
+.login-title,
+.desktop-card .login-title {
+  text-align: center !important;
+  width: 100% !important;
+  display: block !important;
+  margin: 0 auto 0.25rem !important;
+}
+
+.login-subtitle,
+.desktop-card .login-subtitle {
+  text-align: center !important;
+  width: 100% !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
