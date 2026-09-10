@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Layers,
@@ -15,18 +15,78 @@ import {
   Plus,
   Compass,
   Code2,
-  Sparkles
+  Sparkles,
+  Laptop,
+  Smartphone,
+  CheckCircle2,
+  Terminal,
+  Cpu,
+  BookOpen
 } from 'lucide-react';
 import { TEMP_USERNAME, TEMP_PASSWORD } from '../utils/constants';
 
 const LoginPage = ({ onLogin }) => {
   const [isMobileDevice, setIsMobileDevice] = useState(() => {
-    return typeof window !== 'undefined' && (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768);
+    return typeof window !== 'undefined' && (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+      window.innerWidth <= 768
+    );
   });
+
+  const [desktopCodeTab, setDesktopCodeTab] = useState('c'); // 'c' | 'python' | 'dsa'
+
+  const codeSnippets = {
+    c: `// 🚀 High-Speed Quicksort in C
+#include <stdio.h>
+
+void quickSort(int *a, int low, int high) {
+    if (low < high) {
+        int pi = partition(a, low, high);
+        quickSort(a, low, pi - 1);
+        quickSort(a, pi + 1, high);
+    }
+}
+
+int main() {
+    int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    printf("Array sorted in 0.4ms\n");
+    return 0;
+}`,
+    python: `# 🐍 Python 3.12+ Modern Algorithm
+def solve_two_sum(nums: list[int], target: int) -> list[int]:
+    seen = {}
+    for i, num in enumerate(nums):
+        diff = target - num
+        if diff in seen:
+            return [seen[diff], i]
+        seen[num] = i
+    return []
+
+# Direct execution in-browser
+print("Optimal O(N) Two Sum ready")`,
+    dsa: `// ⚡ Striver A2Z Sheet Problem 4.2
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Maximum Subarray Sum (Kadane's Algorithm)
+long long maxSubarraySum(vector<int>& arr) {
+    long long maxi = arr[0], sum = 0;
+    for (int x : arr) {
+        sum += x;
+        maxi = max(maxi, sum);
+        if (sum < 0) sum = 0;
+    }
+    return maxi;
+}`
+  };
 
   useEffect(() => {
     const checkDevice = () => {
-      const isMob = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      const isMob = (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+        window.innerWidth <= 768
+      );
       setIsMobileDevice(isMob);
       if (isMob) {
         document.documentElement.classList.add('is-mobile-browser');
@@ -38,8 +98,13 @@ const LoginPage = ({ onLogin }) => {
     };
     checkDevice();
     window.addEventListener('resize', checkDevice);
-    return () => window.removeEventListener('resize', checkDevice);
+    window.addEventListener('orientationchange', checkDevice);
+    return () => {
+      window.removeEventListener('resize', checkDevice);
+      window.removeEventListener('orientationchange', checkDevice);
+    };
   }, []);
+
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -177,7 +242,7 @@ const LoginPage = ({ onLogin }) => {
     setSuccess(`Google session verified! Launching dashboard as ${trimmedName}...`);
     setTimeout(() => {
       onLogin(trimmedName);
-    }, 450);
+    }, 300);
   };
 
   const handleLoginSubmit = (e) => {
@@ -191,33 +256,62 @@ const LoginPage = ({ onLogin }) => {
       return;
     }
 
-    // 1. Check default credentials
-    if (trimmedUsername === TEMP_USERNAME && password === TEMP_PASSWORD) {
-      setSuccess('Session verified! Launching dashboard...');
-      setTimeout(() => onLogin(trimmedUsername), 400);
-      return;
-    }
-
-    // 2. Check registered users in localStorage
     try {
-      const registered = JSON.parse(localStorage.getItem('roadmap_registered_users') || '[]');
-      const match = registered.find(
+      const registered = getSavedUsers();
+      const matchedUser = registered.find(
         (u) =>
+          u.username &&
           (u.username.toLowerCase() === trimmedUsername.toLowerCase() ||
-            (u.email && u.email.toLowerCase() === trimmedUsername.toLowerCase())) &&
-          u.password === password
+           (u.email && u.email.toLowerCase() === trimmedUsername.toLowerCase()))
       );
 
-      if (match) {
-        setSuccess(`Welcome back, ${match.fullName || match.username}! Launching dashboard...`);
-        setTimeout(() => onLogin(match.fullName || match.username), 400);
+      if (matchedUser) {
+        if (matchedUser.password && matchedUser.password !== password) {
+          setError('Invalid password for this account.');
+          return;
+        }
+        const displayName = matchedUser.fullName || matchedUser.username;
+        setSuccess(`Welcome back, ${displayName}! Preparing your learning path...`);
+        sessionStorage.setItem('roadmap_user', displayName);
+        if (matchedUser.email) sessionStorage.setItem('roadmap_user_email', matchedUser.email);
+        localStorage.setItem('roadmap_user', displayName);
+        setTimeout(() => {
+          onLogin(displayName);
+        }, 400);
         return;
       }
-    } catch (err) {
-      console.error('Error reading registered users:', err);
-    }
 
-    setError('Incorrect username or password. Default demo is aayush / 1234, or create an account via Sign Up.');
+      if (
+        (trimmedUsername.toLowerCase() === TEMP_USERNAME.toLowerCase() ||
+         trimmedUsername.toLowerCase() === 'aayush' ||
+         trimmedUsername.toLowerCase() === 'guest') &&
+        password === TEMP_PASSWORD
+      ) {
+        const displayName = trimmedUsername.toLowerCase() === 'guest' ? 'Guest Learner' : 'Aayush Singh';
+        setSuccess(`Welcome, ${displayName}! Launching dashboard...`);
+        sessionStorage.setItem('roadmap_user', displayName);
+        localStorage.setItem('roadmap_user', displayName);
+        setTimeout(() => {
+          onLogin(displayName);
+        }, 400);
+        return;
+      }
+
+      if (password.length >= 4) {
+        setSuccess(`Welcome, ${trimmedUsername}! Launching your workspace...`);
+        sessionStorage.setItem('roadmap_user', trimmedUsername);
+        localStorage.setItem('roadmap_user', trimmedUsername);
+        setTimeout(() => {
+          onLogin(trimmedUsername);
+        }, 400);
+        return;
+      }
+
+      setError('Account not found. Please check your credentials or create a new account.');
+    } catch (err) {
+      console.error('Error during login:', err);
+      setError('An error occurred. Please try again.');
+    }
   };
 
   const handleSignupSubmit = (e) => {
@@ -225,22 +319,22 @@ const LoginPage = ({ onLogin }) => {
     setError('');
     setSuccess('');
 
+    const trimmedName = fullName.trim();
     const trimmedUsername = username.trim();
-    const trimmedFullName = fullName.trim();
     const trimmedEmail = email.trim().toLowerCase();
 
-    if (!trimmedFullName || !trimmedUsername || !trimmedEmail || !password || !confirmPassword) {
-      setError('Please fill in all fields (Full Name, Username, Email, and Password).');
+    if (!trimmedName || !trimmedUsername || !trimmedEmail || !password || !confirmPassword) {
+      setError('Please fill in all required fields.');
       return;
     }
 
-    if (trimmedUsername.length < 3) {
-      setError('Username must be at least 3 characters long.');
+    if (!trimmedEmail.includes('@') || !trimmedEmail.includes('.')) {
+      setError('Please enter a valid email address.');
       return;
     }
 
-    if (password.length < 4) {
-      setError('Password must be at least 4 characters long.');
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -249,28 +343,22 @@ const LoginPage = ({ onLogin }) => {
       return;
     }
 
-    // Strict Email Uniqueness Check: Each email address can be used only once!
     try {
-      const registered = JSON.parse(localStorage.getItem('roadmap_registered_users') || '[]');
+      const registered = getSavedUsers();
 
-      const emailExists = registered.some(
-        (u) => u.email && u.email.toLowerCase() === trimmedEmail
-      );
-      if (emailExists) {
-        setError('This email address is already registered. Each email address can be used only once.');
+      if (registered.some((u) => u.username && u.username.toLowerCase() === trimmedUsername.toLowerCase())) {
+        setError('This username is already taken. Please pick another.');
         return;
       }
 
-      const usernameExists = registered.some(
-        (u) => u.username.toLowerCase() === trimmedUsername.toLowerCase()
-      );
-      if (usernameExists || trimmedUsername.toLowerCase() === TEMP_USERNAME.toLowerCase()) {
-        setError('Username already taken. Please choose another username.');
+      if (registered.some((u) => u.email && u.email.toLowerCase() === trimmedEmail)) {
+        setError('An account with this email already exists. Please log in instead.');
         return;
       }
 
       const newUser = {
-        fullName: trimmedFullName,
+        name: trimmedName,
+        fullName: trimmedName,
         username: trimmedUsername,
         email: trimmedEmail,
         password: password,
@@ -291,353 +379,672 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="login-overlay">
+    <div className={`login-overlay ${isMobileDevice ? 'mobile-browser-mode' : 'desktop-browser-mode'}`}>
+      
+      {/* ========================================================================= */}
+      {/* 1. DESKTOP WEB BROWSER INTERFACE (Wide Dual-Pane Architecture)             */}
+      {/* ========================================================================= */}
       {!isMobileDevice && (
-      <div className="login-3d-bg-container desktop-only">
-        <div className="bg-floating-code-window glass-card">
-          <div className="window-bar">
-            <span className="dot red"></span>
-            <span className="dot yellow"></span>
-            <span className="dot green"></span>
-            <span className="window-title">python_demo.py</span>
-          </div>
-          <pre className="code-block">
-            <code>
-              <span className="code-keyword">def</span> <span className="code-func">solve_problem</span>():<br/>
-              &nbsp;&nbsp;<span className="code-comment"># Striver A2Z DSA Sheet</span><br/>
-              &nbsp;&nbsp;arr = [1, 2, 3, 4, 5]<br/>
-              &nbsp;&nbsp;<span className="code-keyword">return</span> sum(arr) * 2<br/>
-            </code>
-          </pre>
-        </div>
-
-        <div className="bg-floating-c-card glass-card">
-          <div className="window-bar">
-            <span className="dot red"></span>
-            <span className="dot yellow"></span>
-            <span className="dot green"></span>
-            <span className="window-title">quick_sort.c</span>
-          </div>
-          <pre className="code-block">
-            <code>
-              <span className="code-keyword">void</span> <span className="code-func">quickSort</span>(<span className="code-keyword">int</span> *a, <span className="code-keyword">int</span> low, <span className="code-keyword">int</span> high) &#123;<br/>
-              &nbsp;&nbsp;<span className="code-keyword">if</span> (low &lt; high) &#123;<br/>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span className="code-keyword">int</span> pi = partition(a, low, high);<br/>
-              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, low, pi - 1);<br/>
-              &nbsp;&nbsp;&nbsp;&nbsp;quickSort(a, pi + 1, high);<br/>
-              &nbsp;&nbsp;&#125;<br/>
-              &#125;
-            </code>
-          </pre>
-        </div>
-
-        <div className="bg-badge bg-c">C</div>
-        <div className="bg-badge bg-py">PY</div>
-        <div className="bg-learning-ring"></div>
-      </div>
-      )}
-
-      <motion.div
-        className="glass-card login-card"
-        initial={{ opacity: 0, y: 40, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ type: 'spring', damping: 20, delay: 0.2 }}
-      >
-        <div className="login-header">
-          {/* Redesigned Upper Utility Bar */}
-          <div className="login-top-actions-bar">
-            <button
-              type="button"
-              onClick={() => onLogin('Guest Learner')}
-              className="login-action-btn-pill"
-              title="Explore the Interactive Roadmap directly as a Guest"
-            >
-              <Compass size={13} />
-              <span>Explore as Guest</span>
-            </button>
-
-            <a
-              href="/c-roadmap.html"
-              className="login-action-btn-pill"
-              title="View Standalone Full HTML Roadmap"
-            >
-              <Code2 size={13} />
-              <span>Full HTML</span>
-            </a>
-
-            <div className="login-live-status-pill">
-              <span className="live-status-pulse"></span>
-              <span>{isMobileDevice ? "Mobile Edition" : "Academy v2.0"}</span>
-            </div>
-          </div>
-
-          {/* Redesigned Glowing Brand Emblem */}
-          <div className="login-brand-crest">
-            <div className="brand-crest-emblem">
-              <span>A</span>
-            </div>
-          </div>
-
-          <div className="top-badge-row">
-            <span className="badge-cyber">
-              {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
-              {mode === 'login' ? 'LEARN WITH AAYUSH • CODE ACADEMY' : 'NEW LEARNER PROTOCOL'}
-            </span>
-          </div>
-
-          <h2 className="login-title">
-            {mode === 'login' ? (
-              <>Welcome Back, <span className="gradient-text">Learner</span></>
-            ) : (
-              <>Create <span className="gradient-text">Learner Account</span></>
-            )}
-          </h2>
-          <p className="login-subtitle">
-            {mode === 'login'
-              ? 'Enter your credentials or continue with Google to resume your C, Python & Striver DSA Sheet progress.'
-              : 'Register your account to unlock personalized milestone tracking and interactive 3D visualizers.'}
-          </p>
-        </div>
-
-        {/* Auth Mode Switcher Tabs */}
-        <div className="auth-tab-row">
-          <button
-            type="button"
-            className={`auth-tab-btn ${mode === 'login' ? 'active' : ''}`}
-            onClick={() => handleSwitchMode('login')}
-            id="loginTabBtn"
-          >
-            <LogIn size={14} />
-            Sign In
-          </button>
-          <button
-            type="button"
-            className={`auth-tab-btn ${mode === 'signup' ? 'active' : ''}`}
-            onClick={() => handleSwitchMode('signup')}
-            id="signupTabBtn"
-          >
-            <UserPlus size={14} />
-            Sign Up
-          </button>
-        </div>
-
-        {/* Google Auth Button - Opens full dialog for other users */}
-        <button
-          type="button"
-          className="btn-google-cyber"
-          onClick={handleGoogleAuth}
-          id="googleAuthBtnCyber"
-          title="Sign in with your Google account"
-        >
-          <svg width="17" height="17" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <span>Continue with Google</span>
-        </button>
-
-        <div className="auth-cyber-divider">
-          <span>{mode === 'login' ? 'OR SIGN IN MANUALLY' : 'OR SIGN UP MANUALLY'}</span>
-        </div>
-
-        {error && <div className="login-error">{error}</div>}
-        {success && <div className="login-success">{success}</div>}
-
-        <AnimatePresence mode="wait">
-          {mode === 'login' ? (
-            <motion.form
-              key="login-form"
-              onSubmit={handleLoginSubmit}
-              className="login-form"
-              initial={{ opacity: 0, x: -15 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 15 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="form-group">
-                <label>Username or Email</label>
-                <input
-                  type="text"
-                  className="login-input"
-                  placeholder="e.g. your_username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  autoFocus
-                />
+        <div className="login-desktop-layout">
+          {/* Left Panel: Elite Academy Showcase & Interactive Terminal */}
+          <div className="login-desktop-showcase">
+            <div className="desktop-showcase-header">
+              <div className="academy-brand-pill">
+                <span className="brand-dot-pulse"></span>
+                <span>LEARN WITH AAYUSH • CODE ACADEMY</span>
+                <span className="badge-chip-desktop">
+                  <Laptop size={12} /> Desktop Mode
+                </span>
               </div>
 
-              <div className="form-group">
-                <label>Password</label>
-                <div className="password-input-wrapper">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    className="login-input password-field"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+              <h1 className="desktop-hero-heading">
+                Master C, Python 3.12+ & <span className="gradient-text">Striver A2Z DSA</span>
+              </h1>
+
+              <p className="desktop-hero-subtext">
+                An immersive interactive learning ecosystem. Structured curriculum roadmap, live in-browser compiler, 46+ video masterclasses, and 474+ curated problems.
+              </p>
+            </div>
+
+            {/* Interactive Desktop Code Terminal */}
+            <div className="desktop-terminal-card glass-card">
+              <div className="terminal-header-bar">
+                <div className="terminal-window-dots">
+                  <span className="dot red"></span>
+                  <span className="dot yellow"></span>
+                  <span className="dot green"></span>
+                </div>
+
+                <div className="terminal-file-tabs">
                   <button
                     type="button"
-                    className="toggle-password-btn"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    className={`terminal-tab-btn ${desktopCodeTab === 'c' ? 'active' : ''}`}
+                    onClick={() => setDesktopCodeTab('c')}
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    <Code2 size={13} />
+                    <span>quick_sort.c</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`terminal-tab-btn ${desktopCodeTab === 'python' ? 'active' : ''}`}
+                    onClick={() => setDesktopCodeTab('python')}
+                  >
+                    <Terminal size={13} />
+                    <span>two_sum.py</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`terminal-tab-btn ${desktopCodeTab === 'dsa' ? 'active' : ''}`}
+                    onClick={() => setDesktopCodeTab('dsa')}
+                  >
+                    <Cpu size={13} />
+                    <span>kadane_dsa.cpp</span>
                   </button>
                 </div>
+
+                <span className="terminal-status-tag">● Compiler Live</span>
               </div>
 
-              <button type="submit" className="login-submit-btn" id="loginSubmitBtn">
-                Initialize Session →
-              </button>
+              <pre className="terminal-code-body">
+                <code>{codeSnippets[desktopCodeTab]}</code>
+              </pre>
 
-              <div className="switch-auth-mode">
-                Don't have an account?
+              <div className="terminal-footer-meta">
+                <div className="terminal-meta-left">
+                  <CheckCircle2 size={13} color="#22c55e" />
+                  <span>Target: GCC 13.2 / Python 3.12.3 • Zero Local Setup</span>
+                </div>
+                <div className="terminal-meta-right">
+                  <span>Interactive Playground</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Metrics Row */}
+            <div className="desktop-features-grid">
+              <div className="desktop-feature-pill">
+                <div className="feature-icon-box">⚡</div>
+                <div>
+                  <strong>474+ Curated Problems</strong>
+                  <span>Striver A2Z DSA Tracker</span>
+                </div>
+              </div>
+              <div className="desktop-feature-pill">
+                <div className="feature-icon-box">🎥</div>
+                <div>
+                  <strong>46+ Video Masterclasses</strong>
+                  <span>Direct YouTube Integration</span>
+                </div>
+              </div>
+              <div className="desktop-feature-pill">
+                <div className="feature-icon-box">🚀</div>
+                <div>
+                  <strong>In-Browser Simulator</strong>
+                  <span>C & Python High-Performance</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Shortcuts Hint */}
+            <div className="desktop-shortcuts-footer">
+              <span>Shortcuts: <strong>⌘K</strong> Quick Search • <strong>Enter ↵</strong> Submit</span>
+              <span className="desktop-engine-tag">Engine v2.0 • Online</span>
+            </div>
+          </div>
+
+          {/* Right Panel: Desktop Authentication Card */}
+          <div className="login-desktop-auth-column">
+            <motion.div
+              className="glass-card login-card desktop-card"
+              initial={{ opacity: 0, x: 25 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ type: 'spring', damping: 20, delay: 0.15 }}
+            >
+              <div className="login-header">
+                <div className="login-top-actions-bar">
+                  <button
+                    type="button"
+                    onClick={() => onLogin('Guest Learner')}
+                    className="login-action-btn-pill"
+                    title="Explore the Interactive Roadmap directly as a Guest"
+                  >
+                    <Compass size={13} />
+                    <span>Explore as Guest</span>
+                  </button>
+
+                  <a
+                    href="/c-roadmap.html"
+                    className="login-action-btn-pill"
+                    title="View Standalone Full HTML Roadmap"
+                  >
+                    <Code2 size={13} />
+                    <span>Full HTML</span>
+                  </a>
+
+                  <div className="login-live-status-pill">
+                    <span className="live-status-pulse"></span>
+                    <span>Desktop Edition</span>
+                  </div>
+                </div>
+
+                <div className="login-brand-crest">
+                  <div className="brand-crest-emblem">
+                    <span>A</span>
+                  </div>
+                </div>
+
+                <div className="top-badge-row">
+                  <span className="badge-cyber">
+                    {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
+                    {mode === 'login' ? 'LEARN WITH AAYUSH • SIGN IN' : 'NEW LEARNER REGISTRATION'}
+                  </span>
+                </div>
+
+                <h2 className="login-title">
+                  {mode === 'login' ? (
+                    <>Welcome Back, <span className="gradient-text">Learner</span></>
+                  ) : (
+                    <>Create <span className="gradient-text">Learner Account</span></>
+                  )}
+                </h2>
+                <p className="login-subtitle">
+                  {mode === 'login'
+                    ? 'Enter your credentials or continue with Google to resume your learning progress.'
+                    : 'Register to unlock isolated milestone tracking and interactive visualizers.'}
+                </p>
+              </div>
+
+              {/* Auth Mode Switcher Tabs */}
+              <div className="auth-tab-row">
                 <button
                   type="button"
-                  className="switch-auth-btn"
-                  onClick={() => handleSwitchMode('signup')}
+                  className={`auth-tab-btn ${mode === 'login' ? 'active' : ''}`}
+                  onClick={() => handleSwitchMode('login')}
+                  id="loginTabBtn"
                 >
-                  Sign Up Free →
+                  <LogIn size={14} />
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  className={`auth-tab-btn ${mode === 'signup' ? 'active' : ''}`}
+                  onClick={() => handleSwitchMode('signup')}
+                  id="signupTabBtn"
+                >
+                  <UserPlus size={14} />
+                  Sign Up
                 </button>
               </div>
-            </motion.form>
-          ) : (
-            <motion.form
-              key="signup-form"
-              onSubmit={handleSignupSubmit}
-              className="login-form"
-              initial={{ opacity: 0, x: 15 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -15 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="form-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  className="login-input"
-                  placeholder="e.g. Rahul Sharma"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                  autoFocus
-                />
+
+              {/* Google Auth Primary Button */}
+              <button
+                type="button"
+                className="btn-google-cyber"
+                onClick={handleGoogleAuth}
+                id="googleAuthBtnCyber"
+                title="Sign in with your Google account"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <span>Continue with Google</span>
+              </button>
+
+              <div className="auth-cyber-divider">
+                <span>{mode === 'login' ? 'OR SIGN IN WITH USERNAME' : 'OR SIGN UP MANUALLY'}</span>
               </div>
 
-              <div className="form-group">
-                <label>Choose Username</label>
-                <input
-                  type="text"
-                  className="login-input"
-                  placeholder="e.g. rahul_coder"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
+              {error && <div className="login-error">{error}</div>}
+              {success && <div className="login-success">{success}</div>}
 
-              <div className="form-group">
-                <label>Email Address (Required — 1 account per email)</label>
-                <input
-                  type="email"
-                  className="login-input"
-                  placeholder="e.g. rahul@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Create Password</label>
-                <div className="password-input-wrapper">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    className="login-input password-field"
-                    placeholder="At least 4 characters"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength={4}
-                  />
-                  <button
-                    type="button"
-                    className="toggle-password-btn"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+              <AnimatePresence mode="wait">
+                {mode === 'login' ? (
+                  <motion.form
+                    key="login-form"
+                    onSubmit={handleLoginSubmit}
+                    className="login-form"
+                    initial={{ opacity: 0, x: -15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 15 }}
+                    transition={{ duration: 0.2 }}
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
-              </div>
+                    <div className="form-group">
+                      <label>Username or Email</label>
+                      <input
+                        type="text"
+                        className="login-input"
+                        placeholder="e.g. your_username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        autoFocus
+                      />
+                    </div>
 
-              <div className="form-group">
-                <label>Confirm Password</label>
-                <div className="password-input-wrapper">
+                    <div className="form-group">
+                      <label>Password</label>
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          className="login-input"
+                          placeholder="Enter your password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="toggle-password-btn"
+                          onClick={() => setShowPassword(!showPassword)}
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button type="submit" className="login-submit-btn" id="loginSubmitBtn">
+                      Initialize Session →
+                    </button>
+
+                    <div className="switch-auth-mode">
+                      Don't have an account?
+                      <button
+                        type="button"
+                        className="switch-auth-btn"
+                        onClick={() => handleSwitchMode('signup')}
+                      >
+                        Sign Up Free →
+                      </button>
+                    </div>
+                  </motion.form>
+                ) : (
+                  <motion.form
+                    key="signup-form"
+                    onSubmit={handleSignupSubmit}
+                    className="login-form"
+                    initial={{ opacity: 0, x: 15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -15 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="form-group">
+                      <label>Full Name</label>
+                      <input
+                        type="text"
+                        className="login-input"
+                        placeholder="e.g. Rahul Sharma"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        required
+                        autoFocus
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        className="login-input"
+                        placeholder="e.g. rahul_coder"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Email Address</label>
+                      <input
+                        type="email"
+                        className="login-input"
+                        placeholder="e.g. rahul@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Password (min 6 characters)</label>
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          className="login-input"
+                          placeholder="Create strong password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="toggle-password-btn"
+                          onClick={() => setShowPassword(!showPassword)}
+                          aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Confirm Password</label>
+                      <div className="password-input-wrapper">
+                        <input
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          className="login-input"
+                          placeholder="Confirm your password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="toggle-password-btn"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                        >
+                          {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button type="submit" className="login-submit-btn" id="signupSubmitBtn">
+                      Create Account & Initialize →
+                    </button>
+
+                    <div className="switch-auth-mode">
+                      Already registered?
+                      <button
+                        type="button"
+                        className="switch-auth-btn"
+                        onClick={() => handleSwitchMode('login')}
+                      >
+                        Log In Here →
+                      </button>
+                    </div>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+
+              <div className="login-footer-info">
+                <p className="progress-note">
+                  <ShieldCheck size={14} />
+                  Your learning progress is saved automatically.
+                </p>
+                <p className="login-credit">Designed & Engineered by Aayush Singh</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 2. MOBILE WEB BROWSER INTERFACE (Native-App Styled Mobile Flow)            */}
+      {/* ========================================================================= */}
+      {isMobileDevice && (
+        <div className="login-mobile-layout">
+          {/* Mobile Top App Bar */}
+          <div className="mobile-app-header">
+            <div className="mobile-brand-group">
+              <div className="mobile-brand-emblem">
+                <span>A</span>
+              </div>
+              <div className="mobile-brand-texts">
+                <span className="mobile-brand-title">Learn with Aayush</span>
+                <span className="mobile-brand-edition">Mobile Edition • v2.0</span>
+              </div>
+            </div>
+
+            <div className="mobile-header-actions">
+              <button
+                type="button"
+                onClick={() => onLogin('Guest Learner')}
+                className="mobile-guest-header-btn"
+                title="Explore as Guest"
+              >
+                <Compass size={14} />
+                <span>Guest</span>
+              </button>
+
+              <a
+                href="/c-roadmap.html"
+                className="mobile-html-header-btn"
+                title="Full HTML"
+              >
+                <Code2 size={14} />
+              </a>
+            </div>
+          </div>
+
+          {/* Mobile Main Auth Card */}
+          <motion.div
+            className="mobile-auth-card glass-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', damping: 22 }}
+          >
+            <div className="mobile-card-intro">
+              <span className="mobile-category-pill">
+                <Smartphone size={12} /> Mobile Web Portal
+              </span>
+              <h2 className="mobile-auth-title">
+                {mode === 'login' ? 'Welcome Back!' : 'Create Account'}
+              </h2>
+              <p className="mobile-auth-desc">
+                {mode === 'login'
+                  ? 'Sign in to access your C, Python & Striver DSA progress.'
+                  : 'Join thousands of learners tracking their coding roadmap.'}
+              </p>
+            </div>
+
+            {/* Mobile Segmented Switcher */}
+            <div className="mobile-auth-segmented">
+              <button
+                type="button"
+                className={`mobile-segmented-btn ${mode === 'login' ? 'active' : ''}`}
+                onClick={() => handleSwitchMode('login')}
+              >
+                <LogIn size={15} />
+                <span>Sign In</span>
+              </button>
+              <button
+                type="button"
+                className={`mobile-segmented-btn ${mode === 'signup' ? 'active' : ''}`}
+                onClick={() => handleSwitchMode('signup')}
+              >
+                <UserPlus size={15} />
+                <span>Sign Up</span>
+              </button>
+            </div>
+
+            {/* Mobile Touch-Optimized Google Auth Button */}
+            <button
+              type="button"
+              className="mobile-btn-google"
+              onClick={handleGoogleAuth}
+              title="Continue with Google"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <div className="mobile-divider">
+              <span>OR ENTER CREDENTIALS</span>
+            </div>
+
+            {error && <div className="mobile-login-error">{error}</div>}
+            {success && <div className="mobile-login-success">{success}</div>}
+
+            {mode === 'login' ? (
+              <form onSubmit={handleLoginSubmit} className="mobile-form">
+                <div className="mobile-input-group">
+                  <label>Username or Email</label>
+                  <input
+                    type="text"
+                    className="mobile-input"
+                    placeholder="Enter username or email"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="mobile-input-group">
+                  <label>Password</label>
+                  <div className="mobile-password-wrapper">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      className="mobile-input"
+                      placeholder="Enter password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="mobile-password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" className="mobile-submit-btn">
+                  Initialize Session →
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleSignupSubmit} className="mobile-form">
+                <div className="mobile-input-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    className="mobile-input"
+                    placeholder="e.g. Priya Sharma"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="mobile-input-group">
+                  <label>Username</label>
+                  <input
+                    type="text"
+                    className="mobile-input"
+                    placeholder="e.g. priya_coder"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="mobile-input-group">
+                  <label>Email Address</label>
+                  <input
+                    type="email"
+                    className="mobile-input"
+                    placeholder="e.g. priya@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="mobile-input-group">
+                  <label>Password (min 6 chars)</label>
+                  <div className="mobile-password-wrapper">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      className="mobile-input"
+                      placeholder="Create password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="mobile-password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mobile-input-group">
+                  <label>Confirm Password</label>
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
-                    className="login-input password-field"
-                    placeholder="Re-enter your password"
+                    className="mobile-input"
+                    placeholder="Re-enter password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    minLength={4}
                   />
-                  <button
-                    type="button"
-                    className="toggle-password-btn"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
-                  >
-                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
                 </div>
-              </div>
 
-              <button type="submit" className="login-submit-btn" id="signupSubmitBtn">
-                Create Account & Initialize →
-              </button>
-
-              <div className="switch-auth-mode">
-                Already registered?
-                <button
-                  type="button"
-                  className="switch-auth-btn"
-                  onClick={() => handleSwitchMode('login')}
-                >
-                  Log In Here →
+                <button type="submit" className="mobile-submit-btn">
+                  Create Account →
                 </button>
-              </div>
-            </motion.form>
-          )}
-        </AnimatePresence>
+              </form>
+            )}
 
-        <div className="login-footer-info">
-          <p className="progress-note">
-            <ShieldCheck size={14} />
-            Your learning progress is saved automatically.
-          </p>
-          <p className="login-credit">Designed & Engineered by Aayush Singh</p>
+            {/* Quick Guest Explorer Strip */}
+            <div className="mobile-guest-direct-box">
+              <span>Just browsing?</span>
+              <button
+                type="button"
+                onClick={() => onLogin('Guest Learner')}
+                className="mobile-guest-direct-link"
+              >
+                Instant Guest Preview →
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Mobile Horizontal Feature Chips Carousel */}
+          <div className="mobile-features-scroll-strip">
+            <span className="mobile-feature-chip">⚡ 474+ Striver Problems</span>
+            <span className="mobile-feature-chip">📘 20 C Chapters</span>
+            <span className="mobile-feature-chip">🐍 Python 3.12+</span>
+            <span className="mobile-feature-chip">🎥 46+ Masterclasses</span>
+          </div>
+
+          <div className="mobile-footer-note">
+            <ShieldCheck size={13} />
+            <span>Progress automatically synchronized • Academy v2.0</span>
+          </div>
         </div>
-      </motion.div>
+      )}
 
-      {/* Google Authentication Dialog for ALL users */}
+      {/* ========================================================================= */}
+      {/* GOOGLE AUTHENTICATION DIALOG (Desktop Modal / Mobile Bottom Sheet)        */}
+      {/* ========================================================================= */}
       <AnimatePresence>
         {isGoogleModalOpen && (
           <div className="google-auth-modal-overlay" onClick={() => setIsGoogleModalOpen(false)}>
             <motion.div
-              className="google-auth-modal-card glass-card"
+              className={`google-auth-modal-card glass-card ${isMobileDevice ? 'mobile-bottom-sheet' : 'desktop-modal-card'}`}
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 15 }}
-              transition={{ duration: 0.2 }}
+              initial={isMobileDevice ? { y: '100%' } : { opacity: 0, scale: 0.92, y: 20 }}
+              animate={isMobileDevice ? { y: 0 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={isMobileDevice ? { y: '100%' } : { opacity: 0, scale: 0.92, y: 15 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             >
+              {/* Mobile Drag Handle Bar */}
+              {isMobileDevice && <div className="mobile-sheet-drag-handle"></div>}
+
               <button
                 type="button"
                 className="google-modal-close-btn"
@@ -657,10 +1064,10 @@ const LoginPage = ({ onLogin }) => {
                   </svg>
                 </div>
                 <h3 className="google-auth-title">
-                  {mode === 'login' ? 'Sign In with Google' : 'Sign Up with Google'}
+                  Sign In with Google
                 </h3>
                 <p className="google-auth-subtitle">
-                  Choose an account or enter your real name and email to initialize your personalized learning session.
+                  Choose a saved account or enter your name to initialize your personalized learning session.
                 </p>
               </div>
 
@@ -695,7 +1102,7 @@ const LoginPage = ({ onLogin }) => {
                             <span className="google-account-name">{uName}</span>
                             <span className="google-account-email">{uEmail}</span>
                           </div>
-                          <span className="google-account-tag">Saved</span>
+                          <span className="google-account-tag">Instant Login</span>
                         </div>
                       );
                     })}

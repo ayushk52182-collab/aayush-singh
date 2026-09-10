@@ -1450,6 +1450,45 @@
       }
     }
 
+  
+    /* Mobile Web Browser vs Desktop Web Browser Modal Enhancements */
+    @media (max-width: 768px) {
+      .interactive-modal-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+
+      .google-modal-box {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 24px 24px 0 0 !important;
+        padding: 1.5rem 1.25rem 2.2rem !important;
+        max-height: 85vh !important;
+        overflow-y: auto !important;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6) !important;
+        animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      }
+
+      .google-input-field {
+        font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+        height: 48px !important;
+      }
+
+      .google-modal-handle {
+        display: block !important;
+        width: 44px;
+        height: 5px;
+        background: rgba(249, 115, 22, 0.4);
+        border-radius: 9999px;
+        margin: 0 auto 1rem;
+      }
+    }
+
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
@@ -2575,6 +2614,30 @@ Click '▶ Run' to compile and execute your C code...
       }
     });
 
+    
+    /* Browser & Device Adaptability Engine */
+    function detectDeviceAndBrowser() {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+      if (isMobile) {
+        document.documentElement.classList.add('is-mobile-browser');
+        document.documentElement.classList.remove('is-desktop-browser');
+        document.body.classList.add('mobile-browser-mode');
+        document.body.classList.remove('desktop-browser-mode');
+        const handle = document.querySelector('.google-modal-handle');
+        if (handle) handle.style.display = 'block';
+      } else {
+        document.documentElement.classList.add('is-desktop-browser');
+        document.documentElement.classList.remove('is-mobile-browser');
+        document.body.classList.add('desktop-browser-mode');
+        document.body.classList.remove('mobile-browser-mode');
+        const handle = document.querySelector('.google-modal-handle');
+        if (handle) handle.style.display = 'none';
+      }
+    }
+    window.addEventListener('resize', detectDeviceAndBrowser);
+    window.addEventListener('orientationchange', detectDeviceAndBrowser);
+    detectDeviceAndBrowser();
+
     /* --- 9. THEME ENGINE --- */
     function initTheme() {
       const saved = localStorage.getItem('site_theme') || 'dark';
@@ -2600,6 +2663,7 @@ Click '▶ Run' to compile and execute your C code...
 
     /* --- INITIALIZATION ON LOAD --- */
     window.addEventListener('DOMContentLoaded', () => {
+      detectDeviceAndBrowser();
       initTheme();
       syncUserIdentityUI();
       renderCCurriculum();
