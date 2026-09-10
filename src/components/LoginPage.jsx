@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
+  GraduationCap,
   Layers,
   ShieldCheck,
   Eye,
@@ -527,31 +528,32 @@ long long maxSubarraySum(vector<int>& arr) {
                   </div>
                 </div>
 
-                <div className="login-brand-crest" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto 0.55rem' }}>
-                  <div className="brand-crest-emblem">
-                    <span>A</span>
+                {/* Unified Brand Logo & Title Alignment Group */}
+                <div className="login-brand-header-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%', margin: '0 auto 0.85rem' }}>
+                  <div className="brand-crest-emblem" style={{ width: '44px', height: '44px', borderRadius: '13px', background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', boxShadow: '0 8px 20px rgba(249, 115, 22, 0.45)', margin: '0 auto 8px' }}>
+                    <GraduationCap size={24} />
                   </div>
-                </div>
 
-                <div className="top-badge-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto 0.35rem', textAlign: 'center' }}>
-                  <span className="badge-cyber" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textAlign: 'center', margin: '0 auto' }}>
-                    {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
-                    <span>{mode === 'login' ? 'LEARN WITH AAYUSH • SIGN IN' : 'NEW LEARNER REGISTRATION'}</span>
-                  </span>
-                </div>
+                  <div className="top-badge-row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', margin: '0 auto 8px', textAlign: 'center' }}>
+                    <span className="badge-cyber brand-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '4px 14px', borderRadius: '9999px', background: 'rgba(249, 115, 22, 0.1)', border: '1px solid rgba(249, 115, 22, 0.3)', color: 'var(--orange-primary, #f97316)', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.01em', textTransform: 'none', margin: '0 auto' }}>
+                      {mode === 'login' ? <Sparkles size={13} /> : <UserPlus size={13} />}
+                      <span>Learn with Aayush • {mode === 'login' ? 'Sign In' : 'Sign Up'}</span>
+                    </span>
+                  </div>
 
-                <h2 className="login-title" style={{ textAlign: 'center', width: '100%', margin: '0 auto 0.25rem', display: 'block' }}>
-                  {mode === 'login' ? (
-                    <>Welcome Back, <span className="gradient-text">Learner</span></>
-                  ) : (
-                    <>Create <span className="gradient-text">Learner Account</span></>
-                  )}
-                </h2>
-                <p className="login-subtitle" style={{ textAlign: 'center', width: '100%', margin: '0 auto', display: 'block' }}>
-                  {mode === 'login'
-                    ? 'Enter your credentials or continue with Google to resume your learning progress.'
-                    : 'Register to unlock isolated milestone tracking and interactive visualizers.'}
-                </p>
+                  <h2 className="login-title" style={{ textAlign: 'center', width: '100%', margin: '0 auto 4px', fontSize: '1.45rem', fontWeight: 800, display: 'block', letterSpacing: '-0.01em' }}>
+                    {mode === 'login' ? (
+                      <>Welcome Back, <span className="gradient-text">Learner</span></>
+                    ) : (
+                      <>Create <span className="gradient-text">Learner Account</span></>
+                    )}
+                  </h2>
+                  <p className="login-subtitle" style={{ textAlign: 'center', width: '100%', margin: '0 auto', fontSize: '0.82rem', color: 'var(--text-secondary, #73738a)', lineHeight: 1.45, display: 'block' }}>
+                    {mode === 'login'
+                      ? 'Enter your credentials or continue with Google to resume your progress.'
+                      : 'Register to unlock isolated milestone tracking and interactive visualizers.'}
+                  </p>
+                </div>
               </div>
 
               {/* Auth Mode Switcher Tabs */}
@@ -831,16 +833,22 @@ long long maxSubarraySum(vector<int>& arr) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: 'spring', damping: 22 }}
           >
-            <div className="mobile-card-intro">
-              <span className="mobile-category-pill">
-                <Smartphone size={12} /> Mobile Web Portal
-              </span>
-              <h2 className="mobile-auth-title">
-                {mode === 'login' ? 'Welcome Back!' : 'Create Account'}
+            <div className="mobile-card-intro" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%', margin: '0 auto 0.9rem' }}>
+              <div className="brand-crest-emblem" style={{ width: '40px', height: '40px', borderRadius: '11px', background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', boxShadow: '0 6px 16px rgba(249, 115, 22, 0.4)', margin: '0 auto 8px' }}>
+                <GraduationCap size={22} />
+              </div>
+
+              <div className="brand-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '5px', padding: '4px 12px', borderRadius: '9999px', background: 'rgba(249, 115, 22, 0.1)', border: '1px solid rgba(249, 115, 22, 0.3)', color: 'var(--orange-primary, #f97316)', fontSize: '0.74rem', fontWeight: 700, letterSpacing: '0.01em', margin: '0 auto 8px' }}>
+                <Sparkles size={12} />
+                <span>Learn with Aayush • {mode === 'login' ? 'Sign In' : 'Sign Up'}</span>
+              </div>
+
+              <h2 className="mobile-auth-title" style={{ textAlign: 'center', width: '100%', margin: '0 auto 4px', fontSize: '1.35rem', fontWeight: 800 }}>
+                {mode === 'login' ? <>Welcome Back, <span className="gradient-text">Learner</span></> : <>Create <span className="gradient-text">Account</span></>}
               </h2>
-              <p className="mobile-auth-desc">
+              <p className="mobile-auth-desc" style={{ textAlign: 'center', width: '100%', margin: '0 auto', fontSize: '0.8rem' }}>
                 {mode === 'login'
-                  ? 'Sign in to access your C, Python & Striver DSA progress.'
+                  ? 'Sign in with Google to resume your learning progress.'
                   : 'Join thousands of learners tracking their coding roadmap.'}
               </p>
             </div>
