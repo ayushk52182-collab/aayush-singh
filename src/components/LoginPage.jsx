@@ -636,7 +636,7 @@ long long maxSubarraySum(vector<int>& arr) {
                         <Lock size={16} className="input-left-icon" />
                         <input
                           type={showPassword ? 'text' : 'password'}
-                          className="login-input input-has-left-icon"
+                          className="login-input input-has-left-icon input-has-right-icon"
                           placeholder="Enter your password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
@@ -733,7 +733,7 @@ long long maxSubarraySum(vector<int>& arr) {
                           <Lock size={16} className="input-left-icon" />
                           <input
                             type={showPassword ? 'text' : 'password'}
-                            className="login-input input-has-left-icon"
+                            className="login-input input-has-left-icon input-has-right-icon"
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -756,7 +756,7 @@ long long maxSubarraySum(vector<int>& arr) {
                           <Lock size={16} className="input-left-icon" />
                           <input
                             type={showConfirmPassword ? 'text' : 'password'}
-                            className="login-input input-has-left-icon"
+                            className="login-input input-has-left-icon input-has-right-icon"
                             placeholder="Confirm"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -935,7 +935,7 @@ long long maxSubarraySum(vector<int>& arr) {
                     <Lock size={16} className="input-left-icon" />
                     <input
                       type={showPassword ? 'text' : 'password'}
-                      className="mobile-input input-has-left-icon"
+                      className="mobile-input input-has-left-icon input-has-right-icon"
                       placeholder="Enter password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -1011,7 +1011,7 @@ long long maxSubarraySum(vector<int>& arr) {
                       <Lock size={16} className="input-left-icon" />
                       <input
                         type={showPassword ? 'text' : 'password'}
-                        className="mobile-input input-has-left-icon"
+                        className="mobile-input input-has-left-icon input-has-right-icon"
                         placeholder="Min 6 chars"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -1033,7 +1033,7 @@ long long maxSubarraySum(vector<int>& arr) {
                       <Lock size={16} className="input-left-icon" />
                       <input
                         type={showConfirmPassword ? 'text' : 'password'}
-                        className="mobile-input input-has-left-icon"
+                        className="mobile-input input-has-left-icon input-has-right-icon"
                         placeholder="Confirm"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
