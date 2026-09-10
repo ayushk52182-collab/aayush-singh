@@ -113,26 +113,32 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
           <button
             type="button"
             className="nav-signin-cta-btn"
-            onClick={onOpenSignIn}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof onOpenSignIn === 'function') {
+                onOpenSignIn();
+              }
+            }}
             title="Sign in with your Google or Student account to unlock videos"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '5px 12px',
+              padding: '6px 14px',
               borderRadius: '9999px',
               background: 'linear-gradient(135deg, #f97316, #ea580c)',
               color: '#ffffff',
-              fontWeight: 700,
-              fontSize: '0.78rem',
+              fontWeight: 800,
+              fontSize: '0.8rem',
               border: 'none',
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(249, 115, 22, 0.35)',
+              boxShadow: '0 4px 16px rgba(249, 115, 22, 0.45)',
               transition: 'all 0.2s ease',
-              marginRight: '6px'
+              marginRight: '8px'
             }}
           >
-            <LogIn size={13} />
+            <LogIn size={14} />
             <span>Sign In</span>
           </button>
         )}
@@ -189,6 +195,24 @@ const Navbar = ({ activeTab, onSelectTab, user, onLogout, theme, toggleTheme, on
                 </div>
 
                 <div className="profile-dropdown-divider"></div>
+
+                {isGuest && (
+                  <>
+                    <button
+                      type="button"
+                      className="profile-dropdown-item"
+                      style={{ color: 'var(--orange-primary, #f97316)', fontWeight: 700 }}
+                      onClick={() => {
+                        setShowProfileMenu(false);
+                        if (typeof onOpenSignIn === 'function') onOpenSignIn();
+                      }}
+                    >
+                      <LogIn size={14} />
+                      <span>Sign In to Unlock Videos</span>
+                    </button>
+                    <div className="profile-dropdown-divider"></div>
+                  </>
+                )}
 
                 <button
                   type="button"

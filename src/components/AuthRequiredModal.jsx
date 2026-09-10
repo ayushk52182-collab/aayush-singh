@@ -8,7 +8,8 @@ import {
   Mail,
   AlertCircle,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react';
 
 const AuthRequiredModal = ({
@@ -31,11 +32,13 @@ const AuthRequiredModal = ({
         setSavedUsers(list);
         setActiveTab('select');
       } else {
-        setSavedUsers([
+        const defaults = [
           { name: "Aayush Singh", email: "aayushsingh@gmail.com" },
           { name: "Priya Patel", email: "priyapatel@gmail.com" },
           { name: "Rahul Sharma", email: "rahulsharma@gmail.com" }
-        ]);
+        ];
+        localStorage.setItem('roadmap_registered_users', JSON.stringify(defaults));
+        setSavedUsers(defaults);
         setActiveTab('select');
       }
     } catch {
@@ -90,255 +93,390 @@ const AuthRequiredModal = ({
   };
 
   return (
-    <AnimatePresence>
-      <div className="google-modal-overlay" onClick={onClose}>
-        <motion.div
-          className="google-modal-card glass-card"
-          style={{ maxWidth: '440px', width: '100%', padding: '2rem' }}
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ type: 'spring', damping: 24 }}
-          onClick={(e) => e.stopPropagation()}
+    <div
+      className="google-auth-modal-overlay google-modal-overlay auth-required-modal-overlay"
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(6, 6, 14, 0.85)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        zIndex: 9999999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1.25rem',
+        boxSizing: 'border-box'
+      }}
+    >
+      <motion.div
+        className="google-auth-modal-card google-modal-card glass-card"
+        style={{
+          maxWidth: '460px',
+          width: '100%',
+          padding: '2.25rem 2rem',
+          position: 'relative',
+          borderRadius: '24px',
+          background: 'var(--card-bg-elevated, #ffffff)',
+          boxShadow: '0 25px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(249, 115, 22, 0.25)',
+          border: '1px solid rgba(249, 115, 22, 0.3)'
+        }}
+        initial={{ opacity: 0, scale: 0.9, y: 25 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 25 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 320 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          type="button"
+          className="google-modal-close-btn"
+          onClick={onClose}
+          aria-label="Close"
+          title="Continue exploring without video"
+          style={{
+            position: 'absolute',
+            top: '1.25rem',
+            right: '1.25rem',
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            background: 'rgba(249, 115, 22, 0.08)',
+            border: '1px solid rgba(249, 115, 22, 0.2)',
+            color: 'var(--text-secondary, #73738a)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
         >
-          {/* Close Button */}
-          <button
-            className="google-modal-close"
-            onClick={onClose}
-            aria-label="Close"
-            title="Continue exploring as guest"
+          <X size={16} />
+        </button>
+
+        {/* Header with Emblem */}
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          <div
+            style={{
+              width: '56px',
+              height: '56px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.1))',
+              border: '1.5px solid rgba(249, 115, 22, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--orange-primary, #f97316)',
+              margin: '0 auto 0.9rem',
+              boxShadow: '0 8px 24px rgba(249, 115, 22, 0.3)'
+            }}
           >
-            <X size={18} />
+            {videoTitle ? <Lock size={26} /> : <ShieldCheck size={28} />}
+          </div>
+
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '4px 12px',
+              borderRadius: '9999px',
+              background: videoTitle ? 'rgba(239, 68, 68, 0.12)' : 'rgba(249, 115, 22, 0.12)',
+              border: videoTitle ? '1px solid rgba(239, 68, 68, 0.35)' : '1px solid rgba(249, 115, 22, 0.35)',
+              color: videoTitle ? '#ef4444' : 'var(--orange-primary, #f97316)',
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              marginBottom: '0.6rem'
+            }}
+          >
+            {videoTitle ? '🔒 Video Playback Locked' : '⚡ Academy Sign In'}
+          </span>
+
+          <h3
+            style={{
+              margin: '0 0 0.45rem',
+              fontFamily: 'var(--font-heading, "Syne", sans-serif)',
+              fontSize: '1.4rem',
+              fontWeight: 800,
+              color: 'var(--text-primary, #1c1917)'
+            }}
+          >
+            {videoTitle ? 'Sign In to Play Video' : 'Sign In to Your Account'}
+          </h3>
+
+          <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--text-secondary, #57534e)', lineHeight: 1.55 }}>
+            {videoTitle ? (
+              <>
+                To play <strong style={{ color: 'var(--orange-primary, #f97316)' }}>"{videoTitle}"</strong> and track your milestones, please sign in with your account.
+              </>
+            ) : (
+              <>
+                Sign in to save your progress, unlock all video masterclasses, and solve Striver A2Z DSA problems.
+              </>
+            )}
+          </p>
+        </div>
+
+        {error && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '0.65rem 1rem',
+              background: '#fff1f2',
+              border: '1px solid rgba(225, 29, 72, 0.3)',
+              borderRadius: '10px',
+              color: '#e11d48',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              marginBottom: '1rem'
+            }}
+          >
+            <AlertCircle size={15} />
+            <span>{error}</span>
+          </div>
+        )}
+
+        {/* Quick Account Switcher Tabs */}
+        <div
+          style={{
+            display: 'flex',
+            gap: '6px',
+            background: 'rgba(249, 115, 22, 0.08)',
+            padding: '4px',
+            borderRadius: '12px',
+            marginBottom: '1.15rem'
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => { setActiveTab('select'); setError(''); }}
+            style={{
+              flex: 1,
+              padding: '7px 12px',
+              borderRadius: '9px',
+              border: 'none',
+              background: activeTab === 'select' ? 'var(--card-bg, #ffffff)' : 'transparent',
+              color: activeTab === 'select' ? 'var(--orange-primary, #f97316)' : 'var(--text-secondary, #73738a)',
+              fontWeight: 800,
+              fontSize: '0.8rem',
+              cursor: 'pointer',
+              boxShadow: activeTab === 'select' ? '0 2px 10px rgba(249, 115, 22, 0.15)' : 'none',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            Saved Accounts ({savedUsers.length})
           </button>
+          <button
+            type="button"
+            onClick={() => { setActiveTab('new'); setError(''); }}
+            style={{
+              flex: 1,
+              padding: '7px 12px',
+              borderRadius: '9px',
+              border: 'none',
+              background: activeTab === 'new' ? 'var(--card-bg, #ffffff)' : 'transparent',
+              color: activeTab === 'new' ? 'var(--orange-primary, #f97316)' : 'var(--text-secondary, #73738a)',
+              fontWeight: 800,
+              fontSize: '0.8rem',
+              cursor: 'pointer',
+              boxShadow: activeTab === 'new' ? '0 2px 10px rgba(249, 115, 22, 0.15)' : 'none',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            Google Account
+          </button>
+        </div>
 
-          {/* Header with Lock Emblem */}
-          <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            <div
-              style={{
-                width: '52px',
-                height: '52px',
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(234, 88, 12, 0.1))',
-                border: '1.5px solid rgba(249, 115, 22, 0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--orange-primary, #f97316)',
-                margin: '0 auto 0.85rem',
-                boxShadow: '0 8px 24px rgba(249, 115, 22, 0.25)'
-              }}
-            >
-              <Lock size={24} />
-            </div>
-
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '3px 10px',
-                borderRadius: '9999px',
-                background: 'rgba(239, 68, 68, 0.12)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                color: '#ef4444',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                marginBottom: '0.5rem'
-              }}
-            >
-              🔒 Video Playback Locked
-            </span>
-
-            <h3 style={{ margin: '0 0 0.4rem', fontFamily: 'var(--font-heading)', fontSize: '1.35rem', fontWeight: 800 }}>
-              Sign In to Watch Video
-            </h3>
-
-            <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-              {videoTitle ? (
-                <>To play <strong style={{ color: 'var(--text-primary)' }}>"{videoTitle}"</strong> and track your progress, please sign in with your account.</>
-              ) : (
-                <>You can freely explore all roadmaps and problem sets in Guest Mode. Please sign in to play masterclass videos.</>
-              )}
-            </p>
-          </div>
-
-          {error && (
-            <div className="google-modal-alert error" style={{ marginBottom: '1rem' }}>
-              <AlertCircle size={15} />
-              <span>{error}</span>
-            </div>
-          )}
-
-          {/* Quick Account Switcher Tabs */}
-          <div style={{ display: 'flex', gap: '6px', background: 'rgba(249, 115, 22, 0.08)', padding: '4px', borderRadius: '10px', marginBottom: '1rem' }}>
-            <button
-              type="button"
-              onClick={() => { setActiveTab('select'); setError(''); }}
-              style={{
-                flex: 1,
-                padding: '6px 10px',
-                borderRadius: '8px',
-                border: 'none',
-                background: activeTab === 'select' ? 'var(--card-bg, #ffffff)' : 'transparent',
-                color: activeTab === 'select' ? 'var(--orange-primary, #f97316)' : 'var(--text-secondary)',
-                fontWeight: 700,
-                fontSize: '0.78rem',
-                cursor: 'pointer',
-                boxShadow: activeTab === 'select' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              Quick Sign In ({savedUsers.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => { setActiveTab('new'); setError(''); }}
-              style={{
-                flex: 1,
-                padding: '6px 10px',
-                borderRadius: '8px',
-                border: 'none',
-                background: activeTab === 'new' ? 'var(--card-bg, #ffffff)' : 'transparent',
-                color: activeTab === 'new' ? 'var(--orange-primary, #f97316)' : 'var(--text-secondary)',
-                fontWeight: 700,
-                fontSize: '0.78rem',
-                cursor: 'pointer',
-                boxShadow: activeTab === 'new' ? '0 2px 8px rgba(0,0,0,0.1)' : 'none',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              Google Account
-            </button>
-          </div>
-
-          {activeTab === 'select' ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto', marginBottom: '1rem' }}>
-              {savedUsers.map((u, i) => {
-                const name = u.fullName || u.name || u.username;
-                const email = u.email || 'student@academy.local';
-                const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => handleSelectAccount(u)}
-                    className="google-user-item"
+        {activeTab === 'select' ? (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '9px',
+              maxHeight: '190px',
+              overflowY: 'auto',
+              marginBottom: '1.25rem',
+              paddingRight: '4px'
+            }}
+          >
+            {savedUsers.map((u, i) => {
+              const name = u.fullName || u.name || u.username;
+              const email = u.email || 'student@academy.local';
+              const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => handleSelectAccount(u)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '10px 14px',
+                    borderRadius: '12px',
+                    background: 'var(--card-bg-elevated, rgba(249, 115, 22, 0.04))',
+                    border: '1px solid var(--card-border, rgba(249, 115, 22, 0.2))',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--orange-primary, #f97316)';
+                    e.currentTarget.style.transform = 'translateX(3px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--card-border, rgba(249, 115, 22, 0.2))';
+                    e.currentTarget.style.transform = 'none';
+                  }}
+                >
+                  <div
                     style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                      color: '#ffffff',
+                      fontWeight: 800,
+                      fontSize: '0.8rem',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '10px',
-                      padding: '8px 12px',
-                      borderRadius: '10px',
-                      background: 'var(--card-bg-elevated, rgba(249, 115, 22, 0.04))',
-                      border: '1px solid var(--card-border, rgba(249, 115, 22, 0.2))',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      transition: 'all 0.2s ease'
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(249, 115, 22, 0.35)'
                     }}
                   >
-                    <div
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #f97316, #ea580c)',
-                        color: '#fff',
-                        fontWeight: 800,
-                        fontSize: '0.75rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {initials}
-                    </div>
-                    <div style={{ flex: 1, overflow: 'hidden' }}>
-                      <strong style={{ display: 'block', fontSize: '0.82rem', color: 'var(--text-primary)' }}>{name}</strong>
-                      <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>{email}</span>
-                    </div>
-                    <ArrowRight size={14} color="var(--orange-primary, #f97316)" />
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <form onSubmit={handleNewAccountSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '1rem' }}>
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                <User size={15} style={{ position: 'absolute', left: '12px', color: 'var(--text-muted)' }} />
-                <input
-                  type="text"
-                  placeholder="Full Name (e.g. Priya Sharma)"
-                  value={googleName}
-                  onChange={(e) => setGoogleName(e.target.value)}
-                  className="login-input"
-                  style={{ width: '100%', paddingLeft: '34px' }}
-                />
-              </div>
-
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-                <Mail size={15} style={{ position: 'absolute', left: '12px', color: 'var(--text-muted)' }} />
-                <input
-                  type="email"
-                  placeholder="Google Email (e.g. yourname@gmail.com)"
-                  value={googleEmail}
-                  onChange={(e) => setGoogleEmail(e.target.value)}
-                  className="login-input"
-                  style={{ width: '100%', paddingLeft: '34px' }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn-hero-primary"
-                style={{ width: '100%', justifyContent: 'center', padding: '0.75rem' }}
-              >
-                <Sparkles size={15} />
-                <span>Sign In & Play Video</span>
-              </button>
-            </form>
-          )}
-
-          {/* Footer Actions */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid var(--card-border)', paddingTop: '0.85rem' }}>
-            <button
-              type="button"
-              onClick={onSwitchToFullLogin}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--orange-primary, #f97316)',
-                fontSize: '0.78rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px'
-              }}
-            >
-              <LogIn size={13} />
-              <span>Login with Password / Create New Account →</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={onClose}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--text-muted)',
-                fontSize: '0.75rem',
-                cursor: 'pointer'
-              }}
-            >
-              Continue Exploring Without Video
-            </button>
+                    {initials}
+                  </div>
+                  <div style={{ flex: 1, overflow: 'hidden' }}>
+                    <strong style={{ display: 'block', fontSize: '0.88rem', color: 'var(--text-primary, #1c1917)' }}>{name}</strong>
+                    <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary, #57534e)' }}>{email}</span>
+                  </div>
+                  <ArrowRight size={15} color="var(--orange-primary, #f97316)" />
+                </button>
+              );
+            })}
           </div>
-        </motion.div>
-      </div>
-    </AnimatePresence>
+        ) : (
+          <form onSubmit={handleNewAccountSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '11px', marginBottom: '1.25rem' }}>
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <User size={16} style={{ position: 'absolute', left: '14px', color: 'var(--text-muted, #a8a29e)' }} />
+              <input
+                type="text"
+                placeholder="Full Name (e.g. Priya Sharma)"
+                value={googleName}
+                onChange={(e) => setGoogleName(e.target.value)}
+                className="login-input"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem 0.75rem 38px',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(249, 115, 22, 0.25)',
+                  fontSize: '0.88rem',
+                  background: 'var(--card-bg, #fffbf7)',
+                  color: 'var(--text-primary, #1c1917)',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <Mail size={16} style={{ position: 'absolute', left: '14px', color: 'var(--text-muted, #a8a29e)' }} />
+              <input
+                type="email"
+                placeholder="Google Email (e.g. yourname@gmail.com)"
+                value={googleEmail}
+                onChange={(e) => setGoogleEmail(e.target.value)}
+                className="login-input"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem 1rem 0.75rem 38px',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(249, 115, 22, 0.25)',
+                  fontSize: '0.88rem',
+                  background: 'var(--card-bg, #fffbf7)',
+                  color: 'var(--text-primary, #1c1917)',
+                  boxSizing: 'border-box'
+                }}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn-hero-primary"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                padding: '0.8rem',
+                borderRadius: '12px',
+                fontSize: '0.88rem',
+                fontWeight: 800
+              }}
+            >
+              <Sparkles size={16} />
+              <span>{videoTitle ? 'Sign In & Play Video' : 'Sign In with Google'}</span>
+            </button>
+          </form>
+        )}
+
+        {/* Footer Actions */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '9px',
+            borderTop: '1px solid rgba(249, 115, 22, 0.18)',
+            paddingTop: '1rem'
+          }}
+        >
+          <button
+            type="button"
+            onClick={onSwitchToFullLogin}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--orange-primary, #f97316)',
+              fontSize: '0.82rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              padding: '6px'
+            }}
+          >
+            <LogIn size={14} />
+            <span>Login with Password / Create New Account →</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-muted, #73738a)',
+              fontSize: '0.78rem',
+              cursor: 'pointer',
+              padding: '4px'
+            }}
+          >
+            Continue Exploring Without Video
+          </button>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 

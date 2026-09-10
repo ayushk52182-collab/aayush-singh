@@ -1210,6 +1210,12 @@
         <i data-lucide="sun" id="themeIcon" style="width:18px;height:18px;"></i>
       </button>
 
+      <!-- Guest Sign In CTA Button -->
+      <button id="navGuestSignInBtn" class="btn-hero-primary" style="display:none;padding:0.4rem 1rem;font-size:0.8rem;border-radius:9999px;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(249,115,22,0.4);" onclick="openGoogleModal()">
+        <i data-lucide="log-in" style="width:14px;height:14px;"></i>
+        <span>Sign In</span>
+      </button>
+
       <!-- Profile Chip -->
       <div class="user-profile-chip" id="profileChip" onclick="toggleProfileDropdown(event)">
         <div class="user-avatar-initials" id="navAvatarInitials">AS</div>
@@ -1739,14 +1745,21 @@ Click '▶ Run' to compile and execute your C code...
     }
 
     function syncUserIdentityUI() {
-      const name = currentUser.name || "Aayush Singh";
-      const email = currentUser.email || "aayushsingh@gmail.com";
-      const initials = name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "AS";
+      const isGuest = !currentUser || currentUser.name === 'Guest Learner' || currentUser.email === 'guest@academy.local';
+      const name = isGuest ? "Guest Explorer" : (currentUser.name || "Aayush Singh");
+      const email = isGuest ? "guest@academy.local (Guest Mode)" : (currentUser.email || "aayushsingh@gmail.com");
+      const initials = isGuest ? "GL" : (name.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) || "AS");
 
       document.getElementById('navUserName').textContent = name;
       document.getElementById('navAvatarInitials').textContent = initials;
       document.getElementById('dropdownFullName').textContent = name;
       document.getElementById('dropdownUserEmail').textContent = email;
+
+      const signInBtn = document.getElementById('navGuestSignInBtn');
+      if (signInBtn) {
+        signInBtn.style.display = isGuest ? 'inline-flex' : 'none';
+      }
+      if (window.lucide) window.lucide.createIcons();
     }
 
     function toggleProfileDropdown(e) {
